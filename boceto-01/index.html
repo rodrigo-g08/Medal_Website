@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medal — Landing Concept</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="hero">
+    <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster="assets/poster.svg">
+      <source src="assets/medal-hero.mp4" type="video/mp4" />
+    </video>
+
+    <div class="hero__fallback" aria-hidden="true"></div>
+    <div class="hero__overlay" aria-hidden="true"></div>
+
+    <header class="hero__topbar">
+      <span>Independent Creative Studio</span>
+      <button class="menu" type="button" aria-label="Open menu">Menu</button>
+    </header>
+
+    <section class="hero__center" aria-label="Medal introduction">
+      <div class="logo-lockup" aria-label="Medal">
+        <svg class="logo-lockup__mark" viewBox="0 0 160 78" role="img" aria-label="Medal symbol">
+          <path d="M16 19 L80 56 L144 19 L160 48 L80 95 L0 48 Z" transform="translate(0,-17)" fill="currentColor" />
+        </svg>
+        <div class="logo-lockup__word">MEDAL</div>
+      </div>
+    </section>
+
+    <footer class="hero__bottom">
+      <span>Brand · Digital · Content</span>
+      <a href="#next" class="scroll-link">Scroll <span class="scroll-line"></span></a>
+      <span>Miami · Lima</span>
+    </footer>
+  </main>
+
+  <section id="next" class="next-section">
+    <p>Next section placeholder</p>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

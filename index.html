@@ -1,45 +1,86 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Medal — Landing Concept</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medal — A new Medal is in the making</title>
+  <meta name="description" content="Medal is a brand and visual studio for hospitality, food and consumer brands. Our new site is being prepared. The studio remains open for new projects.">
+  <meta property="og:title" content="Medal — A new Medal is in the making">
+  <meta property="og:description" content="Brand, photography and film. The studio remains open for new projects.">
+  <meta property="og:image" content="assets/img/hero-poster.jpg">
+  <meta name="theme-color" content="#05060A">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/img/hero-poster.jpg" as="image">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <main class="hero">
-    <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster="assets/poster.svg">
-      <source src="assets/medal-hero.mp4" type="video/mp4" />
-    </video>
+  <div class="site">
 
-    <div class="hero__fallback" aria-hidden="true"></div>
-    <div class="hero__overlay" aria-hidden="true"></div>
+    <!-- Portada en video -->
+    <section class="hero" id="top">
+      <video class="hero__media" id="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/img/hero-poster.jpg">
+        <source src="assets/video/artech-classic-cars.mp4" type="video/mp4">
+      </video>
+      <div class="hero__scrim" aria-hidden="true"></div>
 
-    <header class="hero__topbar">
-      <span>Independent Creative Studio</span>
-      <button class="menu" type="button" aria-label="Open menu">Menu</button>
-    </header>
+      <div class="hero__grid">
+        <header class="brand">
+          <img class="brand__logo" src="assets/logo-medal.svg" alt="Medal" width="132" height="41">
+        </header>
 
-    <section class="hero__center" aria-label="Medal introduction">
-      <div class="logo-lockup" aria-label="Medal">
-        <svg class="logo-lockup__mark" viewBox="0 0 160 78" role="img" aria-label="Medal symbol">
-          <path d="M16 19 L80 56 L144 19 L160 48 L80 95 L0 48 Z" transform="translate(0,-17)" fill="currentColor" />
-        </svg>
-        <div class="logo-lockup__word">MEDAL</div>
+        <div class="hero__copy">
+          <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>Studio update · Miami</p>
+          <h1 id="title">A new Medal<br>is in <span class="making">the making.</span></h1>
+          <a class="btn hero__cta" href="#contact">Send inquiry <span aria-hidden="true">→</span></a>
+        </div>
+
+        <button class="hero__sound" id="sound-toggle" type="button" aria-pressed="false">
+          <span class="hero__sound-icon" aria-hidden="true">&#9654;</span>
+          <span>Artech &middot; Classic car collection &middot; <span id="sound-label">Sound off</span></span>
+        </button>
       </div>
     </section>
 
-    <footer class="hero__bottom">
-      <span>Brand · Digital · Content</span>
-      <a href="#next" class="scroll-link">Scroll <span class="scroll-line"></span></a>
-      <span>Miami · Lima</span>
+    <!-- Mensaje y formulario -->
+    <section class="message" id="contact" aria-labelledby="contact-title">
+      <div class="mesh" aria-hidden="true"></div>
+
+      <div class="message__inner">
+        <div class="message__text">
+          <h2 id="contact-title">We are reworking how we<br>present our brand, photography<br>and film.</h2>
+        </div>
+
+        <form class="contact-form" id="contact-form" novalidate>
+          <div class="field">
+            <label for="cf-name">Name</label>
+            <input id="cf-name" name="name" type="text" autocomplete="name" required placeholder="Your name">
+          </div>
+          <div class="field">
+            <label for="cf-email">Work email</label>
+            <input id="cf-email" name="email" type="email" autocomplete="email" required placeholder="name@company.com">
+          </div>
+          <div class="field field--message">
+            <label for="cf-brand">A few lines about your brand</label>
+            <textarea id="cf-brand" name="brand" rows="3" maxlength="900" required placeholder="Tell us what you're building, reworking or launching."></textarea>
+          </div>
+          <!-- Campo trampa contra bots: debe quedar vacío -->
+          <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="form-foot">
+            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+            <button class="btn" type="submit" id="cf-submit">Send inquiry <span aria-hidden="true">→</span></button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <footer class="site-foot">
+      <span>&copy; Medal Studio</span>
+      <span>Miami &middot; Lima</span>
     </footer>
-  </main>
 
-  <section id="next" class="next-section">
-    <p>Next section placeholder</p>
-  </section>
+  </div>
 
-  <script src="script.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
