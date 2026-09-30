@@ -8,11 +8,11 @@
   <link rel="icon" href="/assets/favicon.svg" />
   <link rel="stylesheet" href="/src/css/pages/work.css" />
 </head>
+
 <body data-page="work">
   <div class="ambient" aria-hidden="true">
     <span class="halo halo--one"></span>
     <span class="halo halo--two"></span>
-    <span class="halo halo--three"></span>
   </div>
 
   <header class="site-header" data-header>
@@ -24,6 +24,7 @@
       <a class="site-header__link is-active" href="/work/">Work</a>
       <a class="site-header__link" href="/film-services/">Film &amp; Services</a>
       <a class="site-header__link" href="/contact/">Contact</a>
+
       <a class="button button--primary button--header" href="/contact/">
         <span class="button__label" data-label="Book a session">Book a session</span>
         <span class="button__arrow" aria-hidden="true">→</span>
@@ -34,7 +35,15 @@
       <a class="button button--primary button--compact" href="/contact/">
         <span class="button__label" data-label="Book a session">Book a session</span>
       </a>
-      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-menu-toggle
+      >
         <span></span><span></span>
       </button>
     </div>
@@ -51,18 +60,42 @@
   </div>
 
   <main>
-    <section class="work-hero" data-theme="dark">
+    <section class="work-hero" data-theme="dark" data-work-intro>
       <div class="work-hero__inner">
-        <p class="eyebrow work-hero__eyebrow">Selected work · 2024–2026</p>
-        <h1 class="work-hero__word" aria-label="Work">WORK</h1>
-        <div class="work-hero__bottom">
-          <p class="work-hero__intro">Restaurants, classic cars and packaged goods,<br />from Lima to Miami.</p>
+        <p class="eyebrow work-hero__eyebrow" data-work-copy>
+          Selected work · 2024–2026
+        </p>
+
+        <h1 class="work-hero__word" aria-label="Work" data-work-word>
+          <span class="work-hero__letter" data-work-other>W</span><span class="work-hero__letter work-hero__letter--o" data-work-o>O</span><span class="work-hero__letter" data-work-other>R</span><span class="work-hero__letter" data-work-other>K</span>
+        </h1>
+
+        <div class="work-hero__bottom" data-work-copy>
+          <p class="work-hero__intro">
+            Restaurants, classic cars and packaged goods,<br />
+            from Lima to Miami.
+          </p>
+
           <p class="work-hero__stage">
-            <span>01</span><span class="work-hero__stage-line" aria-hidden="true"></span><span>Work</span>
+            <span>01</span>
+            <span class="work-hero__stage-line" aria-hidden="true"></span>
+            <span>Work</span>
           </p>
         </div>
       </div>
+
+      <div class="work-bone-cover" data-work-bone>
+        <div class="work-bone-content" data-work-bone-content>
+          <p class="eyebrow work-bone__eyebrow">Five brands · Four sectors</p>
+          <h2 class="work-bone__title">
+            Every brand,<br />
+            a different standard.
+          </h2>
+        </div>
+      </div>
     </section>
+
+    <section class="work-h3-handoff" data-theme="light" aria-hidden="true"></section>
   </main>
 
   <script type="module" src="/src/js/pages/work.js"></script>

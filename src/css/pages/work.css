@@ -3,45 +3,224 @@
 @import "../header.css";
 @import "../buttons.css";
 
-main { position:relative; z-index:1; }
+main {
+  position: relative;
+  z-index: 1;
+}
 
-.work-hero { position:relative; min-height:100svh; overflow:hidden; }
+.work-hero {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background: transparent;
+  isolation: isolate;
+}
 
 .work-hero__inner {
-  min-height:100svh;
-  padding:calc(var(--header-height) + clamp(38px,7vh,84px)) var(--page-pad) clamp(28px,5vh,54px);
-  display:grid; grid-template-rows:auto 1fr auto;
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  padding:
+    calc(var(--header-height) + clamp(38px, 7vh, 84px))
+    var(--page-pad)
+    clamp(28px, 5vh, 54px);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
-.work-hero__eyebrow { align-self:start; }
-.work-hero__word {
-  align-self:center; justify-self:center; margin:0; color:var(--bone);
-  font-size:clamp(7rem,22vw,24rem); font-weight:800; font-stretch:125%;
-  line-height:.72; letter-spacing:-.075em; white-space:nowrap; transform:translateX(-.025em);
-}
-.work-hero__bottom {
-  display:flex; align-items:flex-end; justify-content:space-between; gap:40px;
-}
-.work-hero__intro {
-  margin:0; max-width:590px; color:var(--text-soft);
-  font-size:clamp(18px,1.45vw,24px); font-weight:330; line-height:1.18; letter-spacing:-.025em;
-}
-.work-hero__stage {
-  margin:0; min-width:160px; display:grid; grid-template-columns:auto 1fr auto;
-  align-items:center; gap:10px; color:var(--label);
-  font-family:"IBM Plex Mono",monospace; font-size:10px; line-height:1;
-  letter-spacing:.12em; text-transform:uppercase;
-}
-.work-hero__stage-line { height:1px; background:rgba(242,239,232,.28); }
 
-@media (max-width:860px) {
-  .work-hero__inner { padding-top:calc(var(--header-height) + 58px); padding-bottom:28px; }
-  .work-hero__word { font-size:clamp(6rem,27vw,11rem); line-height:.78; }
-  .work-hero__bottom { display:grid; gap:32px; }
-  .work-hero__intro { max-width:27rem; font-size:clamp(18px,5vw,23px); }
-  .work-hero__stage { width:min(100%,220px); min-width:0; }
+.work-hero__eyebrow {
+  align-self: start;
 }
-@media (max-width:540px) {
-  .work-hero__inner { padding-top:calc(var(--header-height) + 76px); }
-  .work-hero__word { justify-self:start; font-size:clamp(5.2rem,28vw,8.6rem); transform:translateX(-.045em); }
-  .work-hero__intro br { display:none; }
+
+.work-hero__word {
+  position: relative;
+  align-self: center;
+  justify-self: center;
+  margin: 0;
+  color: var(--bone);
+  font-size: clamp(7rem, 22vw, 24rem);
+  font-weight: 800;
+  font-stretch: 125%;
+  line-height: .72;
+  letter-spacing: -.075em;
+  white-space: nowrap;
+  transform: translateX(-.025em);
+}
+
+.work-hero__letter {
+  display: inline-block;
+}
+
+.work-hero__letter--o {
+  position: relative;
+  /*
+   * The animation scales THE O ITSELF, not the full word.
+   * Origin is deliberately on the left stroke, never near R.
+   */
+  transform-origin: 18% 50%;
+}
+
+.work-hero__bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.work-hero__intro {
+  margin: 0;
+  max-width: 590px;
+  color: var(--text-soft);
+  font-size: clamp(18px, 1.45vw, 24px);
+  font-weight: 330;
+  line-height: 1.18;
+  letter-spacing: -.025em;
+}
+
+.work-hero__stage {
+  margin: 0;
+  min-width: 160px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  color: var(--label);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.work-hero__stage-line {
+  height: 1px;
+  background: rgba(242, 239, 232, .28);
+}
+
+.work-bone-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: grid;
+  align-items: center;
+  background: var(--bone);
+  color: var(--ink);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.work-bone-content {
+  width: min(100%, 1500px);
+  margin: 0 auto;
+  padding:
+    calc(var(--header-height) + clamp(46px, 7vh, 90px))
+    var(--page-pad)
+    clamp(52px, 8vh, 100px);
+  opacity: 0;
+}
+
+.work-bone__eyebrow {
+  margin-bottom: clamp(24px, 4vh, 44px);
+  color: rgba(5, 6, 10, .54);
+}
+
+.work-bone__title {
+  margin: 0;
+  max-width: 11ch;
+  font-size: clamp(4rem, 9vw, 10.5rem);
+  font-weight: 300;
+  font-stretch: 112%;
+  line-height: .88;
+  letter-spacing: -.055em;
+  text-wrap: balance;
+}
+
+.work-h3-handoff {
+  min-height: 52svh;
+  background: var(--bone);
+}
+
+.site-header {
+  z-index: 100;
+}
+
+@media (max-width: 860px) {
+  .work-hero__inner {
+    padding-top: calc(var(--header-height) + 58px);
+    padding-bottom: 28px;
+  }
+
+  .work-hero__word {
+    font-size: clamp(6rem, 27vw, 11rem);
+    line-height: .78;
+  }
+
+  .work-hero__bottom {
+    display: grid;
+    gap: 32px;
+  }
+
+  .work-hero__intro {
+    max-width: 27rem;
+    font-size: clamp(18px, 5vw, 23px);
+  }
+
+  .work-hero__stage {
+    width: min(100%, 220px);
+    min-width: 0;
+  }
+
+  .work-bone__title {
+    max-width: 9ch;
+    font-size: clamp(4.2rem, 14vw, 8rem);
+  }
+}
+
+@media (max-width: 540px) {
+  .work-hero__inner {
+    padding-top: calc(var(--header-height) + 76px);
+  }
+
+  .work-hero__word {
+    justify-self: start;
+    font-size: clamp(5.2rem, 28vw, 8.6rem);
+    transform: translateX(-.045em);
+  }
+
+  .work-hero__intro br {
+    display: none;
+  }
+
+  .work-bone-content {
+    padding-top: calc(var(--header-height) + 90px);
+  }
+
+  .work-bone__title {
+    font-size: clamp(3.7rem, 17vw, 6rem);
+    line-height: .91;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-hero {
+    min-height: 100svh;
+    background: var(--ink);
+  }
+
+  .work-hero__word,
+  .work-hero__letter,
+  [data-work-copy] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .work-bone-cover {
+    position: relative;
+    min-height: 100svh;
+    opacity: 1 !important;
+  }
+
+  .work-bone-content {
+    opacity: 1 !important;
+  }
 }
