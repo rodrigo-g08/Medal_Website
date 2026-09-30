@@ -1,0 +1,16 @@
+:root {
+  --ink: #05060A;
+  --blue: #0842FB;
+  --blue-soft: #7E9CFF;
+  --yellow: #E0F53B;
+  --bone: #F2EFE8;
+  --text-soft: #D7DAE0;
+  --label: #9FA8B4;
+  --bronze: #B9794A;
+  --silver: #C9CFD8;
+  --gold: #D8B35A;
+  --header-height: 92px;
+  --page-pad: clamp(20px, 3.5vw, 64px);
+  --ease-medal: cubic-bezier(.2,.8,.2,1);
+  --ease-fill: cubic-bezier(.6,0,.2,1);
+}

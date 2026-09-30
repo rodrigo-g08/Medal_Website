@@ -1,0 +1,48 @@
+MEDAL — H1.4 · HALOS DELIMITADOS PARA WEB
+
+Correcciones respecto a H1.3:
+
+1. El halo derecho YA NO aparece cerca del final de WORK.
+   - Quitamos el phase offset.
+   - Inicia realmente en la esquina inferior derecha.
+
+2. El halo izquierdo ya no queda medio perdido fuera del viewport.
+   - La trayectoria ahora se calcula usando el CENTRO del halo.
+   - Solo una pequeña parte del halo queda fuera del borde.
+   - Se puede contemplar la mayor parte del glow.
+
+3. El movimiento vertical se nota más.
+   - Izquierdo: superior izquierda -> inferior izquierda -> centro inferior.
+   - Derecho: inferior derecha -> superior derecha -> centro superior.
+
+4. Tamaño desktop basado en el tratamiento mesh ya usado por Medal:
+   clamp(480px, 46vw, 850px)
+
+5. También se recupera el tratamiento visual del mesh:
+   - blur: 12px
+   - opacity: 1
+   - gradientes radiales originales
+
+6. El retorno después del cursor es aún más suave:
+   RETURN_SPEED = 0.0042
+
+7. Sigue siendo un módulo GLOBAL:
+   src/js/modules/halos.js
+   Se reutilizará en Work, Film & Services, Contact, etc.
+
+INSTALAR:
+Expand-Archive "$env:USERPROFILE\Downloads\Medal_H1_4_HalosWebDelimitados.zip" -DestinationPath . -Force
+
+PROBAR:
+npm run dev
+http://localhost:5173/work/
+
+VALIDAR:
+- Hay solo 2 halos.
+- El izquierdo aparece claramente arriba a la izquierda al cargar.
+- El derecho aparece claramente abajo a la derecha al cargar.
+- Se ve la mayor parte de ambos halos.
+- El movimiento vertical se aprecia.
+- Ninguno desaparece completamente.
+- El cursor solo los captura al entrar en su núcleo.
+- Al soltarlos, vuelven lentamente a su ruta.

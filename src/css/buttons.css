@@ -1,0 +1,56 @@
+.button {
+  position:relative; isolation:isolate; min-height:44px; border-radius:999px;
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:0 20px; overflow:hidden; user-select:none; -webkit-tap-highlight-color:transparent;
+}
+.button:focus-visible,.site-header__link:focus-visible,.mobile-menu__nav a:focus-visible,.menu-toggle:focus-visible {
+  outline:2px solid var(--blue-soft); outline-offset:4px;
+}
+.button--primary {
+  color:var(--bone); border:1px solid rgba(242,239,232,.35); background:var(--ink);
+}
+.button--primary::before {
+  content:""; position:absolute; z-index:-1; inset:-1px; border-radius:inherit;
+  background:var(--yellow); transform:scaleX(0); transform-origin:right center;
+  transition:transform 350ms var(--ease-fill);
+}
+.button--primary:hover::before,.button--primary:focus-visible::before {
+  transform:scaleX(1); transform-origin:left center; transition-duration:400ms;
+}
+.button__label { position:relative; z-index:1; white-space:nowrap; font-size:13px; line-height:1; }
+.button__label::after {
+  content:attr(data-label); position:absolute; inset:0; color:var(--ink);
+  clip-path:inset(0 100% 0 0); transition:clip-path 350ms var(--ease-fill);
+}
+.button--primary:hover .button__label::after,.button--primary:focus-visible .button__label::after {
+  clip-path:inset(0 0 0 0); transition-duration:400ms;
+}
+.button__arrow {
+  position:relative; z-index:1; font-size:16px; line-height:1;
+  transition:transform 300ms var(--ease-medal),color 250ms ease;
+}
+.button--primary:hover .button__arrow,.button--primary:focus-visible .button__arrow {
+  color:var(--ink); transform:translateX(6px);
+}
+.button.is-pressed { transform:scale(.96); }
+.button__ripple {
+  position:absolute; z-index:0; width:18px; height:18px; border-radius:50%;
+  background:rgba(224,245,59,.55); pointer-events:none;
+  transform:translate(-50%,-50%) scale(0); animation:button-ripple 600ms ease-out forwards;
+}
+@keyframes button-ripple {
+  to { opacity:0; transform:translate(-50%,-50%) scale(9); }
+}
+.button--header { min-height:46px; padding-inline:19px; }
+.button--compact { min-height:42px; padding-inline:15px; }
+.button--compact .button__label { font-size:11px; }
+
+@media (hover:none) {
+  .button--primary:active::before { transform:scaleX(1); transform-origin:left center; }
+  .button--primary:active .button__label::after { clip-path:inset(0 0 0 0); }
+}
+@media (prefers-reduced-motion:reduce) {
+  .button,.button::before,.button__label::after,.button__arrow {
+    transition-duration:.01ms !important; animation-duration:.01ms !important;
+  }
+}
