@@ -1,0 +1,245 @@
+/* ==========================================================
+   H3 v4 · BETTER BRAND IMAGES + MORE DIRECT TRANSITIONS
+   ========================================================== */
+
+.work-cases {
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  background: transparent;
+}
+
+.work-cases__pin {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+  background: transparent;
+}
+
+.work-cases__layers {
+  position: absolute;
+  inset: 0;
+}
+
+.work-case {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  background: #05060A;
+}
+
+.work-case__media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.work-case__image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  transform: none;
+}
+
+.work-case__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(5, 6, 10, .24) 0%,
+      rgba(5, 6, 10, .02) 30%,
+      rgba(5, 6, 10, .08) 58%,
+      rgba(5, 6, 10, .60) 100%
+    );
+  pointer-events: none;
+}
+
+.work-case__copy {
+  position: absolute;
+  z-index: 3;
+  inset: auto var(--page-pad) clamp(46px, 6.4vh, 80px);
+  color: #F2EFE8;
+  text-shadow:
+    0 2px 18px rgba(0, 0, 0, .34),
+    0 1px 2px rgba(0, 0, 0, .42);
+  will-change: transform, opacity;
+}
+
+.work-case__meta {
+  margin: 0 0 18px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: clamp(15px, 1vw, 17px);
+  line-height: 1.25;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: rgba(242, 239, 232, .98);
+}
+
+.work-case__bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.work-case__name {
+  margin: 0;
+  font-size: clamp(5.5rem, 8.9vw, 11.4rem);
+  font-weight: 360;
+  font-stretch: 112%;
+  line-height: .87;
+  letter-spacing: -.052em;
+}
+
+.work-case__count {
+  margin: 0 0 .58em;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: clamp(15px, .95vw, 17px);
+  font-weight: 500;
+  letter-spacing: .13em;
+  color: rgba(242, 239, 232, .98);
+}
+
+.work-cases__bone {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  background: var(--bone);
+  pointer-events: none;
+}
+
+.work-cases__progress {
+  position: absolute;
+  z-index: 9;
+  top: 17vh;
+  right: clamp(20px, 2.6vw, 42px);
+  width: 3px;
+  height: 66vh;
+  background: rgba(242, 239, 232, .34);
+  overflow: hidden;
+}
+
+.work-cases__progress-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--yellow);
+  transform: scaleY(0);
+  transform-origin: top center;
+}
+
+/* Bigger header only on Work */
+.site-header__brand {
+  width: clamp(124px, 8.8vw, 172px);
+}
+
+.site-header__nav {
+  gap: clamp(34px, 2.8vw, 56px);
+}
+
+.site-header__link {
+  font-size: clamp(17px, 1.08vw, 19px);
+  font-weight: 550;
+  letter-spacing: -.012em;
+}
+
+.button--header {
+  min-height: 54px;
+  padding-inline: 28px;
+  border-radius: 999px;
+}
+
+.button--header .button__label {
+  font-size: 16px;
+  font-weight: 550;
+}
+
+.button--header .button__arrow {
+  font-size: 18px;
+}
+
+.work-hero__eyebrow,
+.work-bone__eyebrow {
+  font-size: clamp(12px, .86vw, 14px);
+}
+
+.work-hero__intro {
+  font-size: clamp(21px, 1.62vw, 26px);
+}
+
+.work-hero__stage {
+  font-size: 12px;
+}
+
+.site-header.header--light .site-header__link {
+  color: rgba(5, 6, 10, .74);
+}
+
+.site-header.header--light .site-header__link.is-active {
+  color: #05060A;
+}
+
+@media (max-width: 860px) {
+  .site-header__brand {
+    width: 108px;
+  }
+}
+
+@media (max-width: 720px) {
+  .work-case__copy {
+    inset: auto 22px 38px;
+  }
+
+  .work-case__bottom {
+    display: grid;
+    gap: 14px;
+  }
+
+  .work-case__name {
+    font-size: clamp(4.5rem, 19vw, 7.6rem);
+    line-height: .90;
+  }
+
+  .work-case__meta,
+  .work-case__count {
+    font-size: 13px;
+  }
+
+  .work-case__count {
+    margin: 0;
+  }
+
+  .work-cases__progress {
+    top: 16vh;
+    right: 12px;
+    width: 2px;
+    height: 68vh;
+  }
+}
+
+.work-cases.is-reduced .work-cases__pin {
+  height: auto;
+  overflow: visible;
+}
+
+.work-cases.is-reduced .work-cases__layers {
+  position: relative;
+}
+
+.work-cases.is-reduced .work-case {
+  position: relative;
+  min-height: 100svh;
+  opacity: 1;
+}
+
+.work-cases.is-reduced .work-cases__bone,
+.work-cases.is-reduced .work-cases__progress {
+  display: none;
+}

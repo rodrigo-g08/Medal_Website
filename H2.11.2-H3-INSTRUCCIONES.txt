@@ -1,0 +1,109 @@
+MEDAL — H2.11.2 + H3 INTEGRADOS
+
+Este ZIP es deliberadamente AUTÓNOMO respecto a los últimos parches.
+
+BASE
+Se reconstruyó desde:
+1. Medal_H2_11_1_RestoreSmoothCopy.zip
+2. Medal_H2_11_2_NoPauseAfterReveal.zip
+
+Por tanto conserva la versión H2 definitiva:
+- MEDAL
+- zoom al centro del apóstrofe
+- cobertura blanca real
+- reveal smooth por palabras
+- sin pausa muerta después del contenido
+- reversa
+- halos H1.4
+
+H3 YA ESTÁ PEGADO A H2
+No es una página separada.
+
+La sección .work-h3-handoff que ya existía al final de H2 se transforma EN EL
+MISMO LUGAR en los casos.
+
+Flujo:
+H2 negro
+→ zoom apóstrofe
+→ blanco
+→ Every brand, a different standard.
+→ al seguir bajando, la misma pantalla hueso continúa
+→ se desvanece suavemente y aparece KJOLLE
+→ ARTECH
+→ ZÜB ZERO
+→ FIESTA
+→ FOOD FREAKS
+
+IMÁGENES CORREGIDAS
+Kjolle:
+usa un asset gastronómico ya existente en el proyecto:
+assets/img/medal-01-tasting-menu.jpg
+
+Artech:
+ya NO usa el poster marrón.
+Incluye una fotografía real de la colección de autos extraída del brochure
+ARTECH aportado al proyecto:
+assets/img/work/artech-classics.webp
+
+Züb Zero:
+ya NO usa un plato.
+Incluye la fotografía real de potes ZÜB:
+assets/img/work/zub-zero-products.webp
+Se presenta completa sobre un campo negro/azul para no deformar ni recortar el producto.
+
+Fiesta:
+incluye una visual real/brandeada de Fiesta:
+assets/img/work/fiesta-restaurant.webp
+
+Food Freaks:
+usa un asset de hospitality ya existente en el sitio:
+assets/img/medal-03-bar.jpg
+
+SIN ZOOM DE FOTOS
+Se eliminó por completo scale 1.03 -> 1.
+
+Las fotografías:
+width: 100%
+height: 100%
+object-fit: cover
+scale: 1
+
+Es decir: cubren la pantalla por CSS pero NO tienen un zoom de animación.
+
+ZÜB es la excepción lógica porque es un PNG de producto:
+object-fit: contain sobre un fondo full-screen.
+Así los potes no se cortan.
+
+TRANSICIONES
+Cada caso:
+- permanece
+- desaparece 100%
+- negro + halos H1.4
+- recién entra el siguiente
+
+Nunca se mezclan dos fotos.
+
+INSTALAR ESTE ZIP DIRECTAMENTE
+No hace falta volver a instalar H2 y H3 por separado.
+
+Expand-Archive "$env:USERPROFILE\Downloads\Medal_H2_11_2_H3_Integrated.zip" -DestinationPath . -Force
+npm run dev
+
+Abrir:
+http://localhost:5173/work/
+
+ARCHIVOS H2 RESTAURADOS / INCLUIDOS
+work/index.html
+src/css/pages/work.css
+src/js/modules/work-intro.js
+
+ARCHIVOS H3
+src/data/cases.json
+src/css/pages/work-cases.css
+src/js/modules/work-cases.js
+src/js/pages/work.js
+
+ASSETS NUEVOS
+assets/img/work/artech-classics.webp
+assets/img/work/zub-zero-products.webp
+assets/img/work/fiesta-restaurant.webp

@@ -32,32 +32,20 @@ main {
   align-self: start;
 }
 
-.work-hero__word {
+.work-hero__brand-stage {
   position: relative;
   align-self: center;
   justify-self: center;
-  margin: 0;
-  color: var(--bone);
-  font-size: clamp(7rem, 22vw, 24rem);
-  font-weight: 800;
-  font-stretch: 125%;
-  line-height: .72;
-  letter-spacing: -.075em;
-  white-space: nowrap;
-  transform: translateX(-.025em);
+  width: clamp(620px, 72vw, 1120px);
+  transform-origin: 50% 50%;
 }
 
-.work-hero__letter {
-  display: inline-block;
-}
-
-.work-hero__letter--o {
-  position: relative;
-  /*
-   * The animation scales THE O ITSELF, not the full word.
-   * Origin is deliberately on the left stroke, never near R.
-   */
-  transform-origin: 18% 50%;
+.work-hero__brand {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  shape-rendering: geometricPrecision;
 }
 
 .work-hero__bottom {
@@ -135,6 +123,21 @@ main {
   text-wrap: balance;
 }
 
+.work-bone__line {
+  display: block;
+  white-space: nowrap;
+}
+
+.work-bone__line [data-bone-word] {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.work-bone__line [data-bone-word] + [data-bone-word] {
+  margin-left: .14em;
+}
+
 .work-h3-handoff {
   min-height: 52svh;
   background: var(--bone);
@@ -150,9 +153,8 @@ main {
     padding-bottom: 28px;
   }
 
-  .work-hero__word {
-    font-size: clamp(6rem, 27vw, 11rem);
-    line-height: .78;
+  .work-hero__brand-stage {
+    width: min(92vw, 780px);
   }
 
   .work-hero__bottom {
@@ -181,10 +183,8 @@ main {
     padding-top: calc(var(--header-height) + 76px);
   }
 
-  .work-hero__word {
-    justify-self: start;
-    font-size: clamp(5.2rem, 28vw, 8.6rem);
-    transform: translateX(-.045em);
+  .work-hero__brand-stage {
+    width: 94vw;
   }
 
   .work-hero__intro br {
@@ -199,6 +199,10 @@ main {
     font-size: clamp(3.7rem, 17vw, 6rem);
     line-height: .91;
   }
+
+  .work-bone__line {
+    white-space: normal;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -207,8 +211,7 @@ main {
     background: var(--ink);
   }
 
-  .work-hero__word,
-  .work-hero__letter,
+  .work-hero__brand-stage,
   [data-work-copy] {
     opacity: 1 !important;
     transform: none !important;
@@ -220,7 +223,9 @@ main {
     opacity: 1 !important;
   }
 
-  .work-bone-content {
+  .work-bone-content,
+  [data-bone-word] {
     opacity: 1 !important;
+    transform: none !important;
   }
 }
