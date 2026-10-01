@@ -1,0 +1,42 @@
+MEDAL WORK · CORRECCIÓN H4–H6 · V4
+
+Base:
+- Se restauró H3 desde el ZIP/repositorio aprobado original.
+- No se alteran Kjolle, Artech, Züb Zero ni Food Freaks.
+- Únicamente Fiesta cambia al asset entregado por el usuario.
+
+H3 / SELECTED WORK
+- Regresa object-fit: cover a pantalla completa, igual al H3 original.
+- Fiesta usa assets/img/work/fiesta-grill-wide.jpg, preparado en 16:9 a partir de la fotografía entregada.
+- Eliminado el tratamiento contain/fondo duplicado de la revisión anterior.
+
+HEADER
+- En Work, el header no cambia automáticamente por data-theme.
+- Negro solamente durante la pantalla bone/blanca de H2 y el instante de handoff correspondiente.
+- H3 real, H4, H5 y H6 mantienen logo y navegación Medal en blanco.
+
+H4 / MORE THAN A PORTFOLIO
+- Movimiento continuo y lento hacia la izquierda.
+- Nunca se detiene por hover.
+- Sin zoom al hover.
+- Mezcla fotografía food/hospitality con fotogramas reales extraídos del film Artech ya presente en el repo.
+- Sin pin: el scroll vertical nunca queda bloqueado.
+
+H5 / RESULTS
+- Fondo negro con halos azules.
+- Texto blanco.
+- Métricas se vuelven a animar cada vez que se regresa a la sección desde arriba o abajo.
+- Tercer dato actualizado a 105, escala del proyecto Artech: colección de autos dentro de una narrativa de lanzamiento.
+- Se eliminó el dato temporal de “4 sectors”.
+
+H6 / SELECTED BRANDS + AVAILABILITY
+- Sin líneas divisorias entre Results, Selected brands y Availability.
+- Marquee continuo sin pausa por hover.
+- Logos originales/adaptados a blanco: Artech, Central, Kjolle, Food Freaks y Zub Zero.
+- Fiesta usa fuente oficial online con fallback local.
+- Se añade Lisung Health desde el logo entregado por el usuario.
+- CTA secundario: See our plans.
+
+ESTRUCTURA DEL ZIP
+- Archivos y carpetas directamente en raíz.
+- No existe carpeta contenedora Medal_Website-* dentro del ZIP.

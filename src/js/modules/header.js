@@ -3,6 +3,7 @@ export function initHeader() {
   if (!header) return;
 
   const sections = [...document.querySelectorAll("[data-theme]")];
+  const isWorkPage = document.body?.dataset.page === "work";
   const toggle = document.querySelector("[data-menu-toggle]");
   const mobileMenu = document.querySelector("[data-mobile-menu]");
 
@@ -10,7 +11,9 @@ export function initHeader() {
     header.classList.toggle("header--light", theme === "light");
   };
 
-  if (sections.length) {
+  // Work manages its one light-on-bone moment explicitly in work-intro/work-cases.
+  // Everywhere else on Work the identity remains white over the dark photography/halo field.
+  if (sections.length && !isWorkPage) {
     const observer = new IntersectionObserver((entries) => {
       const visible = entries
         .filter((entry) => entry.isIntersecting)

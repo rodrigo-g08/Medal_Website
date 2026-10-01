@@ -1,0 +1,449 @@
+/* ==========================================================
+   H4–H6 · WORK CONTINUATION
+   Revision v3:
+   - H5 restored to dark Medal atmosphere with blue halos.
+   - H5 numerals and copy are white.
+   - H5 counters replay every time the section re-enters.
+   - Selected brands use the provided original marks, adapted in white.
+   - Brand track spacing avoids clipping and the divider before availability is removed.
+   ========================================================== */
+
+.work-beyond,
+.work-results,
+.work-close {
+  position: relative;
+  z-index: 2;
+}
+
+/* ---------------- H4 · MORE THAN A PORTFOLIO ---------------- */
+.work-beyond {
+  min-height: 100svh;
+  overflow: hidden;
+  background: transparent;
+  color: var(--bone);
+}
+
+.work-beyond__pin {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-content: center;
+  gap: clamp(46px, 6vh, 76px);
+  padding: calc(var(--header-height) + clamp(50px, 8vh, 96px)) 0 clamp(54px, 8vh, 92px);
+}
+
+.work-beyond__heading {
+  position: relative;
+  z-index: 2;
+  padding-inline: var(--page-pad);
+}
+
+.work-beyond__eyebrow {
+  margin-bottom: clamp(18px, 2.7vh, 30px);
+  color: rgba(215, 218, 224, 0.68);
+}
+
+.work-beyond__title {
+  margin: 0;
+  max-width: 10.4ch;
+  font-size: clamp(4.8rem, 9.4vw, 11.6rem);
+  font-weight: 300;
+  font-stretch: 112%;
+  line-height: 0.86;
+  letter-spacing: -0.058em;
+}
+
+.work-beyond__strip-shell {
+  width: 100%;
+  overflow: hidden;
+  padding-block: 4px;
+}
+
+.work-beyond__strip {
+  display: flex;
+  width: max-content;
+  gap: clamp(18px, 1.5vw, 28px);
+  padding-inline: var(--page-pad);
+  will-change: transform;
+}
+
+.work-beyond__strip.is-marquee {
+  animation: medal-strip-marquee 52s linear infinite;
+}
+
+
+.work-beyond__figure {
+  position: relative;
+  flex: 0 0 clamp(260px, 22vw, 410px);
+  width: clamp(260px, 22vw, 410px);
+  aspect-ratio: 4 / 5;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: rgba(242, 239, 232, 0.06);
+}
+
+.work-beyond__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 420ms ease, transform 420ms ease;
+}
+
+.work-beyond__figure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(5, 6, 10, 0.28), transparent 38%);
+  pointer-events: none;
+}
+
+.work-beyond__caption {
+  position: absolute;
+  z-index: 2;
+  left: 16px;
+  right: 16px;
+  bottom: 14px;
+  margin: 0;
+  color: rgba(242, 239, 232, 0.88);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+
+@keyframes medal-strip-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+/* ---------------- H5 · RESULTS / PROOF ---------------- */
+.work-results {
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--bone);
+}
+
+.work-results::before,
+.work-results::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(18px);
+}
+
+.work-results::before {
+  width: clamp(420px, 40vw, 720px);
+  aspect-ratio: 1;
+  left: -10vw;
+  bottom: -18vh;
+  background: radial-gradient(circle, rgba(28, 79, 255, 0.56) 0%, rgba(10, 43, 166, 0.2) 42%, transparent 75%);
+}
+
+.work-results::after {
+  width: clamp(420px, 40vw, 720px);
+  aspect-ratio: 1;
+  right: -10vw;
+  top: -18vh;
+  background: radial-gradient(circle, rgba(26, 76, 255, 0.54) 0%, rgba(10, 43, 166, 0.19) 42%, transparent 74%);
+}
+
+.work-results__inner {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1600px);
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: calc(var(--header-height) + clamp(70px, 10vh, 130px)) var(--page-pad) clamp(72px, 10vh, 126px);
+  display: grid;
+  align-content: center;
+  gap: clamp(48px, 8vh, 90px);
+}
+
+.work-results__eyebrow {
+  color: rgba(215, 218, 224, 0.68);
+}
+
+.work-results__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(28px, 4.2vw, 76px);
+}
+
+.work-result { min-width: 0; }
+
+.work-result__value {
+  margin: 0 0 clamp(22px, 3vh, 34px);
+  color: var(--bone);
+  font-size: clamp(4.8rem, 8.6vw, 10.2rem);
+  font-weight: 330;
+  font-stretch: 108%;
+  font-variant-numeric: tabular-nums;
+  line-height: 0.82;
+  letter-spacing: -0.062em;
+  transform-origin: left bottom;
+}
+
+.work-result__copy {
+  min-height: 3.4em;
+  margin: 0;
+  max-width: 20rem;
+  color: rgba(242, 239, 232, 0.78);
+  font-size: clamp(17px, 1.18vw, 21px);
+  font-weight: 420;
+  line-height: 1.16;
+  letter-spacing: -0.025em;
+}
+
+.work-result__client {
+  display: block;
+  margin-top: 7px;
+  color: rgba(242, 239, 232, 0.98);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  line-height: 1.3;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.work-result__rule {
+  display: block;
+  width: 100%;
+  height: 3px;
+  margin-top: clamp(30px, 5vh, 48px);
+  overflow: hidden;
+  background: rgba(242, 239, 232, 0.12);
+}
+
+.work-result__rule::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--yellow);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.work-result.is-animated .work-result__rule::after {
+  animation: medal-result-rule 1.5s cubic-bezier(0.22, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes medal-result-rule { to { transform: scaleX(1); } }
+
+/* ---------------- H6 · CLIENT LOGOS ---------------- */
+.work-close {
+  overflow: hidden;
+  background: transparent;
+  color: var(--bone);
+}
+
+.work-clients {
+  position: relative;
+  padding: clamp(82px, 11vh, 130px) 0 clamp(92px, 12vh, 120px);
+  border: 0;
+}
+
+.work-clients__eyebrow { margin: 0 var(--page-pad) clamp(42px, 6vh, 66px); }
+
+.work-clients__viewport {
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+}
+
+.work-clients__track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: clamp(74px, 7vw, 124px);
+  padding-inline: clamp(42px, 5vw, 88px);
+  animation: medal-client-marquee 42s linear infinite;
+}
+
+
+.work-client-logo {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  min-width: max(160px, var(--logo-w, 160px));
+  min-height: max(54px, var(--logo-h, 54px));
+}
+
+.work-client-logo img {
+  display: block;
+  width: auto;
+  max-width: var(--logo-w, 200px);
+  height: auto;
+  max-height: var(--logo-h, 62px);
+  object-fit: contain;
+  filter: grayscale(1) brightness(100) invert(1);
+  opacity: 0.97;
+}
+
+.work-client-logo--native-light img {
+  filter: none;
+  opacity: 0.99;
+}
+
+.work-client-logo.is-round {
+  min-width: 110px;
+}
+
+@keyframes medal-client-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+/* ---------------- H6 · AVAILABILITY CLOSE ---------------- */
+.work-availability {
+  position: relative;
+  min-height: 92svh;
+  margin-top: -1px;
+  padding: calc(var(--header-height) + clamp(72px, 10vh, 120px)) var(--page-pad) clamp(72px, 10vh, 118px);
+  display: grid;
+  align-content: center;
+}
+
+.work-availability__inner { width: min(100%, 1500px); margin: 0 auto; }
+.work-availability__eyebrow { margin-bottom: clamp(28px, 4vh, 46px); }
+
+.work-availability__title {
+  margin: 0;
+  max-width: 10ch;
+  font-size: clamp(5rem, 10vw, 12rem);
+  font-weight: 300;
+  font-stretch: 112%;
+  line-height: 0.84;
+  letter-spacing: -0.06em;
+}
+
+.work-availability__bottom {
+  margin-top: clamp(54px, 8vh, 92px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 54px;
+}
+
+.work-availability__slots-wrap { display: grid; gap: 16px; }
+.work-availability__slots-label {
+  margin: 0;
+  color: rgba(215, 218, 224, 0.58);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.work-availability__slots { display: flex; gap: 10px; }
+.work-availability__slot {
+  width: clamp(44px, 3.2vw, 56px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(242, 239, 232, 0.42);
+  border-radius: 50%;
+  background: transparent;
+  transform: scale(0.92);
+}
+
+.work-availability__slot.is-occupied {
+  border-color: var(--yellow);
+  background: var(--yellow);
+}
+
+.work-availability__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 14px;
+}
+
+.work-availability__secondary {
+  min-height: 54px;
+  padding: 0 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(242, 239, 232, 0.28);
+  border-radius: 999px;
+  color: var(--bone);
+  font-size: 15px;
+  font-weight: 520;
+  transition: background 220ms ease, color 220ms ease, border-color 220ms ease;
+}
+
+.work-availability__secondary:hover {
+  border-color: var(--bone);
+  background: var(--bone);
+  color: var(--ink);
+}
+
+@media (max-width: 1100px) {
+  .work-results__grid {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+
+  .work-result {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.65fr) 1fr;
+    column-gap: 34px;
+    align-items: end;
+  }
+
+  .work-result__value { margin: 0; }
+  .work-result__rule { grid-column: 1 / -1; margin-top: 24px; }
+}
+
+@media (max-width: 980px) {
+  .work-beyond__figure { flex-basis: min(44vw, 350px); width: min(44vw, 350px); }
+
+  .work-availability__bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .work-availability__actions { justify-content: flex-start; }
+}
+
+@media (max-width: 720px) {
+  .work-beyond__pin { gap: 36px; }
+  .work-beyond__title { max-width: 8.2ch; font-size: clamp(4.25rem, 18vw, 7rem); }
+  .work-beyond__figure { flex-basis: min(68vw, 310px); width: min(68vw, 310px); border-radius: 10px; }
+  .work-results__inner { align-content: start; padding-top: calc(var(--header-height) + 90px); }
+  .work-result { display: block; }
+  .work-result__value { margin-bottom: 24px; font-size: clamp(5.4rem, 24vw, 8.5rem); }
+  .work-clients__track { gap: 56px; }
+  .work-client-logo { min-width: max(128px, var(--logo-w, 128px)); }
+  .work-client-logo img { max-width: min(var(--logo-w, 160px), 160px); max-height: min(var(--logo-h, 48px), 48px); }
+  .work-availability { min-height: 88svh; }
+  .work-availability__title { font-size: clamp(4.8rem, 20vw, 7.6rem); }
+  .work-availability__actions { width: 100%; display: grid; grid-template-columns: 1fr; }
+  .work-availability__actions .button,
+  .work-availability__secondary { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-beyond__strip { transform: none !important; }
+  .work-beyond__strip.is-marquee,
+  .work-clients__track { animation: none; }
+  .work-results .work-result__rule::after { transform: scaleX(1); animation: none; }
+  .work-availability__slot { transform: none !important; }
+}
+
+/* Official Fiesta raster source: black/navy background disappears against Medal's dark field. */
+.work-client-logo--screen-source img {
+  filter: grayscale(1) brightness(1.42) contrast(1.16);
+  mix-blend-mode: screen;
+  opacity: .96;
+}

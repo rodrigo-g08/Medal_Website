@@ -133,11 +133,15 @@ export function initWorkCases() {
 
       onEnterBack: () => {
         const p = timeline.scrollTrigger?.progress ?? 0;
-        header?.classList.toggle("header--light", p < 0.04);
+        header?.classList.toggle("header--light", p < 0.035);
       },
 
       onUpdate: (self) => {
-        header?.classList.toggle("header--light", self.progress < 0.04);
+        header?.classList.toggle("header--light", self.progress < 0.035);
+      },
+
+      onLeave: () => {
+        header?.classList.remove("header--light");
       },
 
       onLeaveBack: () => {
