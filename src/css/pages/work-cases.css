@@ -243,3 +243,21 @@
 .work-cases.is-reduced .work-cases__progress {
   display: none;
 }
+
+
+/* H3 V6 · perceptible photographic fade-to-black between brand cases. */
+.work-cases__fade {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  background: #05060A;
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-cases__fade {
+    display: none;
+  }
+}

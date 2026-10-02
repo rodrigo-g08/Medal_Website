@@ -5,10 +5,11 @@ import cases from "../../data/cases.json";
 gsap.registerPlugin(ScrollTrigger);
 
 const INTRO = 0.20;
-const HOLD = 0.70;
-const TRANSITION = 0.30;
-const OUT = 0.18;
-const IN = 0.18;
+const HOLD = 0.74;
+const TRANSITION = 0.58;
+const FADE_TO_BLACK = 0.17;
+const BLACK_HOLD = 0.09;
+const FADE_FROM_BLACK = 0.22;
 
 function caseMarkup(item, index, total) {
   const number = String(index + 1).padStart(2, "0");
@@ -58,6 +59,7 @@ function buildCasesSection() {
         ${cases.map((item, index) => caseMarkup(item, index, cases.length)).join("")}
       </div>
 
+      <div class="work-cases__fade" data-cases-fade aria-hidden="true"></div>
       <div class="work-cases__bone" data-cases-bone aria-hidden="true"></div>
 
       <div class="work-cases__progress" aria-hidden="true">
@@ -75,6 +77,7 @@ export function initWorkCases() {
 
   const pin = section.querySelector("[data-cases-pin]");
   const bone = section.querySelector("[data-cases-bone]");
+  const fade = section.querySelector("[data-cases-fade]");
   const layers = [...section.querySelectorAll(".work-case")];
   const progress = section.querySelector("[data-cases-progress]");
   const header = document.querySelector("[data-header]");
@@ -94,6 +97,7 @@ export function initWorkCases() {
   }
 
   gsap.set(bone, { opacity: 1 });
+  if (fade) gsap.set(fade, { opacity: 0 });
 
   layers.forEach((layer, index) => {
     const copy = layer.querySelector(".work-case__copy");
@@ -170,38 +174,56 @@ export function initWorkCases() {
     const outgoingCopy = layer.querySelector(".work-case__copy");
     const incomingCopy = next.querySelector(".work-case__copy");
 
-    // True crossfade: no black gap.
+    // Cinematic transition: image -> perceptible black -> next image.
+    // The next case is swapped only while the black veil is fully opaque.
     timeline.to(
-      [layer, outgoingCopy],
+      outgoingCopy,
       {
         opacity: 0,
-        y: (_i, target) => target === outgoingCopy ? -12 : 0,
-        duration: OUT,
-        ease: "power1.inOut",
+        y: -12,
+        duration: 0.13,
+        ease: "power1.in",
       },
       cursor
     );
 
-    timeline.to(
-      next,
-      {
-        opacity: 1,
-        duration: IN,
-        ease: "power1.inOut",
-      },
-      cursor
-    );
+    if (fade) {
+      timeline.to(
+        fade,
+        {
+          opacity: 1,
+          duration: FADE_TO_BLACK,
+          ease: "power2.in",
+        },
+        cursor
+      );
+    }
+
+    timeline.set(layer, { opacity: 0 }, cursor + FADE_TO_BLACK);
+    timeline.set(next, { opacity: 1 }, cursor + FADE_TO_BLACK);
+
+    if (fade) {
+      timeline.to(
+        fade,
+        {
+          opacity: 0,
+          duration: FADE_FROM_BLACK,
+          ease: "power2.out",
+        },
+        cursor + FADE_TO_BLACK + BLACK_HOLD
+      );
+    }
 
     timeline.fromTo(
       incomingCopy,
-      { opacity: 0, y: 12 },
+      { opacity: 0, y: 14 },
       {
         opacity: 1,
         y: 0,
-        duration: IN,
+        duration: 0.22,
         ease: "power2.out",
       },
-      cursor + 0.01
+      cursor + FADE_TO_BLACK + BLACK_HOLD + 0.08
     );
 
     cursor += TRANSITION;

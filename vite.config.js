@@ -7,6 +7,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         work: resolve(__dirname, 'work/index.html'),
+        filmServices: resolve(__dirname, 'film-services/index.html'),
       },
     },
   },

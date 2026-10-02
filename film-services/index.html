@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Film, photography and launch direction by Medal — Miami and Lima." />
+  <meta name="theme-color" content="#05060A" />
+  <title>Film & Services — Medal</title>
+  <link rel="icon" href="/assets/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/img/film/film-hero-poster.jpg" as="image" />
+  <link rel="stylesheet" href="/src/css/pages/film-services.css" />
+</head>
+
+<body data-page="film-services">
+  <div class="ambient" aria-hidden="true">
+    <span class="halo halo--one"></span>
+    <span class="halo halo--two"></span>
+  </div>
+
+  <header class="site-header" data-header>
+    <a class="site-header__brand" href="/" aria-label="Medal home">
+      <img src="/assets/logo-medal.svg" alt="Medal" />
+    </a>
+
+    <nav class="site-header__nav" aria-label="Primary navigation">
+      <a class="site-header__link" href="/work/">Work</a>
+      <a class="site-header__link is-active" href="/film-services/">Film &amp; Services</a>
+      <a class="site-header__link" href="/#contact">Contact</a>
+
+      <a class="button button--primary button--header" href="/#contact">
+        <span class="button__label" data-label="Book a session">Book a session</span>
+        <span class="button__arrow" aria-hidden="true">→</span>
+      </a>
+    </nav>
+
+    <div class="site-header__mobile-actions">
+      <a class="button button--primary button--compact" href="/#contact">
+        <span class="button__label" data-label="Book a session">Book a session</span>
+      </a>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-menu-toggle
+      >
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu" data-mobile-menu aria-hidden="true">
+    <div class="mobile-menu__halos" aria-hidden="true"></div>
+    <nav class="mobile-menu__nav" aria-label="Mobile navigation">
+      <a href="/work/">Work</a>
+      <a class="is-active" href="/film-services/">Film &amp; Services</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+    <p class="mobile-menu__meta">Miami · Lima</p>
+  </div>
+
+  <main>
+    <section class="film-hero" data-film-hero data-theme="dark">
+      <div class="film-hero__sticky">
+        <div class="film-hero__frame" data-film-frame>
+          <video
+            class="film-hero__video"
+            data-film-video
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="/assets/img/film/film-hero-poster.jpg"
+          >
+            <source src="/assets/video/artech-classic-cars.mp4" type="video/mp4" />
+          </video>
+          <div class="film-hero__scrim" aria-hidden="true"></div>
+
+          <div class="film-hero__opening" data-film-opening>
+            <p class="eyebrow">Artech · Classic car collection</p>
+            <h1>Film</h1>
+          </div>
+
+          <button class="film-sound" type="button" data-film-sound aria-pressed="false">
+            <span class="film-sound__dot" aria-hidden="true"></span>
+            <span data-film-sound-label>Sound off</span>
+          </button>
+        </div>
+
+        <div class="film-hero__cinema-copy" data-film-cinema-copy>
+          <p class="eyebrow">Film direction · Medal</p>
+          <h2>Every frame,<br />directed.</h2>
+          <p>Artech · Brand film · 0:47</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="reels" data-reels data-theme="dark">
+      <div class="section-shell">
+        <div class="reels__heading">
+          <p class="eyebrow">Reels</p>
+          <h2>Made for the feed.</h2>
+          <p class="reels__intro">Short-form work still gets full direction. Framing, rhythm and product remain intentional even when the format moves fast.</p>
+        </div>
+
+        <div class="reels__row" data-reels-row>
+          <article class="reel-card" data-reel-card data-client="Artech">
+            <video muted loop playsinline preload="none" poster="/assets/img/strip/artech-dashboard.jpg">
+              <source src="/assets/video/reels/artech-reel.mp4" type="video/mp4" />
+            </video>
+            <div class="reel-card__shade" aria-hidden="true"></div>
+            <div class="reel-card__meta">
+              <span>Artech</span>
+              <span>Classic cars</span>
+            </div>
+            <span class="reel-card__progress" aria-hidden="true"><i></i></span>
+          </article>
+
+          <article class="reel-card" data-reel-card data-client="Fiesta">
+            <video muted loop playsinline preload="none" poster="/assets/img/work/fiesta-grill-wide.jpg">
+              <source src="/assets/video/reels/fiesta-reel.mp4" type="video/mp4" />
+            </video>
+            <div class="reel-card__shade" aria-hidden="true"></div>
+            <div class="reel-card__meta">
+              <span>Fiesta</span>
+              <span>Hospitality</span>
+            </div>
+            <span class="reel-card__progress" aria-hidden="true"><i></i></span>
+          </article>
+
+          <article class="reel-card" data-reel-card data-client="Kjolle">
+            <video muted loop playsinline preload="none" poster="/assets/img/medal-01-tasting-menu.jpg">
+              <source src="/assets/video/reels/kjolle-reel.mp4" type="video/mp4" />
+            </video>
+            <div class="reel-card__shade" aria-hidden="true"></div>
+            <div class="reel-card__meta">
+              <span>Kjolle</span>
+              <span>Food direction</span>
+            </div>
+            <span class="reel-card__progress" aria-hidden="true"><i></i></span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="services-intro" data-services-intro data-theme="dark">
+      <div class="section-shell services-intro__inner">
+        <p class="eyebrow">Services</p>
+        <h2>Three medals.<br /><span data-standard-fill>One standard.</span></h2>
+        <p class="services-intro__copy">Choose the level of involvement the brand needs. The standard of direction does not change.</p>
+
+        <div class="medal-selector" data-medal-selector>
+          <button class="medal-choice medal-choice--bronze" type="button" data-medal-target="bronze">
+            <span class="medal-choice__disc">
+              <span class="medal-choice__face medal-choice__face--front">B</span>
+              <span class="medal-choice__face medal-choice__face--back">Shoot</span>
+            </span>
+            <span class="medal-choice__title">Bronze Medal</span>
+            <span class="medal-choice__subtitle">The shoot</span>
+          </button>
+
+          <button class="medal-choice medal-choice--silver" type="button" data-medal-target="silver">
+            <span class="medal-choice__disc">
+              <span class="medal-choice__face medal-choice__face--front">S</span>
+              <span class="medal-choice__face medal-choice__face--back">Brand</span>
+            </span>
+            <span class="medal-choice__title">Silver Medal</span>
+            <span class="medal-choice__subtitle">The brand</span>
+          </button>
+
+          <button class="medal-choice medal-choice--gold" type="button" data-medal-target="gold">
+            <span class="medal-choice__disc">
+              <span class="medal-choice__face medal-choice__face--front">G</span>
+              <span class="medal-choice__face medal-choice__face--back">Launch</span>
+            </span>
+            <span class="medal-choice__title">Gold Medal</span>
+            <span class="medal-choice__subtitle">The launch</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="medal-journey" data-medal-journey data-theme="dark">
+      <div class="medal-journey__pin" data-medal-pin>
+        <div class="medal-journey__index" aria-hidden="true">
+          <span data-service-index>01</span><span>/ 03</span>
+        </div>
+
+        <div class="medal-journey__visual" data-service-visual>
+          <div class="service-medal service-medal--bronze" data-service-medal>
+            <span class="service-medal__ring"></span>
+            <span class="service-medal__letter">B</span>
+          </div>
+        </div>
+
+        <div class="medal-journey__copy" data-service-copy>
+          <p class="eyebrow" data-service-label>Bronze Medal · The shoot</p>
+          <h2 data-service-title>The shoot.</h2>
+          <p class="medal-journey__lead" data-service-lead>For brands that already know what they need to say and need the visual execution to match.</p>
+          <ul data-service-list>
+            <li>Creative direction</li>
+            <li>Shot list</li>
+            <li>Production day</li>
+            <li>Photo + video selects</li>
+          </ul>
+        </div>
+
+        <div class="medal-journey__rail" aria-hidden="true">
+          <span data-service-progress></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="launch-protection" data-theme="light">
+      <div class="section-shell launch-protection__inner">
+        <p class="eyebrow">How we protect your launch</p>
+        <h2>You approve the visual direction before we shoot a single frame.</h2>
+
+        <div class="launch-protection__grid">
+          <article>
+            <span>01</span>
+            <h3>Direction first</h3>
+            <p>Moodboard and shot list before production.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Dates in writing</h3>
+            <p>Timeline agreed before we start.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>One team</h3>
+            <p>One point of contact from brief to delivery.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="services-availability" data-services-availability data-theme="light">
+      <div class="section-shell services-availability__inner">
+        <div>
+          <p class="eyebrow" data-service-month>October availability</p>
+          <h2><span data-open-slots>2</span> of <span data-total-slots>6</span><br />slots still open.</h2>
+        </div>
+
+        <a class="button button--dark-on-light services-availability__cta" href="/#contact">
+          <span class="button__label" data-label="Book your Medal Session">Book your Medal Session</span>
+          <span class="button__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <footer class="medal-footer" data-theme="dark">
+      <div class="medal-footer__brand">
+        <img src="/assets/logo-medal.svg" alt="Medal" />
+      </div>
+
+      <div class="medal-footer__grid">
+        <div>
+          <p class="eyebrow">Studio</p>
+          <p>Miami · Lima</p>
+        </div>
+        <div>
+          <p class="eyebrow">Contact</p>
+          <a href="mailto:info@medalusa.com">info@medalusa.com</a>
+        </div>
+        <nav aria-label="Footer navigation">
+          <p class="eyebrow">Navigate</p>
+          <a href="/work/">Work</a>
+          <a href="/film-services/">Film &amp; Services</a>
+          <a href="/#contact">Book a session</a>
+        </nav>
+      </div>
+
+      <div class="medal-footer__bottom">
+        <span>© Medal Studio</span>
+        <span>Brand · Photography · Film</span>
+      </div>
+    </footer>
+  </main>
+
+  <script type="module" src="/src/js/pages/film-services.js"></script>
+</body>
+</html>

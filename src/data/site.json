@@ -1,9 +1,10 @@
 {
   "availability": {
     "label": "Availability",
-    "headline": "Four new brands a month.",
-    "total": 4,
-    "occupied": null,
+    "headline": "Six new brands a month.",
+    "headlineLines": ["Six new", "brands a", "month."],
+    "total": 6,
+    "occupied": 4,
     "primaryCta": {
       "label": "Book your Medal Session",
       "href": "/contact/"
@@ -40,8 +41,9 @@
       "name": "Kjolle",
       "src": "/assets/logos/clients/kjolle-original-white.png",
       "treatment": "native-light",
-      "width": "132px",
-      "height": "32px"
+      "width": "210px",
+      "height": "52px",
+      "className": "is-kjolle"
     },
     {
       "name": "Food Freaks",
