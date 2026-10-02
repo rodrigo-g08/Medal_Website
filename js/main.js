@@ -6,8 +6,8 @@
 
 /* ---------- Configuración ---------- */
 const CONFIG = {
-  formEndpoint: 'https://formsubmit.co/ajax/info@medalusa.com',
-  fallbackEmail: 'info@medalusa.com',
+  formEndpoint: 'https://formsubmit.co/ajax/marcelo@medalusa.com',
+  fallbackEmail: 'marcelo@medalusa.com',
   subject: 'New inquiry from medalusa.com',
 };
 
