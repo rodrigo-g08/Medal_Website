@@ -1,0 +1,39 @@
+FILM & SERVICES V3 — SCROLL EXPERIENCE
+
+Cambios de esta versión:
+
+1. Metal Exposure
+- Gold ya no termina contra un bloque bone horizontal.
+- La medalla Gold continúa la narrativa: se acerca a cámara, aumenta exposición y desde su centro se abre el fondo bone.
+- La pantalla How Medal Works aparece después sobre el mismo bone, sin corte visual.
+
+2. Medal Cut
+- La entrada a Select your plan ya no usa fade ni degradado vertical.
+- Dos paneles bone se separan mediante una abertura inspirada en el chevron de Medal.
+- El fondo oscuro y los halos ya están activos debajo antes de ser revelados.
+- El título y las medallas entran durante la propia transición.
+
+3. Header adaptativo
+- Dark scene: logo y navegación blancos, activo amarillo.
+- Light scene: logo y navegación negros, activo amarillo.
+- Durante Metal Exposure y Medal Cut el estado se controla según el progreso real de la transición.
+
+4. Yellow title light
+- Los títulos principales reciben un barrido amarillo dentro de las letras.
+- Después del barrido vuelven a su color natural (blanco sobre dark / negro sobre bone).
+- La animación se repite al volver a entrar a las secciones subiendo o bajando.
+- The Shoot / The Brand / The Launch reproducen el efecto al cambiar de servicio.
+
+5. Footer
+- Eliminado el footer grande de Medal y todo el bloque inferior.
+- Availability es ahora el cierre de Film & Services.
+
+6. Availability
+- Se conserva 4 of 6 / 2 positions open.
+
+7. Work
+- Work/H1-H6 no fue modificado en esta iteración.
+
+Prueba:
+  npm run dev
+  http://localhost:5173/film-services/

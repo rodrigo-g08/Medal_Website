@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Book a Medal Session — 30 minutes to define a visual direction for your next launch." />
+  <meta name="theme-color" content="#05060A" />
+  <title>Contact — Medal Session</title>
+  <link rel="icon" href="/assets/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/src/css/pages/contact.css" />
+</head>
+<body data-page="contact">
+  <div class="ambient" aria-hidden="true">
+    <span class="halo halo--one"></span>
+    <span class="halo halo--two"></span>
+  </div>
+
+  <header class="site-header" data-header>
+    <a class="site-header__brand" href="/" aria-label="Medal home">
+      <img src="/assets/logo-medal.svg" alt="Medal" />
+    </a>
+    <nav class="site-header__nav" aria-label="Primary navigation">
+      <a class="site-header__link" href="/work/">Work</a>
+      <a class="site-header__link" href="/film-services/">Film &amp; Services</a>
+      <a class="site-header__link is-active" href="/contact/">Contact</a>
+      <a class="button button--primary button--header" href="#scheduler" data-scroll-target="scheduler">
+        <span class="button__label" data-label="Book a session">Book a session</span>
+        <span class="button__arrow" aria-hidden="true">→</span>
+      </a>
+    </nav>
+    <div class="site-header__mobile-actions">
+      <a class="button button--primary button--compact" href="#scheduler" data-scroll-target="scheduler">
+        <span class="button__label" data-label="Book a session">Book a session</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu" data-mobile-menu aria-hidden="true">
+    <div class="mobile-menu__halos" aria-hidden="true"></div>
+    <nav class="mobile-menu__nav" aria-label="Mobile navigation">
+      <a href="/work/">Work</a>
+      <a href="/film-services/">Film &amp; Services</a>
+      <a class="is-active" href="/contact/">Contact</a>
+    </nav>
+    <p class="mobile-menu__meta">Miami · Lima</p>
+  </div>
+
+  <main>
+    <section class="contact-stage contact-stage--hero" data-theme="dark" data-contact-hero>
+      <div class="contact-stage__sticky">
+        <div class="section-shell contact-stage__inner contact-stage__inner--hero">
+          <div class="contact-stage__copy" data-contact-hero-copy>
+            <p class="eyebrow">The Medal Session · 30 minutes · No cost</p>
+            <h1 class="contact-display">
+              Leave with a <span class="text-sweep" data-sweep>visual direction</span><br />
+              for your next launch.
+            </h1>
+            <p class="contact-stage__lead">The session is not presented as a free call. It is the first useful deliverable: a sharper direction for what the brand should do next.</p>
+            <div class="contact-stage__meta">
+              <span><i></i><i></i><i class="is-off"></i><i class="is-off"></i> 2 November slots open</span>
+              <span class="contact-stage__pill">Offer first</span>
+            </div>
+            <a class="contact-hero__cta" href="#outcomes" data-scroll-target="outcomes">
+              <span>See what you leave with</span>
+              <span class="contact-hero__arrow" aria-hidden="true">↓</span>
+            </a>
+          </div>
+
+          <aside class="contact-stage__aside" aria-hidden="true">
+            <div class="contact-stage__scrollbar">
+              <span></span>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-stage contact-stage--outcomes" id="outcomes" data-theme="dark" data-contact-outcomes>
+      <div class="contact-stage__sticky">
+        <div class="section-shell contact-stage__inner contact-stage__inner--outcomes">
+          <div class="contact-outcomes__heading">
+            <p class="eyebrow">What you leave with</p>
+            <h2 class="contact-display contact-display--medium">
+              Thirty minutes.<br />
+              <span class="text-sweep" data-sweep>Three useful decisions.</span>
+            </h2>
+            <p class="contact-outcomes__intro">Three concrete outcomes the client gets even before deciding to hire Medal. No image on the side. Just the value of the session, centered and clear.</p>
+          </div>
+
+          <div class="contact-timeline" data-contact-timeline>
+            <div class="contact-timeline__track" aria-hidden="true">
+              <span class="contact-timeline__fill" data-contact-line></span>
+            </div>
+
+            <article class="contact-outcome" data-contact-point>
+              <div class="contact-outcome__marker"><span></span></div>
+              <p class="contact-outcome__number text-sweep text-sweep--yellow" data-sweep>01</p>
+              <div class="contact-outcome__content">
+                <h3>A visual direction</h3>
+                <p>Three references and a first idea for your launch.</p>
+              </div>
+            </article>
+
+            <article class="contact-outcome" data-contact-point>
+              <div class="contact-outcome__marker"><span></span></div>
+              <p class="contact-outcome__number text-sweep text-sweep--yellow" data-sweep>02</p>
+              <div class="contact-outcome__content">
+                <h3>The right medal</h3>
+                <p>Bronze, Silver or Gold, and why the level of involvement matters.</p>
+              </div>
+            </article>
+
+            <article class="contact-outcome" data-contact-point>
+              <div class="contact-outcome__marker"><span></span></div>
+              <p class="contact-outcome__number text-sweep text-sweep--yellow" data-sweep>03</p>
+              <div class="contact-outcome__content">
+                <h3>A realistic timeline</h3>
+                <p>Dates you can plan around before the launch starts moving.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-stage contact-stage--scheduler" id="scheduler" data-theme="dark" data-contact-scheduler>
+      <div class="contact-stage__sticky">
+        <div class="section-shell contact-stage__inner contact-stage__inner--scheduler">
+          <div class="contact-scheduler__intro">
+            <p class="eyebrow">Pick a time</p>
+            <h2 class="contact-display contact-display--large">
+              Choose the day.<br />
+              <span class="text-sweep" data-sweep>We take care of the rest.</span>
+            </h2>
+            <p class="contact-scheduler__lead">Calendly is not connected yet, but this mockup already explains the logic: choose a day, choose a time, and move straight into confirmation.</p>
+            <p class="contact-scheduler__meta">Video call · English or Spanish · America/Lima</p>
+          </div>
+
+          <div class="contact-scheduler__ui" data-scheduler>
+            <div class="schedule-panel schedule-panel--month">
+              <div class="schedule-panel__header">
+                <p>November 2026</p>
+                <div class="schedule-panel__nav" aria-hidden="true"><span>‹</span><span>›</span></div>
+              </div>
+              <div class="schedule-grid__weekdays" aria-hidden="true">
+                <span>MO</span><span>TU</span><span>WE</span><span>TH</span><span>FR</span><span>SA</span><span>SU</span>
+              </div>
+              <div class="schedule-grid" data-day-grid></div>
+            </div>
+
+            <div class="schedule-panel schedule-panel--times">
+              <div class="schedule-panel__header">
+                <p data-selected-day-label>Choose a day</p>
+                <small>30 min</small>
+              </div>
+              <div class="schedule-times" data-time-grid>
+                <p class="schedule-times__placeholder">Select a date to see available hours.</p>
+              </div>
+              <button class="button button--primary contact-scheduler__button" type="button" data-scheduler-confirm disabled>
+                <span class="button__label" data-label="Confirm session">Confirm session</span>
+                <span class="button__arrow" aria-hidden="true">→</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="contact-confirming" data-contact-confirming aria-hidden="true">
+    <div class="contact-confirming__curtain"></div>
+    <div class="contact-confirming__content" aria-hidden="true">
+      <img src="/assets/logo-medal.svg" alt="" />
+    </div>
+  </div>
+
+  <script type="module" src="/src/js/pages/contact.js"></script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+@import "../tokens.css";
+@import "../base.css";
+@import "../header.css";
+@import "../buttons.css";
+
+html { background: var(--bone); color-scheme: light; }
+body[data-page="confirmed"] { background: var(--bone); color: var(--ink); overflow-x: hidden; }
+.section-shell { width: min(100%, 1640px); margin: 0 auto; padding-inline: var(--page-pad); }
+body[data-page="confirmed"] .site-header__link.is-active { color: var(--yellow); }
+.site-header { z-index: 650; }
+
+.booking-confirmed {
+  min-height: 100svh;
+  background: var(--bone);
+  color: var(--ink);
+}
+.booking-confirmed__screen {
+  min-height: 100svh;
+  display: grid;
+  align-items: center;
+  padding-top: var(--header-height);
+}
+.booking-confirmed__grid {
+  min-height: calc(100svh - var(--header-height));
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(420px, .95fr);
+  gap: clamp(64px, 9vw, 150px);
+  align-items: center;
+  padding-top: clamp(38px, 5vh, 70px);
+  padding-bottom: clamp(42px, 6vh, 76px);
+}
+.booking-confirmed__left,
+.booking-confirmed__right {
+  opacity: 0;
+  transform: translateY(26px);
+}
+.booking-confirmed__left .eyebrow,
+.booking-confirmed__film-copy .eyebrow {
+  color: rgba(5,6,10,.46);
+}
+.booking-confirmed__date {
+  margin: clamp(20px, 3vh, 34px) 0 0;
+  max-width: 8.5ch;
+  font-size: clamp(5.4rem, 9vw, 10.6rem);
+  font-weight: 300;
+  line-height: .84;
+  letter-spacing: -.065em;
+}
+.booking-confirmed__time {
+  margin: 18px 0 0;
+  color: rgba(5,6,10,.66);
+  font-size: clamp(2.1rem, 3vw, 3.8rem);
+  line-height: 1;
+  letter-spacing: -.045em;
+}
+.booking-confirmed__checklist {
+  margin: clamp(42px, 6vh, 70px) 0 0;
+  padding: 0;
+  list-style: none;
+  max-width: 48rem;
+}
+.booking-confirmed__checklist li {
+  padding: 14px 0;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 12px;
+  align-items: start;
+  border-top: 1px solid rgba(5,6,10,.12);
+}
+.booking-confirmed__checklist li:last-child { border-bottom: 1px solid rgba(5,6,10,.12); }
+.booking-confirmed__checklist span {
+  color: #1855ff;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.booking-confirmed__checklist p {
+  margin: 0;
+  color: rgba(5,6,10,.72);
+  font-size: clamp(16px, 1.05vw, 19px);
+  line-height: 1.42;
+}
+.booking-confirmed__actions {
+  margin-top: clamp(34px, 5vh, 48px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.booking-action {
+  min-height: 46px;
+  padding: 0 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(5,6,10,.24);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 240ms ease, border-color 240ms ease, transform 240ms ease;
+}
+.booking-action:hover,
+.booking-action:focus-visible {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  transform: translateY(-1px);
+}
+.booking-action[aria-disabled="true"] { opacity: .56; }
+
+.booking-confirmed__right {
+  align-self: center;
+}
+.booking-film {
+  position: relative;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #15161a;
+  aspect-ratio: 16 / 9;
+  cursor: pointer;
+  box-shadow: 0 20px 52px rgba(5,6,10,.12);
+}
+.booking-film video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.booking-film__play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 52px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--yellow);
+  color: var(--ink);
+  font-size: 15px;
+  padding-left: 3px;
+  transition: transform 260ms var(--ease-medal), opacity 220ms ease;
+}
+.booking-film:hover .booking-film__play,
+.booking-film:focus-visible .booking-film__play {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+.booking-film.is-playing .booking-film__play { opacity: 0; }
+.booking-confirmed__film-copy {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 42px;
+}
+.booking-confirmed__film-copy p:last-child {
+  margin: 10px 0 0;
+  color: rgba(5,6,10,.62);
+  font-size: 15px;
+  line-height: 1.42;
+}
+.booking-confirmed__tag {
+  width: fit-content;
+  margin: 28px 0 0 auto;
+  display: block;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #e4c6ff;
+  color: #443264;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.confirmed-entry {
+  position: fixed;
+  z-index: 600;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--bone);
+  pointer-events: none;
+  visibility: hidden;
+}
+.confirmed-entry.is-active { visibility: visible; }
+.confirmed-entry img {
+  width: clamp(112px, 11vw, 178px);
+  filter: brightness(0);
+}
+
+@media (max-width: 980px) {
+  .booking-confirmed__screen { align-items: start; }
+  .booking-confirmed__grid {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding-top: calc(var(--header-height) + 70px);
+    padding-bottom: 80px;
+  }
+  .booking-confirmed__date { max-width: 10ch; }
+  .booking-confirmed__right { width: min(100%, 720px); }
+}
+
+@media (max-width: 620px) {
+  .booking-confirmed__date { font-size: clamp(4.6rem, 18vw, 7rem); }
+  .booking-confirmed__time { font-size: 2.2rem; }
+  .booking-confirmed__actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .booking-action { width: 100%; }
+  .booking-confirmed__film-copy { grid-template-columns: 1fr; }
+  .booking-confirmed__tag { margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .booking-confirmed__left,
+  .booking-confirmed__right { opacity: 1; transform: none; }
+  .confirmed-entry { display: none; }
+}

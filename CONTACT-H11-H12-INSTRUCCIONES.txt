@@ -1,0 +1,50 @@
+MEDAL — CONTACT / MEDAL SESSION — H11 + H12
+
+Rutas nuevas:
+- /contact/
+- /contact/confirmed/
+
+H11 / CONTACT
+- Hero basado en MEDAL-MAESTRO:
+  "The Medal Session · 30 minutes · No cost"
+  "Leave with a visual direction for your next launch."
+  CTA: "Request a session ↓"
+- Halos globales Medal y animación de órbita de 30 minutos.
+- Transición scroll de dark a bone.
+- "What you leave with" sin imagen lateral.
+- 01 A visual direction
+- 02 The right medal
+- 03 A realistic timeline
+- Línea vertical animada con scroll y activación de cada punto.
+- Formulario Fase 1 con:
+  name
+  work email
+  brand/company
+  optional short message
+- FormSubmit AJAX al destino temporal del maestro:
+  rgamero406@gmail.com
+- Status accesible con aria-live.
+- Al enviar correctamente: cortina hueso + Medal negro + "Confirming your session" y redirect a /contact/confirmed/?phase=request
+- "Prefer to write?" mantiene el correo temporal.
+
+H12 / CONFIRMED
+- Estado por defecto: Request received / We'll reply within one business day.
+- También soporta la futura fase Calendly mediante:
+  /contact/confirmed/?phase=booked&start=<ISO>&end=<ISO>
+  En ese modo cambia a "You're booked" y habilita Add to calendar (.ics).
+- Checklist "To make the most of 30 minutes".
+- Columna Artech con el video local existente.
+- El maestro solicita un video de 2 minutos; el repositorio actual solo contiene artech-classic-cars.mp4 (~47 s), por eso se usa como placeholder real sin falsificar duración.
+
+PENDIENTES DEL MAESTRO QUE NO SE INVENTARON
+- URL / plan / persona definitiva de Calendly.
+- WhatsApp oficial de Medal.
+Ambos tienen hooks preparados en src/data/site.json:
+  contact.calendlyUrl
+  contact.whatsappUrl
+Cuando existan, pueden conectarse sin rediseñar la página.
+
+INTEGRACIÓN
+- Work y Film & Services ahora enlazan Contact / Book a session a /contact/.
+- Vite incluye contact e contactConfirmed como entradas de build.
+- Work y Film & Services no recibieron cambios visuales ni de animación en esta iteración.

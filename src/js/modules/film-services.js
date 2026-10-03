@@ -8,34 +8,48 @@ const SERVICES = [
   {
     id: "bronze",
     index: "01",
-    className: "service-medal--bronze",
-    letter: "B",
-    label: "Bronze Medal · The shoot",
+    image: "/assets/img/film/medals/bronze-medal.png",
+    alt: "Bronze Medal",
+    label: "Bronze Medal · The Shoot",
     title: "The shoot.",
-    lead: "For brands that already know what they need to say and need the visual execution to match.",
-    list: ["Creative direction", "Shot list", "Production day", "Photo + video selects"],
+    lead: "For brands with the idea already defined. Medal turns it into a directed production where every frame answers the same brief.",
+    list: ["Creative direction", "Photography", "Film", "Shot list", "Production", "Final selects"],
+    cta: "Start with Bronze",
+    name: "Bronze Medal",
   },
   {
     id: "silver",
     index: "02",
-    className: "service-medal--silver",
-    letter: "S",
-    label: "Silver Medal · The brand",
+    image: "/assets/img/film/medals/silver-medal.png",
+    alt: "Silver Medal",
+    label: "Silver Medal · The Brand",
     title: "The brand.",
-    lead: "For businesses whose value has outgrown how they look and need one visual system across every channel.",
-    list: ["Brand direction", "Visual system", "Photo + film", "Content framework"],
+    lead: "For businesses whose value has outgrown the way they show up. Medal builds one visual direction that can keep working across channels.",
+    list: ["Brand direction", "Visual system", "Photography", "Film", "Content framework", "Launch-ready assets"],
+    cta: "Start with Silver",
+    name: "Silver Medal",
   },
   {
     id: "gold",
     index: "03",
-    className: "service-medal--gold",
-    letter: "G",
-    label: "Gold Medal · The launch",
+    image: "/assets/img/film/medals/gold-medal.png",
+    alt: "Gold Medal",
+    label: "Gold Medal · The Launch",
     title: "The launch.",
-    lead: "For an opening, relaunch or campaign that needs one clear idea from first frame to final rollout.",
-    list: ["Launch concept", "Campaign direction", "Hero film", "Rollout system"],
+    lead: "For an opening, relaunch or campaign that needs one clear idea carried from first frame to the final rollout.",
+    list: ["Launch concept", "Campaign direction", "Hero film", "Photography", "Rollout system", "Launch execution"],
+    cta: "Start with Gold",
+    name: "Gold Medal",
   },
 ];
+
+
+function setFilmHeaderMode(mode = null) {
+  const body = document.body;
+  if (!body) return;
+  body.classList.toggle("film-header-dark", mode === "dark");
+  body.classList.toggle("film-header-light", mode === "light");
+}
 
 function initFilmHero() {
   const section = document.querySelector("[data-film-hero]");
@@ -150,127 +164,436 @@ function initReels() {
   }
 }
 
-function initStandardFill() {
-  const target = document.querySelector("[data-standard-fill]");
-  if (!target) return;
+function prepareYellowSweep(target) {
+  if (!target || target.dataset.sweepPrepared === "true") return target;
 
-  gsap.to(target, {
-    backgroundPosition: "0% 0%",
-    ease: "none",
-    scrollTrigger: {
-      trigger: target,
-      start: "top 78%",
-      end: "bottom 46%",
-      scrub: 0.5,
-    },
+  const content = target.innerHTML;
+  target.innerHTML = `
+    <span class="yellow-sweep__base">${content}</span>
+    <span class="yellow-sweep__flash" aria-hidden="true">${content}</span>
+  `;
+  target.dataset.sweepPrepared = "true";
+  return target;
+}
+
+function setYellowSweepContent(target, content, { html = false } = {}) {
+  if (!target) return;
+  prepareYellowSweep(target);
+  const base = target.querySelector(".yellow-sweep__base");
+  const flash = target.querySelector(".yellow-sweep__flash");
+  if (!base || !flash) return;
+
+  if (html) {
+    base.innerHTML = content;
+    flash.innerHTML = content;
+  } else {
+    base.textContent = content;
+    flash.textContent = content;
+  }
+}
+
+function resetYellowSweep(target) {
+  if (!target) return;
+  prepareYellowSweep(target);
+  const flash = target.querySelector(".yellow-sweep__flash");
+  if (!flash) return;
+  gsap.killTweensOf(flash);
+  gsap.set(flash, { clipPath: "inset(0 100% 0 0)" });
+}
+
+function playYellowSweep(target) {
+  if (!target) return;
+  prepareYellowSweep(target);
+  const flash = target.querySelector(".yellow-sweep__flash");
+  if (!flash) return;
+
+  gsap.killTweensOf(flash);
+  gsap.set(flash, { clipPath: "inset(0 100% 0 0)" });
+
+  gsap.timeline()
+    .to(flash, {
+      clipPath: "inset(0 0% 0 0)",
+      duration: 0.58,
+      ease: "power2.inOut",
+    })
+    .to(flash, {
+      clipPath: "inset(0 0 0 100%)",
+      duration: 0.58,
+      ease: "power2.inOut",
+    })
+    .set(flash, { clipPath: "inset(0 100% 0 0)" });
+}
+
+function initYellowSweeps() {
+  const targets = [...document.querySelectorAll("[data-yellow-sweep]")];
+  targets.forEach((target) => {
+    prepareYellowSweep(target);
+    const section = target.closest("section") || target;
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top 68%",
+      end: "bottom 24%",
+      onEnter: () => playYellowSweep(target),
+      onEnterBack: () => playYellowSweep(target),
+      onLeave: () => resetYellowSweep(target),
+      onLeaveBack: () => resetYellowSweep(target),
+    });
   });
 }
 
-function initMedalJourney(lenis) {
+function initMedalIntro(lenis) {
+  const section = document.querySelector("[data-services-intro]");
+  if (!section) return;
+
+  const choices = [...section.querySelectorAll("[data-medal-target]")];
+  const objects = choices.map((choice) => choice.querySelector("[data-medal-object]"));
+  const journey = document.querySelector("[data-medal-journey]");
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const enterMedals = () => {
+    if (reduced) return;
+    gsap.killTweensOf(objects);
+    gsap.fromTo(objects,
+      { y: 280, opacity: 0, scale: 0.84, rotateX: 16 },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        rotateX: 0,
+        duration: 1.15,
+        stagger: 0.12,
+        ease: "power3.out",
+        clearProps: "rotateX",
+      }
+    );
+  };
+
+  if (!reduced) {
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top 62%",
+      end: "bottom 20%",
+      onEnter: enterMedals,
+      onEnterBack: enterMedals,
+    });
+  }
+
+  choices.forEach((choice) => {
+    choice.addEventListener("click", () => {
+      const id = choice.dataset.medalTarget;
+      const index = SERVICES.findIndex((service) => service.id === id);
+      if (index < 0 || !journey) return;
+
+      choices.forEach((item) => item.classList.toggle("is-selected", item === choice));
+      const object = choice.querySelector("[data-medal-object]");
+      if (!reduced && object) {
+        gsap.fromTo(object, { rotateY: 0 }, { rotateY: 360, duration: 1.25, ease: "power2.inOut" });
+      }
+
+      const rect = journey.getBoundingClientRect();
+      const sectionTop = window.scrollY + rect.top;
+      const travel = Math.max(0, journey.offsetHeight - window.innerHeight);
+      const positions = [0.08, 0.49, 0.84];
+      const destination = sectionTop + travel * positions[index];
+
+      window.setTimeout(() => {
+        if (lenis?.scrollTo) {
+          lenis.scrollTo(destination, { duration: 1.15 });
+        } else {
+          window.scrollTo({ top: destination, behavior: "smooth" });
+        }
+      }, reduced ? 0 : 260);
+    });
+  });
+}
+
+function initMedalJourney() {
   const section = document.querySelector("[data-medal-journey]");
   if (!section) return;
 
   const pin = section.querySelector("[data-medal-pin]");
-  const medal = section.querySelector("[data-service-medal]");
-  const letter = section.querySelector(".service-medal__letter");
+  const medalImage = section.querySelector("[data-service-medal-image]");
   const index = section.querySelector("[data-service-index]");
   const label = section.querySelector("[data-service-label]");
   const title = section.querySelector("[data-service-title]");
   const lead = section.querySelector("[data-service-lead]");
   const list = section.querySelector("[data-service-list]");
   const progress = section.querySelector("[data-service-progress]");
-  const header = document.querySelector("[data-header]");
-  const choices = [...document.querySelectorAll("[data-medal-target]")];
-
+  const flare = section.querySelector("[data-journey-flare]");
+  const bone = section.querySelector("[data-journey-bone]");
+  const direction = section.querySelector("[data-journey-direction]");
+  const directionTitle = section.querySelector("[data-direction-title]");
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let activeIndex = 0;
+  let directionSweepPlayed = false;
+
+  const serviceEls = [medalImage, index, label, title, lead, list, progress].filter(Boolean);
 
   const applyService = (nextIndex, immediate = false) => {
     if (nextIndex === activeIndex && !immediate) return;
     const service = SERVICES[nextIndex];
-    const oldClass = SERVICES[activeIndex]?.className;
     activeIndex = nextIndex;
 
     const update = () => {
-      if (oldClass) medal.classList.remove(oldClass);
-      medal.classList.remove("service-medal--bronze", "service-medal--silver", "service-medal--gold");
-      medal.classList.add(service.className);
-      letter.textContent = service.letter;
+      medalImage.src = service.image;
+      medalImage.alt = service.alt;
       index.textContent = service.index;
       label.textContent = service.label;
-      title.textContent = service.title;
+      setYellowSweepContent(title, service.title);
       lead.textContent = service.lead;
       list.innerHTML = service.list.map((item) => `<li>${item}</li>`).join("");
+      requestAnimationFrame(() => playYellowSweep(title));
     };
 
-    if (immediate || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (immediate || reduced) {
       update();
       return;
     }
 
     gsap.timeline()
-      .to([medal, label, title, lead, list], {
+      .to([medalImage, label, title, lead, list], {
         opacity: 0,
-        y: (i) => i === 0 ? 0 : 12,
+        y: (i) => i === 0 ? 20 : 14,
         duration: 0.22,
         ease: "power1.in",
       })
       .add(update)
-      .set(medal, { rotateY: -16, scale: 0.93 })
-      .to([medal, label, title, lead, list], {
+      .set(medalImage, { rotateY: -18, scale: 0.92 })
+      .to([medalImage, label, title, lead, list], {
         opacity: 1,
         y: 0,
         duration: 0.42,
         ease: "power2.out",
       })
-      .to(medal, { rotateY: 0, scale: 1, duration: 0.55, ease: "power3.out" }, "<");
+      .to(medalImage, { rotateY: 0, scale: 1, duration: 0.78, ease: "power3.out" }, "<");
   };
 
   applyService(0, true);
+  prepareYellowSweep(directionTitle);
 
-  const trigger = ScrollTrigger.create({
+  if (reduced) {
+    if (direction) {
+      direction.style.visibility = "visible";
+      direction.style.opacity = "1";
+    }
+    return;
+  }
+
+  gsap.set(flare, { scale: 0.25, opacity: 0 });
+  gsap.set(bone, { clipPath: "circle(0% at 31% 50%)" });
+  gsap.set(direction, { autoAlpha: 0, y: 26 });
+
+  const exposure = gsap.timeline({ paused: true, defaults: { ease: "none" } });
+  exposure
+    .to([index, label, title, lead, list, progress], {
+      opacity: 0,
+      y: -16,
+      duration: 0.16,
+    }, 0)
+    .to(medalImage, {
+      scale: 1.20,
+      duration: 0.18,
+      ease: "power2.inOut",
+    }, 0.02)
+    .to(medalImage, {
+      scale: 5.2,
+      x: () => window.innerWidth * 0.19,
+      filter: "brightness(2.45) saturate(.68) drop-shadow(0 0 0 rgba(0,0,0,0))",
+      duration: 0.58,
+      ease: "power2.in",
+    }, 0.18)
+    .to(flare, {
+      opacity: 1,
+      scale: 4.8,
+      duration: 0.34,
+    }, 0.40)
+    .to(bone, {
+      clipPath: "circle(155% at 31% 50%)",
+      duration: 0.36,
+    }, 0.50)
+    .to(medalImage, { opacity: 0, duration: 0.12 }, 0.72)
+    .to(flare, { opacity: 0, duration: 0.18 }, 0.77)
+    .set(direction, { visibility: "visible" }, 0.85)
+    .to(direction, {
+      autoAlpha: 1,
+      y: 0,
+      duration: 0.13,
+      ease: "power2.out",
+    }, 0.86);
+
+  ScrollTrigger.create({
     trigger: section,
     start: "top top",
     end: "bottom bottom",
+    scrub: 0.52,
+    invalidateOnRefresh: true,
     onUpdate: (self) => {
       const p = self.progress;
-      gsap.set(progress, { scaleY: p });
+      gsap.set(progress, { scaleY: Math.min(1, p / 0.66) });
 
-      const next = p < 0.335 ? 0 : p < 0.67 ? 1 : 2;
-      applyService(next);
+      if (p < 0.22) applyService(0);
+      else if (p < 0.44) applyService(1);
+      else applyService(2);
 
-      const light = p > 0.82;
-      pin.classList.toggle("is-gold-light", light);
-      header?.classList.toggle("header--light", light);
-    },
-    onLeave: () => header?.classList.add("header--light"),
-    onEnterBack: (self) => {
-      header?.classList.toggle("header--light", self.progress > 0.82);
-    },
-    onLeaveBack: () => header?.classList.remove("header--light"),
-  });
+      const exposureProgress = gsap.utils.clamp(0, 1, (p - 0.64) / 0.22);
+      exposure.progress(exposureProgress);
 
-  choices.forEach((choice) => {
-    choice.addEventListener("click", () => {
-      const id = choice.dataset.medalTarget;
-      const serviceIndex = SERVICES.findIndex((service) => service.id === id);
-      if (serviceIndex < 0) return;
+      const isBone = exposureProgress >= 0.72;
+      setFilmHeaderMode(isBone ? "light" : "dark");
 
-      const rect = section.getBoundingClientRect();
-      const currentY = window.scrollY;
-      const sectionTop = currentY + rect.top;
-      const travel = Math.max(0, section.offsetHeight - window.innerHeight);
-      const targets = [0.08, 0.48, 0.82];
-      const destination = sectionTop + travel * targets[serviceIndex];
-
-      if (lenis?.scrollTo) {
-        lenis.scrollTo(destination, { duration: 1.2 });
-      } else {
-        window.scrollTo({ top: destination, behavior: "smooth" });
+      if (exposureProgress >= 0.89 && !directionSweepPlayed) {
+        directionSweepPlayed = true;
+        playYellowSweep(directionTitle);
       }
+      if (exposureProgress < 0.60) {
+        directionSweepPlayed = false;
+        resetYellowSweep(directionTitle);
+      }
+    },
+    onLeave: () => setFilmHeaderMode("light"),
+    onLeaveBack: () => setFilmHeaderMode("dark"),
+  });
+}
+
+function initMedalCut() {
+  const section = document.querySelector("[data-plan-select]");
+  if (!section || !section.classList.contains("plan-select--cut")) return;
+
+  const left = section.querySelector("[data-cut-left]");
+  const right = section.querySelector("[data-cut-right]");
+  const mark = section.querySelector("[data-cut-mark]");
+  const notes = [section.querySelector("[data-cut-note-left]"), section.querySelector("[data-cut-note-right]")].filter(Boolean);
+  const heading = section.querySelector(".plan-select__heading");
+  const title = section.querySelector("[data-plan-yellow-title]");
+  const cards = [...section.querySelectorAll("[data-plan-card]")];
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const desktop = window.matchMedia("(min-width: 981px)").matches;
+
+  if (reduced || !desktop) {
+    setFilmHeaderMode("dark");
+    if (title) playYellowSweep(title);
+    return;
+  }
+
+  gsap.set([left, right], { xPercent: 0 });
+  gsap.set(mark, { scale: 0.9, opacity: 1 });
+  gsap.set(notes, { opacity: 1, y: 0 });
+  gsap.set(heading, { opacity: 0, y: 64 });
+  gsap.set(cards, { opacity: 0, y: 220, rotateX: 8, scale: 0.94 });
+
+  let sweepPlayedForward = false;
+  let sweepPlayedBack = false;
+
+  const timeline = gsap.timeline({ paused: true, defaults: { ease: "none" } });
+  timeline
+    .to(mark, { scale: 1.65, duration: 0.16 }, 0.03)
+    .to(notes, { opacity: 0, y: -14, duration: 0.16, ease: "power1.in" }, 0.06)
+    .to(left, { xPercent: -116, duration: 0.42 }, 0.10)
+    .to(right, { xPercent: 116, duration: 0.42 }, 0.10)
+    .to(mark, { opacity: 0, scale: 2.4, duration: 0.20 }, 0.20)
+    .to(heading, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 0.28)
+    .to(cards, {
+      opacity: 1,
+      y: 0,
+      rotateX: 0,
+      scale: 1,
+      duration: 0.34,
+      stagger: 0.035,
+      ease: "power3.out",
+    }, 0.48);
+
+  ScrollTrigger.create({
+    trigger: section,
+    start: "top top",
+    end: "bottom bottom",
+    scrub: 0.55,
+    invalidateOnRefresh: true,
+    onUpdate: (self) => {
+      const p = self.progress;
+      timeline.progress(p);
+      setFilmHeaderMode(p < 0.31 ? "light" : "dark");
+
+      if (p >= 0.34 && !sweepPlayedForward) {
+        sweepPlayedForward = true;
+        sweepPlayedBack = false;
+        playYellowSweep(title);
+      }
+      if (p < 0.23) {
+        sweepPlayedForward = false;
+      }
+      if (self.direction < 0 && p <= 0.70 && p >= 0.28 && !sweepPlayedBack) {
+        sweepPlayedBack = true;
+        playYellowSweep(title);
+      }
+      if (self.direction > 0 && p > 0.72) {
+        sweepPlayedBack = false;
+      }
+    },
+    onEnter: () => setFilmHeaderMode("light"),
+    onLeave: () => setFilmHeaderMode("dark"),
+    onEnterBack: () => setFilmHeaderMode("dark"),
+    onLeaveBack: () => setFilmHeaderMode("light"),
+  });
+}
+
+function initPlanSelector() {
+  const section = document.querySelector("[data-plan-select]");
+  if (!section) return;
+
+  const cards = [...section.querySelectorAll("[data-plan-card]")];
+  const selectedPlan = section.querySelector("[data-selected-plan]");
+  const cta = section.querySelector("[data-plan-cta]");
+  const ctaLabel = cta?.querySelector(".button__label");
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const decision = section.querySelector("[data-plan-decision]");
+
+  const selectPlan = (id, animate = true) => {
+    const service = SERVICES.find((item) => item.id === id);
+    if (!service) return;
+    cards.forEach((card) => {
+      const isActive = card.dataset.planCard === id;
+      card.classList.toggle("is-selected", isActive);
+      card.classList.toggle("is-muted", !isActive);
+      const button = card.querySelector("[data-plan-select-button]");
+      const label = button?.querySelector("span");
+      if (label) label.textContent = isActive ? `${service.name.replace(" Medal", "")} selected` : `Select ${card.dataset.planCard[0].toUpperCase()}${card.dataset.planCard.slice(1)}`;
+    });
+
+    if (selectedPlan) selectedPlan.textContent = service.name;
+    decision?.classList.add("is-visible");
+    if (ctaLabel) {
+      ctaLabel.textContent = service.cta;
+      ctaLabel.dataset.label = service.cta;
+    }
+
+    const activeCard = cards.find((card) => card.dataset.planCard === id);
+    const medal = activeCard?.querySelector(".plan-card__medal img");
+    if (animate && !reduced && medal) {
+      gsap.killTweensOf(medal);
+      gsap.fromTo(medal,
+        { rotateY: 0, rotateX: 0, scale: 1 },
+        {
+          rotateY: 360,
+          rotateX: -5,
+          scale: 1.035,
+          duration: 1.45,
+          ease: "power2.inOut",
+          onComplete: () => gsap.to(medal, { rotateX: 0, scale: 1, duration: 0.28, ease: "power2.out" }),
+        }
+      );
+    }
+  };
+
+  cards.forEach((card) => {
+    const id = card.dataset.planCard;
+    card.querySelectorAll("[data-plan-medal], [data-plan-select-button]").forEach((control) => {
+      control.addEventListener("click", () => selectPlan(id, true));
     });
   });
 
-  window.addEventListener("resize", () => trigger.refresh?.());
+  // No pre-selected state visually: the user makes the choice.
+  cards.forEach((card) => card.classList.remove("is-selected", "is-muted"));
+  decision?.classList.remove("is-visible");
 }
 
 function initAvailability() {
@@ -278,15 +601,17 @@ function initAvailability() {
   if (!section) return;
 
   const monthEl = section.querySelector("[data-service-month]");
+  const occupiedEl = section.querySelector("[data-occupied-slots]");
   const openEl = section.querySelector("[data-open-slots]");
   const totalEl = section.querySelector("[data-total-slots]");
 
   const total = Math.max(1, Number(site.availability?.total || 6));
-  const occupied = Math.max(0, Math.min(total, Number(site.availability?.occupied || 0)));
+  const occupied = Math.max(0, Math.min(total, Number(site.availability?.occupied ?? 4)));
   const open = Math.max(0, total - occupied);
   const month = new Intl.DateTimeFormat("en", { month: "long" }).format(new Date());
 
   if (monthEl) monthEl.textContent = `${month} availability`;
+  if (occupiedEl) occupiedEl.textContent = String(occupied);
   if (openEl) openEl.textContent = String(open);
   if (totalEl) totalEl.textContent = String(total);
 }
@@ -294,7 +619,10 @@ function initAvailability() {
 export function initFilmServices(lenis) {
   initFilmHero();
   initReels();
-  initStandardFill();
-  initMedalJourney(lenis);
+  initYellowSweeps();
+  initMedalIntro(lenis);
+  initMedalJourney();
+  initMedalCut();
+  initPlanSelector();
   initAvailability();
 }

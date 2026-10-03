@@ -2,7 +2,11 @@
   "availability": {
     "label": "Availability",
     "headline": "Six new brands a month.",
-    "headlineLines": ["Six new", "brands a", "month."],
+    "headlineLines": [
+      "Six new",
+      "brands a",
+      "month."
+    ],
     "total": 6,
     "occupied": 4,
     "primaryCta": {
@@ -67,5 +71,13 @@
       "width": "220px",
       "height": "88px"
     }
-  ]
+  ],
+  "contact": {
+    "formEndpoint": "https://formsubmit.co/ajax/rgamero406@gmail.com",
+    "email": "rgamero406@gmail.com",
+    "sessionMinutes": 30,
+    "cost": "No cost",
+    "calendlyUrl": "",
+    "whatsappUrl": ""
+  }
 }

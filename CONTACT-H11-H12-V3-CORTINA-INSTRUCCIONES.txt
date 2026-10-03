@@ -1,0 +1,29 @@
+MEDAL — CONTACT H11/H12 V3 · CORTINA BONE
+
+CAMBIOS DE ESTA VERSION
+- /contact/ mantiene el calendario mockup funcional.
+- Confirmar fecha + hora ejecuta una cortina bone que SUBE desde abajo.
+- Cuando la cortina cubre el centro aparece únicamente el wordmark negro de Medal.
+- Cuando la cortina termina de cubrir la pantalla, el header pasa a modo claro.
+- Navegación continua hacia /contact/confirmed/ sin pantalla intermedia de "Booking your session".
+- /contact/confirmed/ es una única pantalla bone/fullscreen con:
+  * fecha elegida
+  * hora elegida + Lima
+  * checklist de 3 puntos
+  * Add to calendar (.ics)
+  * WhatsApp us (hook preparado; requiere URL oficial en site.json)
+  * video Artech + textos de preparación
+- No existe el antiguo hero gigante "You're booked" ni secciones adicionales debajo.
+- El header Medal permanece en todas las fases y adapta su identidad al fondo.
+
+RUTAS
+/contact/
+/contact/confirmed/
+
+PRUEBA LOCAL
+npm run dev
+
+Luego:
+http://localhost:5173/contact/
+
+Seleccionar fecha + hora > Confirm session.

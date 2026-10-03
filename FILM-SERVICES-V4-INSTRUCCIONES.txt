@@ -1,0 +1,38 @@
+FILM & SERVICES V4 — CONTINUITY PASS
+
+Cambios de esta iteración:
+
+1. Barrido amarillo corregido
+- Cada gran título conserva un color base sólido.
+- Una segunda capa amarilla cruza las letras y desaparece completamente.
+- El título siempre termina en su color original: blanco sobre oscuro, negro sobre bone.
+- El efecto vuelve a ejecutarse al entrar de nuevo a la sección.
+
+2. The Shoot / The Brand / The Launch
+- Los títulos terminan siempre en blanco.
+- Cada cambio de Medal reproduce reveal + barrido amarillo + blanco final.
+
+3. Gold -> bone sin medalla duplicada
+- Se eliminó la sección standalone de transición con una segunda Gold Medal.
+- La misma Gold Medal visible en The Launch empieza a hacer zoom en cuanto continúa el scroll.
+- Copy, lista e índice desaparecen mientras la medalla crece.
+- La superficie se sobreexpone hacia bone.
+- En cuanto el viewport ya es bone, aparece inmediatamente el contenido de How Medal Works dentro de la misma escena pinneada.
+- No existe una pantalla bone vacía entre ambos momentos.
+
+4. Medal Cut
+- Se conserva el rombo/chevron central.
+- Se añadieron textos laterales:
+  CLARITY BEFORE PRODUCTION — We define the route before the cameras roll.
+  ONE STANDARD — Different depth. Same direction.
+- Los textos se retiran mientras el corte abre el fondo y revela Select your plan.
+
+5. Header
+- Se mantiene blanco sobre el universo oscuro.
+- Cambia a negro al completar la exposición hacia bone.
+- Vuelve a blanco al abrirse Medal Cut.
+
+6. Scope
+- Work / H1-H6 no fue modificado.
+- Availability permanece 4 of 6.
+- No se reintrodujo el footer grande.

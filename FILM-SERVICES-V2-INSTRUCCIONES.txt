@@ -1,0 +1,53 @@
+FILM & SERVICES V2 — MEDAL
+
+Base: Medal_Website-Film-Services-v1-COMPLETE.zip
+Work / H1–H6: sin modificaciones.
+
+CAMBIOS PRINCIPALES
+
+1. THREE MEDALS. ONE STANDARD.
+- Reemplazo de medallas CSS por las tres medallas finales PNG aprobadas:
+  Bronze / Silver / Gold.
+- Las medallas entran desde la parte inferior con stagger, escala y profundidad suave.
+- Tipografía de títulos, subtítulos, descripciones y CTAs aumentada.
+- “One standard.” usa barrido amarillo Medal y vuelve a blanco.
+- Al elegir una Medal, su CTA se pinta amarillo, la medalla realiza giro 3D y se navega al punto correspondiente del recorrido.
+
+2. RECORRIDO DE SERVICIOS
+- Usa las mismas medallas reales como objeto visual.
+- Bronze: The Shoot.
+- Silver: The Brand.
+- Gold: The Launch.
+- Descripciones y lista de capacidades aumentadas en tamaño y legibilidad.
+
+3. ÚLTIMA PANTALLA CLARA
+- Se elimina “You approve the visual direction before we shoot a single frame.”
+- Nuevo concepto:
+  “Production starts with a decision, not a camera.”
+- Tres principios:
+  Direction first / Scope without surprises / One team, end to end.
+- “decision” recibe barrido amarillo y vuelve a negro.
+
+4. SELECT YOUR PLAN
+- Después del bloque claro, el sitio vuelve a negro con halos azules globales.
+- Tres planes con las medallas reales.
+- Botón seleccionado pasa a amarillo.
+- La medalla seleccionada gira lentamente en 3D.
+- Las otras opciones reducen presencia visual.
+- CTA dinámico: Start with Bronze / Silver / Gold.
+- “your plan.” recibe barrido amarillo.
+
+5. AVAILABILITY
+- Cambiado de “2 of 6” a “4 of 6 slots in motion.”
+- Mantiene como dato complementario: 2 monthly positions remain open.
+- Fondo oscuro con halos.
+
+6. FOOTER
+- Se mantiene el sistema de footer Medal existente.
+
+VALIDACIÓN
+- film-services.js: sintaxis Node verificada.
+- film-services.css: parseado sin errores CSS.
+- film-services/index.html: estructura parseada correctamente.
+- Assets de las tres medallas incluidos localmente.
+- Archivos Work comparados contra Film & Services v1: sin cambios.
