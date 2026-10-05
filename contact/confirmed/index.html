@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Your Medal Session is booked." />
+  <meta name="theme-color" content="#F2EFE8" />
+  <title>Your booking — Medal</title>
+  <link rel="icon" href="/assets/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/src/css/pages/confirmed.css" />
+</head>
+<body data-page="confirmed">
+  <header class="site-header header--light" data-header>
+    <a class="site-header__brand" href="/" aria-label="Medal home">
+      <img src="/assets/logo-medal.svg" alt="Medal" />
+    </a>
+    <nav class="site-header__nav" aria-label="Primary navigation">
+      <a class="site-header__link" href="/work/">Work</a>
+      <a class="site-header__link" href="/film-services/">Film &amp; Services</a>
+      <a class="site-header__link is-active" href="/contact/">Contact</a>
+      <a class="button button--primary button--header" href="/contact/">
+        <span class="button__label" data-label="Medal Session">Medal Session</span>
+        <span class="button__arrow" aria-hidden="true">→</span>
+      </a>
+    </nav>
+    <div class="site-header__mobile-actions">
+      <a class="button button--primary button--compact" href="/contact/">
+        <span class="button__label" data-label="Medal Session">Medal Session</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu" data-mobile-menu aria-hidden="true">
+    <div class="mobile-menu__halos" aria-hidden="true"></div>
+    <nav class="mobile-menu__nav" aria-label="Mobile navigation">
+      <a href="/work/">Work</a>
+      <a href="/film-services/">Film &amp; Services</a>
+      <a class="is-active" href="/contact/">Contact</a>
+    </nav>
+    <p class="mobile-menu__meta">Miami · Lima</p>
+  </div>
+
+  <main class="booking-confirmed" data-theme="light">
+    <section class="booking-confirmed__screen">
+      <div class="section-shell booking-confirmed__grid" data-confirmed-content>
+        <div class="booking-confirmed__left">
+          <p class="eyebrow">Your booking</p>
+          <h1 class="booking-confirmed__date" data-confirmed-date>Thursday, Nov 5</h1>
+          <p class="booking-confirmed__time"><span data-confirmed-time>10:00</span> · Lima</p>
+
+          <ul class="booking-confirmed__checklist" aria-label="Before your Medal Session">
+            <li><span>✓</span><p>Reply to our email with 3 photos or links of your brand today.</p></li>
+            <li><span>✓</span><p>Tell us your next launch or opening date.</p></li>
+            <li><span>✓</span><p>Invite whoever decides with you.</p></li>
+          </ul>
+
+          <div class="booking-confirmed__actions">
+            <button class="booking-action" type="button" data-add-calendar>Add to calendar</button>
+            <a class="booking-action" href="#" data-whatsapp-action>WhatsApp us</a>
+          </div>
+        </div>
+
+        <aside class="booking-confirmed__right">
+          <button class="booking-film" type="button" data-confirmed-film aria-label="Play Artech film">
+            <video playsinline preload="metadata" poster="/assets/img/film/film-hero-poster.jpg" data-confirmed-video>
+              <source src="/assets/video/artech-classic-cars.mp4" type="video/mp4" />
+            </video>
+            <span class="booking-film__play" aria-hidden="true">▶</span>
+          </button>
+
+          <div class="booking-confirmed__film-copy">
+            <div>
+              <p class="eyebrow">Before we meet</p>
+              <p>2 minutes: how we filmed Artech.</p>
+            </div>
+            <div>
+              <p class="eyebrow">What you'll show / see</p>
+              <p>Three visual references chosen for your brand, based on what you sent us.</p>
+            </div>
+          </div>
+
+          <span class="booking-confirmed__tag">Pre-launch · Medal method</span>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <div class="confirmed-entry" data-confirmed-entry aria-hidden="true">
+    <img src="/assets/logo-medal.svg" alt="" />
+  </div>
+
+  <script type="module" src="/src/js/pages/confirmed.js"></script>
+</body>
+</html>

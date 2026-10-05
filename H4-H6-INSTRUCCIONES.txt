@@ -1,0 +1,52 @@
+MEDAL WORK · V6 · SCROLL WEIGHT + H3 BLACK FADES + H4 AUTO/EXPLORE/FOCUS
+
+Base: Medal_Website-H4-H6-ROOT-v5.zip
+
+CAMBIOS APLICADOS
+
+1. SCROLL GLOBAL CON PESO
+- Se mantiene Lenis; no hay scroll-snap ni bloqueo duro.
+- Los impulsos grandes de mouse/trackpad se comprimen antes de entrar al smooth scroll.
+- El movimiento conserva inercia y continuidad, pero evita atravesar varias escenas por un flick fuerte.
+- Touch conserva un comportamiento más nativo.
+
+2. H3 · TRANSICIONES ENTRE BRANDS
+- No se cambiaron fotos, textos, orden ni assets de las cinco marcas.
+- Se reemplaza el crossfade directo por: foto actual -> negro perceptible -> foto siguiente.
+- El texto de la nueva marca entra ligeramente después de la nueva imagen.
+- Se aumenta moderadamente el tiempo narrativo para que el cambio sea visible incluso con scroll rápido.
+
+3. H4 · TRES ESTADOS
+AUTO
+- Fuera de la galería: movimiento lento permanente hacia la izquierda.
+
+EXPLORE
+- Al entrar con mouse, no hace falta click.
+- La posición horizontal del cursor controla dirección y velocidad.
+- Lado izquierdo: la tira se desplaza hacia la derecha.
+- Lado derecho: la tira se desplaza hacia la izquierda.
+- Cerca del centro: movimiento mínimo y suave.
+
+FOCUS
+- Si el cursor se estabiliza sobre una foto ~165 ms, la tira se detiene por completo.
+- La foto sube 42 px, aumenta sutilmente de escala y aparece la marca.
+- Al volver a mover el cursor, la foto baja y vuelve inmediatamente EXPLORE.
+- Al salir de H4 vuelve a AUTO.
+
+4. H5/H6
+- Se conserva exactamente la lógica funcional del v5: replay de KPIs, halos globales, logos, Six new brands a month y 4/6 círculos animados.
+
+ARCHIVOS MODIFICADOS EN V6
+- src/js/modules/smooth-scroll.js
+- src/js/modules/work-cases.js
+- src/css/pages/work-cases.css
+- src/js/modules/work-h4-h6.js
+- src/css/pages/work-h4-h6.css
+
+VALIDACIÓN
+- Sintaxis JS verificada con node --check.
+- JSON de src/data verificado.
+- work-intro.js, cases.json y assets principales de H3 comprobados idénticos al v5.
+- npm run build no pudo completarse en el entorno de empaquetado porque npm ci no terminó correctamente; el ZIP no incluye node_modules.
+
+El ZIP está aplanado en raíz y se puede extraer directamente sobre el repositorio con -Force.

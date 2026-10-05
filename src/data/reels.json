@@ -1,0 +1,71 @@
+[
+  {
+    "client": "Artech",
+    "category": "Classic cars",
+    "video": "/assets/video/reels/artech-reel.mp4",
+    "poster": "/assets/img/strip/artech-dashboard.jpg",
+    "kpis": [
+      {
+        "value": 428,
+        "suffix": "K",
+        "label": "Views"
+      },
+      {
+        "value": 37,
+        "suffix": "K",
+        "label": "Saves"
+      },
+      {
+        "value": 19,
+        "suffix": "s",
+        "label": "Avg. watch"
+      }
+    ]
+  },
+  {
+    "client": "Fiesta",
+    "category": "Hospitality",
+    "video": "/assets/video/reels/fiesta-reel.mp4",
+    "poster": "/assets/img/work/fiesta-grill-wide.jpg",
+    "kpis": [
+      {
+        "value": 312,
+        "suffix": "K",
+        "label": "Views"
+      },
+      {
+        "value": 24,
+        "suffix": "K",
+        "label": "Shares"
+      },
+      {
+        "value": 11,
+        "suffix": "s",
+        "label": "Avg. watch"
+      }
+    ]
+  },
+  {
+    "client": "Kjolle",
+    "category": "Food direction",
+    "video": "/assets/video/reels/kjolle-reel.mp4",
+    "poster": "/assets/img/medal-01-tasting-menu.jpg",
+    "kpis": [
+      {
+        "value": 265,
+        "suffix": "K",
+        "label": "Views"
+      },
+      {
+        "value": 18,
+        "suffix": "K",
+        "label": "Saves"
+      },
+      {
+        "value": 15,
+        "suffix": "s",
+        "label": "Avg. watch"
+      }
+    ]
+  }
+]

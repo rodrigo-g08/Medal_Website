@@ -1,0 +1,571 @@
+@import "../tokens.css";
+@import "../base.css";
+@import "../header.css";
+@import "../buttons.css";
+
+html { background: var(--ink); color-scheme: dark; }
+body[data-page="contact"] { background: var(--ink); color: var(--bone); }
+main { position: relative; z-index: 1; }
+.section-shell { width: min(100%, 1680px); margin: 0 auto; padding-inline: var(--page-pad); }
+body[data-page="contact"] .site-header__link.is-active { color: var(--yellow); }
+.site-header { z-index: 650; }
+
+.contact-stage {
+  position: relative;
+  min-height: 145svh;
+  background: transparent;
+  overflow: clip;
+}
+.contact-stage__sticky {
+  position: sticky;
+  top: 0;
+  min-height: 100svh;
+  display: grid;
+  align-items: stretch;
+}
+.contact-stage__inner {
+  min-height: 100svh;
+  padding-top: calc(var(--header-height) + clamp(48px, 7vh, 90px));
+  padding-bottom: clamp(48px, 7vh, 84px);
+}
+.contact-stage::before {
+  content: "";
+  position: absolute;
+  inset: 10% auto auto -14%;
+  width: clamp(380px, 45vw, 920px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(30, 73, 244, .50) 0%, rgba(30, 73, 244, .10) 46%, rgba(30, 73, 244, 0) 74%);
+  filter: blur(36px);
+  opacity: .72;
+  pointer-events: none;
+}
+.contact-stage::after {
+  content: "";
+  position: absolute;
+  inset: auto -14% 8% auto;
+  width: clamp(420px, 40vw, 860px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(30, 73, 244, .56) 0%, rgba(30, 73, 244, .12) 44%, rgba(30, 73, 244, 0) 72%);
+  filter: blur(34px);
+  opacity: .7;
+  pointer-events: none;
+}
+
+.contact-display {
+  margin: 0;
+  font-size: clamp(5.5rem, 9.6vw, 10.9rem);
+  font-weight: 300;
+  line-height: .87;
+  letter-spacing: -.067em;
+}
+.contact-display--medium { font-size: clamp(5.2rem, 8.8vw, 9.8rem); }
+.contact-display--large { font-size: clamp(5.2rem, 8.6vw, 9.7rem); }
+
+.text-sweep {
+  position: relative;
+  display: inline-grid;
+  line-height: inherit;
+  color: inherit;
+}
+.text-sweep__base,
+.text-sweep__flash {
+  grid-area: 1 / 1;
+  display: block;
+  line-height: inherit;
+}
+.text-sweep__base { color: inherit; }
+.text-sweep__flash {
+  color: var(--yellow);
+  clip-path: inset(0 100% 0 0);
+  pointer-events: none;
+  will-change: clip-path;
+}
+.text-sweep--yellow .text-sweep__base { color: rgba(242,239,232,.32); }
+.text-sweep--yellow .text-sweep__flash { color: var(--yellow); }
+
+.contact-stage__inner--hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(120px, .34fr);
+  gap: clamp(24px, 3vw, 50px);
+  align-items: center;
+}
+.contact-stage__copy {
+  max-width: 1080px;
+  position: relative;
+  z-index: 2;
+}
+.contact-stage__copy .eyebrow,
+.contact-outcomes__heading .eyebrow,
+.contact-scheduler__intro .eyebrow {
+  margin-bottom: clamp(18px, 3vh, 28px);
+  color: rgba(215,218,224,.62);
+}
+.contact-stage__lead,
+.contact-outcomes__intro,
+.contact-scheduler__lead {
+  margin: clamp(26px, 3.5vh, 36px) 0 0;
+  max-width: 37rem;
+  color: rgba(215,218,224,.70);
+  font-size: clamp(21px, 1.55vw, 28px);
+  line-height: 1.34;
+  letter-spacing: -.025em;
+}
+.contact-stage__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 28px;
+  margin-top: clamp(26px, 4vh, 40px);
+  align-items: center;
+}
+.contact-stage__meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(242,239,232,.72);
+  font-size: 15px;
+}
+.contact-stage__meta i {
+  width: 14px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--yellow);
+  box-shadow: 0 0 10px rgba(224,245,59,.28);
+}
+.contact-stage__meta i.is-off { background: transparent; border: 1px solid rgba(242,239,232,.34); box-shadow: none; }
+.contact-stage__pill {
+  min-height: 32px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(242,239,232,.14);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px !important;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.contact-hero__cta {
+  margin-top: clamp(36px, 6vh, 54px);
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  font-size: clamp(18px, 1.35vw, 23px);
+  font-weight: 500;
+}
+.contact-hero__arrow {
+  width: 42px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(242,239,232,.26);
+  border-radius: 50%;
+  transition: background 240ms ease, color 240ms ease, border-color 240ms ease;
+}
+.contact-hero__cta:hover .contact-hero__arrow,
+.contact-hero__cta:focus-visible .contact-hero__arrow {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  color: var(--ink);
+}
+.contact-stage__aside {
+  height: 100%;
+  display: grid;
+  justify-items: end;
+  align-items: center;
+}
+.contact-stage__scrollbar {
+  width: 2px;
+  height: min(42vh, 340px);
+  border-radius: 999px;
+  background: rgba(242,239,232,.10);
+  overflow: hidden;
+}
+.contact-stage__scrollbar span {
+  display: block;
+  width: 100%;
+  height: 26%;
+  border-radius: inherit;
+  background: var(--yellow);
+}
+
+.contact-stage__inner--outcomes {
+  display: grid;
+  align-content: center;
+  gap: clamp(52px, 7vh, 84px);
+}
+.contact-outcomes__heading {
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: 0;
+}
+.contact-outcomes__intro {
+  max-width: 46rem;
+  text-align: center;
+}
+.contact-timeline {
+  position: relative;
+  width: min(100%, 1050px);
+  margin: 0 auto;
+  padding-left: clamp(52px, 5vw, 74px);
+}
+.contact-timeline__track {
+  position: absolute;
+  left: 14px;
+  top: 22px;
+  bottom: 22px;
+  width: 2px;
+  background: rgba(242,239,232,.12);
+  overflow: hidden;
+}
+.contact-timeline__fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--yellow);
+  transform: scaleY(0);
+  transform-origin: top center;
+}
+.contact-outcome {
+  position: relative;
+  min-height: clamp(148px, 22vh, 210px);
+  display: grid;
+  grid-template-columns: minmax(110px, 180px) minmax(0, 1fr);
+  gap: clamp(22px, 3.2vw, 40px);
+  align-items: center;
+  opacity: .36;
+  transform: translateY(30px);
+  transition: opacity 420ms ease, transform 520ms var(--ease-medal);
+}
+.contact-outcome.is-active { opacity: 1; transform: translateY(0); }
+.contact-outcome__marker {
+  position: absolute;
+  left: -42px;
+  top: 50%;
+  width: 14px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  transform: translateY(-50%);
+  border: 1px solid rgba(242,239,232,.28);
+  border-radius: 50%;
+  background: var(--ink);
+}
+.contact-outcome__marker span {
+  width: 6px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--yellow);
+  transform: scale(0);
+  transition: transform 360ms var(--ease-medal);
+}
+.contact-outcome.is-active .contact-outcome__marker span { transform: scale(1); }
+.contact-outcome.is-active .text-sweep--yellow .text-sweep__base { color: var(--bone); }
+.contact-outcome__number {
+  margin: 0;
+  font-size: clamp(5.2rem, 8vw, 8.4rem);
+  font-weight: 300;
+  line-height: .85;
+  letter-spacing: -.07em;
+}
+.contact-outcome__content h3 {
+  margin: 0;
+  font-size: clamp(2.4rem, 3.4vw, 4.6rem);
+  font-weight: 330;
+  line-height: .96;
+  letter-spacing: -.05em;
+}
+.contact-outcome__content p {
+  margin: 14px 0 0;
+  max-width: 36rem;
+  color: rgba(215,218,224,.68);
+  font-size: clamp(18px, 1.32vw, 22px);
+  line-height: 1.32;
+}
+
+.contact-stage--scheduler { min-height: 170svh; }
+.contact-stage__inner--scheduler {
+  display: grid;
+  grid-template-columns: minmax(0, .78fr) minmax(560px, 1.22fr);
+  gap: clamp(46px, 5vw, 80px);
+  align-items: center;
+}
+.contact-scheduler__intro { position: relative; z-index: 2; }
+.contact-scheduler__meta {
+  margin-top: 22px;
+  color: rgba(215,218,224,.52);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.contact-scheduler__ui {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(250px, .72fr);
+  gap: clamp(18px, 2vw, 22px);
+  align-items: stretch;
+}
+.schedule-panel {
+  min-height: min(62vh, 620px);
+  padding: clamp(22px, 2vw, 28px);
+  border-radius: 28px;
+  background: rgba(242,239,232,.96);
+  color: var(--ink);
+  box-shadow: 0 16px 70px rgba(0,0,0,.22);
+  display: grid;
+  align-content: start;
+}
+.schedule-panel--times { grid-template-rows: auto 1fr auto; }
+.schedule-panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 26px;
+}
+.schedule-panel__header p {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(22px, 1.6vw, 28px);
+  font-weight: 500;
+}
+.schedule-panel__header small {
+  color: rgba(5,6,10,.48);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.schedule-panel__nav {
+  display: inline-flex;
+  gap: 12px;
+  color: rgba(5,6,10,.38);
+  font-size: 18px;
+}
+.schedule-grid__weekdays,
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+}
+.schedule-grid__weekdays {
+  margin-bottom: 14px;
+}
+.schedule-grid__weekdays span {
+  display: grid;
+  place-items: center;
+  color: rgba(5,6,10,.38);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.schedule-day {
+  min-height: clamp(46px, 4vw, 58px);
+  border: 1px solid rgba(5,6,10,.08);
+  border-radius: 999px;
+  background: rgba(9,10,16,.04);
+  color: rgba(5,6,10,.66);
+  font-size: 16px;
+  transition: transform 220ms ease, background 220ms ease, color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+.schedule-day:hover,
+.schedule-day:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(26, 89, 255, .28);
+}
+.schedule-day.is-available { background: rgba(26,89,255,.09); color: var(--ink); }
+.schedule-day.is-selected {
+  background: #1855ff;
+  color: #fff;
+  border-color: #1855ff;
+  box-shadow: 0 10px 24px rgba(24,85,255,.22);
+}
+.schedule-day.is-disabled { opacity: .22; pointer-events: none; }
+.schedule-times {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+.schedule-times__placeholder {
+  margin: 4px 0 0;
+  color: rgba(5,6,10,.46);
+  font-size: 16px;
+  line-height: 1.45;
+}
+.schedule-time {
+  min-height: 52px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(26,89,255,.28);
+  background: transparent;
+  color: #1855ff;
+  font-size: 16px;
+  transition: background 220ms ease, color 220ms ease, transform 220ms ease, border-color 220ms ease;
+}
+.schedule-time:hover,
+.schedule-time:focus-visible { transform: translateY(-1px); }
+.schedule-time.is-selected { background: #1855ff; color: #fff; border-color: #1855ff; }
+.contact-scheduler__button {
+  margin-top: 18px;
+  width: 100%;
+  justify-content: center;
+}
+.contact-scheduler__button[disabled] { opacity: .38; cursor: not-allowed; }
+
+
+.contact-confirming {
+  position: fixed;
+  z-index: 540;
+  inset: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.contact-confirming.is-active { visibility: visible; pointer-events: auto; }
+.contact-confirming__curtain {
+  position: absolute;
+  inset: 0;
+  background: var(--bone);
+  transform: translateY(100%);
+  box-shadow: 0 -34px 72px rgba(242,239,232,.58);
+  will-change: transform;
+}
+.contact-confirming__content {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  pointer-events: none;
+}
+.contact-confirming__content img {
+  width: clamp(112px, 11vw, 178px);
+  filter: brightness(0);
+}
+
+@media (max-width: 1180px) {
+  .contact-stage__inner--hero,
+  .contact-stage__inner--scheduler { grid-template-columns: 1fr; }
+  .contact-stage__aside { display: none; }
+  .contact-stage__copy { max-width: 980px; }
+  .contact-scheduler__ui { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 840px) {
+  .contact-stage { min-height: auto; }
+  .contact-stage__sticky { position: relative; min-height: auto; }
+  .contact-stage__inner {
+    min-height: auto;
+    padding-top: calc(var(--header-height) + 84px);
+    padding-bottom: 88px;
+  }
+  .contact-display,
+  .contact-display--medium,
+  .contact-display--large { font-size: clamp(4.6rem, 15vw, 7.2rem); }
+  .contact-stage__lead,
+  .contact-outcomes__intro,
+  .contact-scheduler__lead { font-size: 19px; }
+  .contact-timeline { padding-left: 46px; }
+  .contact-outcome { grid-template-columns: 1fr; gap: 18px; min-height: 0; padding: 18px 0 24px; }
+  .contact-outcome__marker { left: -36px; }
+  .contact-outcome__content h3 { font-size: clamp(2.8rem, 11vw, 4.4rem); }
+  .contact-scheduler__ui { grid-template-columns: 1fr; }
+  .schedule-panel { min-height: auto; }
+}
+
+@media (max-width: 560px) {
+  .contact-stage::before { left: -44%; top: 8%; width: 120vw; }
+  .contact-stage::after { right: -46%; bottom: 10%; width: 116vw; }
+  .contact-stage__meta { gap: 12px 18px; }
+  .contact-hero__cta { font-size: 17px; }
+  .contact-timeline__track { left: 12px; }
+  .contact-outcome__marker { left: -34px; }
+  .contact-outcome__number { font-size: 4.8rem; }
+  .schedule-grid__weekdays,
+  .schedule-grid { gap: 8px; }
+  .schedule-day { min-height: 42px; font-size: 14px; }
+  .schedule-time { min-height: 48px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-outcome { opacity: 1; transform: none; }
+  .contact-timeline__fill { transform: scaleY(1); }
+  .contact-outcome__marker span { transform: scale(1); }
+}
+
+
+/* --------------------------------------------------------------------------
+   CALENDLY — live Medal Session embed
+   -------------------------------------------------------------------------- */
+.contact-calendly {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+  border: 1px solid rgba(242,239,232,.16);
+  border-radius: 28px;
+  overflow: hidden;
+  background: rgba(5,6,10,.52);
+  box-shadow: 0 24px 80px rgba(0,0,0,.28);
+  backdrop-filter: blur(14px);
+}
+.contact-calendly__frame {
+  position: relative;
+  width: 100%;
+  min-height: min(76svh, 780px);
+}
+.contact-calendly__frame .calendly-inline-widget,
+.contact-calendly__frame iframe {
+  width: 100% !important;
+  min-width: 320px !important;
+  height: min(76svh, 780px) !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+.contact-calendly__fallback {
+  display: none;
+  padding: 34px;
+  min-height: 280px;
+  align-content: center;
+  justify-items: start;
+  gap: 18px;
+}
+.contact-calendly.has-error .contact-calendly__frame { display: none; }
+.contact-calendly.has-error .contact-calendly__fallback { display: grid; }
+.contact-calendly__fallback p {
+  margin: 0;
+  max-width: 38rem;
+  color: var(--text-soft);
+  font-size: clamp(17px, 1.2vw, 21px);
+  line-height: 1.4;
+}
+@media (max-width: 1180px) {
+  .contact-calendly__frame,
+  .contact-calendly__frame .calendly-inline-widget,
+  .contact-calendly__frame iframe { min-height: 720px; height: 720px !important; }
+}
+@media (max-width: 840px) {
+  .contact-calendly { border-radius: 20px; }
+  .contact-calendly__frame,
+  .contact-calendly__frame .calendly-inline-widget,
+  .contact-calendly__frame iframe { min-height: 700px; height: 700px !important; }
+}
+
+/* Final readability pass — Contact supporting copy */
+.contact-stage__copy .eyebrow,
+.contact-outcomes__heading .eyebrow,
+.contact-scheduler__intro .eyebrow { font-size: 13px; }
+.contact-stage__meta span { font-size: 16px; }
+.contact-stage__pill { font-size: 12px !important; }
+.contact-scheduler__meta { font-size: 12px; }
+.schedule-panel__header small { font-size: 12px; }
+.schedule-grid__weekdays span { font-size: 12px; }
+.schedule-day { font-size: 17px; }
+.schedule-times__placeholder { font-size: 17px; }
+.schedule-time { font-size: 17px; }

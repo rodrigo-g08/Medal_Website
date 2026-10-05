@@ -1,0 +1,27 @@
+MEDAL — H2.11.2 · QUITAR LA PAUSA DESPUÉS DE APARECER EL CONTENIDO
+
+Base: H2.11.1 aprobada.
+
+Problema:
+El apóstrofe llegaba a cubrir todo el viewport demasiado pronto dentro del
+recorrido fijado. El contenido aparecía correctamente, pero todavía quedaba
+un pequeño tramo del pin y al seguir scrolleando parecía que la página
+"no bajaba" durante un momento.
+
+Corrección mínima:
+finalHeight pasa de 0.34 a 3.0.
+
+Esto NO cambia:
+- trayectoria del zoom
+- centro del apóstrofe
+- halos H1.4
+- animación de palabras de H2.11.1
+- cobertura real como trigger
+- reversa
+
+Solo hace que la cobertura total ocurra aproximadamente al final del pin.
+Así, cuando ya apareció el contenido y sigues scrolleando, la página continúa
+prácticamente de inmediato hacia H3.
+
+INSTALAR:
+Expand-Archive "$env:USERPROFILE\Downloads\Medal_H2_11_2_NoPauseAfterReveal.zip" -DestinationPath . -Force

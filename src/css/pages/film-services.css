@@ -1,0 +1,1187 @@
+@import "../tokens.css";
+@import "../base.css";
+@import "../header.css";
+@import "../buttons.css";
+
+main {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+}
+
+.section-shell {
+  width: min(100%, 1600px);
+  margin: 0 auto;
+  padding-inline: var(--page-pad);
+}
+
+
+.reels,
+.medals,
+.apostrophe-thread,
+.services-availability {
+  isolation: isolate;
+}
+
+.reels::before,
+.reels::after,
+.medals::before,
+.medals::after,
+.apostrophe-thread::before,
+.apostrophe-thread::after,
+.services-availability::before,
+.services-availability::after {
+  content: "";
+  position: absolute;
+  width: clamp(420px, 38vw, 760px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(18px);
+  opacity: .58;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: 0;
+}
+
+.reels::before,
+.medals::before,
+.apostrophe-thread::before,
+.services-availability::before {
+  left: -10vw;
+  top: 6%;
+  background: radial-gradient(circle, rgba(45,92,255,.72) 0%, rgba(22,68,232,.38) 30%, rgba(7,34,140,.12) 58%, transparent 74%);
+  animation: filmHaloDriftA 24s ease-in-out infinite alternate;
+}
+
+.reels::after,
+.medals::after,
+.apostrophe-thread::after,
+.services-availability::after {
+  right: -12vw;
+  bottom: 4%;
+  background: radial-gradient(circle, rgba(25,76,255,.78) 0%, rgba(14,60,230,.42) 30%, rgba(3,20,80,.12) 58%, transparent 74%);
+  animation: filmHaloDriftB 28s ease-in-out infinite alternate;
+}
+
+.reels > *,
+.medals > *,
+.apostrophe-thread > *,
+.services-availability > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes filmHaloDriftA {
+  0% { transform: translate3d(-2%, -3%, 0) scale(1); }
+  50% { transform: translate3d(9%, 7%, 0) scale(1.06); }
+  100% { transform: translate3d(3%, 13%, 0) scale(.98); }
+}
+
+@keyframes filmHaloDriftB {
+  0% { transform: translate3d(3%, 4%, 0) scale(1); }
+  50% { transform: translate3d(-10%, -6%, 0) scale(1.05); }
+  100% { transform: translate3d(-5%, -14%, 0) scale(.97); }
+}
+
+/* --------------------------------------------------------------------------
+   FILM HERO — preserved behavior
+   -------------------------------------------------------------------------- */
+.film-hero {
+  position: relative;
+  height: 190svh;
+  color: var(--bone);
+  background: transparent;
+}
+
+.film-hero__sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.film-hero__frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: calc(100svh + var(--header-height) + var(--header-height));
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  border-radius: 0;
+  transform-origin: center center;
+  will-change: width, height, border-radius, transform;
+}
+
+.film-hero__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  background: var(--ink);
+}
+
+.film-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(5,6,10,.25), transparent 28%),
+    linear-gradient(to top, rgba(5,6,10,.60), transparent 48%);
+  pointer-events: none;
+}
+
+.film-hero__opening {
+  position: absolute;
+  z-index: 2;
+  left: var(--page-pad);
+  right: var(--page-pad);
+  bottom: clamp(84px, 11vh, 132px);
+}
+
+.film-hero__opening .eyebrow {
+  margin-bottom: 14px;
+  color: rgba(242,239,232,.82);
+}
+
+.film-hero__opening h1 {
+  margin: 0;
+  font-size: clamp(6rem, 13vw, 15rem);
+  font-weight: 300;
+  font-stretch: 112%;
+  line-height: .78;
+  letter-spacing: -.065em;
+}
+
+.film-sound {
+  position: absolute;
+  z-index: 4;
+  right: var(--page-pad);
+  bottom: clamp(76px, 9.5vh, 118px);
+  min-height: 42px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid rgba(242,239,232,.32);
+  border-radius: 999px;
+  background: rgba(5,6,10,.38);
+  color: var(--bone);
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.film-sound__dot {
+  width: 7px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--yellow);
+  box-shadow: 0 0 0 0 rgba(224,245,59,.45);
+}
+
+.film-sound[aria-pressed="true"] .film-sound__dot {
+  animation: sound-pulse 1.6s ease-out infinite;
+}
+
+@keyframes sound-pulse {
+  70%,100% { box-shadow: 0 0 0 11px rgba(224,245,59,0); }
+}
+
+.film-hero__cinema-copy {
+  position: absolute;
+  left: var(--page-pad);
+  bottom: clamp(48px, 7vh, 82px);
+  width: min(28vw, 420px);
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.film-hero__cinema-copy .eyebrow {
+  margin-bottom: 18px;
+}
+
+.film-hero__cinema-copy h2 {
+  margin: 0 0 22px;
+  font-size: clamp(3.1rem, 5.25vw, 6.9rem);
+  font-weight: 300;
+  line-height: .86;
+  letter-spacing: -.055em;
+}
+
+.film-hero__cinema-copy > p:last-child {
+  margin: 0;
+  color: var(--label);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   APPROVED YELLOW SWEEP
+   -------------------------------------------------------------------------- */
+.yellow-sweep {
+  --sweep-base: var(--bone);
+  position: relative;
+  display: grid;
+  width: fit-content;
+  color: var(--sweep-base);
+}
+
+.yellow-sweep--block { width: fit-content; }
+.yellow-sweep__base,
+.yellow-sweep__flash {
+  grid-area: 1 / 1;
+  display: block;
+  white-space: inherit;
+}
+.yellow-sweep__base { color: var(--sweep-base); }
+.yellow-sweep__flash {
+  color: var(--yellow);
+  clip-path: inset(0 100% 0 0);
+  pointer-events: none;
+  will-change: clip-path;
+}
+
+/* --------------------------------------------------------------------------
+   REELS — continuous strip + full-screen viewer
+   -------------------------------------------------------------------------- */
+.reels {
+  position: relative;
+  min-height: 100svh;
+  padding: clamp(120px, 16vh, 190px) 0 clamp(110px, 15vh, 180px);
+  background: transparent;
+  color: var(--bone);
+  overflow: hidden;
+}
+
+.reels__heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(260px, .9fr);
+  column-gap: clamp(40px, 8vw, 130px);
+  align-items: end;
+  margin-bottom: clamp(54px, 8vh, 86px);
+}
+
+.reels__heading .eyebrow {
+  grid-column: 1 / -1;
+  margin-bottom: 18px;
+}
+
+.reels__heading h2 {
+  margin: 0;
+  font-size: clamp(4.7rem, 8.7vw, 11rem);
+  font-weight: 300;
+  line-height: .86;
+  letter-spacing: -.06em;
+}
+
+.reels__intro {
+  margin: 0;
+  max-width: 620px;
+  color: var(--text-soft);
+  font-size: clamp(18px, 1.5vw, 25px);
+  line-height: 1.28;
+  letter-spacing: -.025em;
+}
+
+.reels__help {
+  grid-column: 2;
+  margin: 18px 0 0;
+  color: var(--label);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  line-height: 1.55;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.reels__viewport {
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+}
+
+.reels__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.reels__segment {
+  display: flex;
+  gap: 18px;
+  padding-right: 18px;
+}
+
+.reel-card {
+  position: relative;
+  flex: 0 0 clamp(150px, 17vw, 236px);
+  aspect-ratio: 9 / 16;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0b0c10;
+  color: var(--bone);
+  cursor: pointer;
+  text-align: left;
+  transform: scale(1);
+  opacity: 1;
+  transition: transform .45s var(--ease-medal), opacity .35s ease;
+  isolation: isolate;
+}
+
+.reel-card video,
+.reel-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.reel-card__shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(5,6,10,.78), rgba(5,6,10,.04) 48%);
+  pointer-events: none;
+}
+
+.reel-card__meta {
+  position: absolute;
+  z-index: 2;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  display: grid;
+  gap: 3px;
+}
+
+.reel-card__meta span:first-child {
+  font-size: clamp(18px, 1.45vw, 24px);
+  font-weight: 420;
+  letter-spacing: -.025em;
+}
+
+.reel-card__meta span:last-child {
+  color: rgba(242,239,232,.66);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.reel-card__progress {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: rgba(242,239,232,.16);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+.reel-card__progress i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--yellow);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.reels.has-hover .reel-card { opacity: .42; }
+.reels.has-hover .reel-card.is-hovered {
+  opacity: 1;
+  transform: scale(1.08);
+  z-index: 5;
+}
+.reel-card.is-hovered .reel-card__progress { opacity: 1; }
+
+/* Viewer */
+.reel-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: none;
+  color: var(--bone);
+  overflow: hidden;
+}
+.reel-viewer.is-open { display: block; }
+.reel-viewer__backdrop {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+}
+.reel-viewer__layout {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) auto minmax(180px, 1fr);
+  align-items: center;
+  gap: clamp(34px, 5vw, 82px);
+  padding: clamp(54px, 7vh, 86px) clamp(30px, 5vw, 86px);
+}
+.reel-viewer__meta,
+.reel-viewer__controls {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.reel-viewer__meta {
+  justify-self: end;
+  width: min(100%, 360px);
+}
+.reel-viewer__meta h2 {
+  margin: 16px 0 0;
+  font-size: clamp(3.1rem, 5vw, 6.2rem);
+  font-weight: 300;
+  line-height: .9;
+  letter-spacing: -.055em;
+}
+.reel-viewer__kpis {
+  margin-top: 40px;
+  display: grid;
+  gap: 22px;
+}
+.reel-viewer__kpis:empty { display: none; }
+.reel-viewer__kpi {
+  padding-top: 12px;
+  border-top: 1px solid rgba(242,239,232,.22);
+}
+.reel-viewer__kpi strong {
+  display: block;
+  font-size: clamp(2.2rem, 3.5vw, 4.4rem);
+  font-weight: 320;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  transition: color .9s ease;
+}
+.reel-viewer__kpi strong.is-counting { color: var(--yellow); transition: none; }
+.reel-viewer__kpi span {
+  display: block;
+  margin-top: 8px;
+  color: var(--label);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.reel-viewer__media-shell {
+  position: relative;
+  height: min(92dvh, 880px);
+  aspect-ratio: 9 / 16;
+  justify-self: center;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #0a0a0a;
+  transform-origin: top left;
+  will-change: transform;
+}
+.reel-viewer__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000;
+}
+.reel-viewer__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: rgba(242,239,232,.15);
+}
+.reel-viewer__progress i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--yellow);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.reel-viewer__controls {
+  justify-self: start;
+  display: grid;
+  gap: 26px;
+}
+.reel-viewer__controls button,
+.reel-viewer__close {
+  border: 1px solid rgba(242,239,232,.34);
+  background: rgba(5,6,10,.7);
+  color: var(--bone);
+  cursor: pointer;
+}
+.reel-viewer__controls > button {
+  min-width: 120px;
+  min-height: 46px;
+  border-radius: 999px;
+}
+.reel-viewer__arrows {
+  display: flex;
+  gap: 10px;
+}
+.reel-viewer__arrows button,
+.reel-viewer__close {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+}
+.reel-viewer__close {
+  position: absolute;
+  z-index: 4;
+  top: calc(var(--header-height) + 18px);
+  right: 22px;
+  background: rgba(5,6,10,.86);
+  border-color: rgba(242,239,232,.42);
+  box-shadow: 0 10px 24px rgba(0,0,0,.24);
+}
+
+/* --------------------------------------------------------------------------
+   SINGLE MEDAL SCENE
+   -------------------------------------------------------------------------- */
+.medals {
+  position: relative;
+  height: 560svh;
+  background: transparent;
+  color: var(--bone);
+}
+.medals__stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  background: transparent;
+}
+.medals__title {
+  position: absolute;
+  z-index: 2;
+  top: 15%;
+  left: 50%;
+  width: min(92vw, 1200px);
+  transform: translateX(-50%);
+  text-align: center;
+  will-change: opacity, transform;
+}
+.medals__title .eyebrow {
+  margin-bottom: 18px;
+}
+.medals__title h2 {
+  margin: 0;
+  font-size: clamp(4.8rem, 8.2vw, 10.8rem);
+  font-weight: 300;
+  line-height: .84;
+  letter-spacing: -.06em;
+}
+.medals__standard {
+  --standard-fill: 0;
+  background: linear-gradient(90deg,
+    var(--yellow) 0%,
+    var(--yellow) calc(var(--standard-fill) * 100%),
+    var(--bone) calc(var(--standard-fill) * 100%),
+    var(--bone) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.medals__medal {
+  position: absolute;
+  z-index: 8;
+  left: 0;
+  top: 0;
+  width: 100px;
+  height: 100px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+.medals__medal img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(1.16) contrast(1.08) saturate(1.08) drop-shadow(0 22px 34px rgba(0,0,0,.55));
+}
+.medals__medal:hover img { transform: translateY(-6px); }
+.medals__medal img { transition: transform .25s var(--ease-medal); }
+.medals__spot {
+  position: absolute;
+  z-index: 4;
+  left: 55.5%;
+  top: 50%;
+  width: min(36vw, 560px);
+  transform: translateY(-50%);
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+.medals__spot .eyebrow { margin-bottom: 20px; }
+.medals__spot h2 {
+  margin: 0 0 24px;
+  font-size: clamp(56px, 8.8vw, 138px);
+  font-weight: 300;
+  line-height: .82;
+  letter-spacing: -.062em;
+}
+.medals__spot > p:last-child {
+  margin: 0;
+  max-width: 34rem;
+  color: var(--text-soft);
+  font-size: clamp(18px, 1.35vw, 23px);
+  line-height: 1.34;
+  letter-spacing: -.022em;
+}
+.medals__index {
+  position: absolute;
+  z-index: 6;
+  left: var(--page-pad);
+  bottom: 34px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--label);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: .12em;
+  opacity: 0;
+}
+.medals__index i {
+  position: relative;
+  display: block;
+  width: 120px;
+  height: 2px;
+  background: rgba(242,239,232,.20);
+  overflow: hidden;
+}
+.medals__index i b {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--yellow);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.medals__cards {
+  position: absolute;
+  z-index: 3;
+  inset: calc(var(--header-height) + 22px) var(--page-pad) 34px;
+  opacity: 0;
+  pointer-events: none;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 18px;
+}
+.medals__cards > .eyebrow { align-self: start; font-size: 12px; }
+.medals__grid {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 1.7vw, 30px);
+}
+.medal-card {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  padding: clamp(24px, 2.35vw, 38px);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(242,239,232,.34);
+  border-radius: 22px;
+  background: rgba(5,6,10,.36);
+  color: var(--bone);
+  transform: translateY(24px);
+  opacity: 0;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: background .32s ease, border-color .32s ease, color .32s ease, box-shadow .32s ease;
+}
+.medal-card.is-selected {
+  background: var(--bone);
+  border-color: var(--bone);
+  color: var(--ink);
+  box-shadow: 0 18px 44px rgba(0,0,0,.16);
+}
+.medal-card__badge {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  color: rgba(242,239,232,.56);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.medal-card__slot {
+  display: block;
+  width: clamp(52px, 4.9vw, 68px);
+  aspect-ratio: 1;
+  margin-bottom: 26px;
+}
+.medal-card__body {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  padding-top: 4px;
+}
+.medal-card__eyebrow {
+  margin: 0 0 12px;
+  color: var(--label);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.medal-card.is-selected .medal-card__eyebrow { color: rgba(5,6,10,.55); }
+.medal-card h3 {
+  margin: 0;
+  font-size: clamp(2.8rem, 4.2vw, 5.7rem);
+  font-weight: 320;
+  line-height: .93;
+  letter-spacing: -.05em;
+}
+.medal-card__copy {
+  margin: 18px 0 22px;
+  max-width: 36rem;
+  color: var(--text-soft);
+  font-size: clamp(15px, 1.08vw, 18px);
+  line-height: 1.4;
+}
+.medal-card.is-selected .medal-card__copy { color: rgba(5,6,10,.70); }
+.medal-card ul {
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 9px 18px;
+  color: rgba(242,239,232,.82);
+  font-size: 14px;
+}
+.medal-card li::before {
+  content: "✓";
+  margin-right: 7px;
+  color: var(--yellow);
+}
+.medal-card.is-selected ul { color: rgba(5,6,10,.68); }
+.medal-card .button { margin-top: auto; width: fit-content; }
+.medal-card.is-selected .medal-card__badge { color: rgba(5,6,10,.55); }
+.medal-card.is-selected .button--primary {
+  color: var(--bone);
+  border-color: rgba(5,6,10,.22);
+  background: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   APOSTROPHE THREAD
+   -------------------------------------------------------------------------- */
+.apostrophe-thread {
+  position: relative;
+  height: 42vh;
+  min-height: 260px;
+  overflow: hidden;
+  background: transparent;
+}
+.apostrophe-thread__line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 2px;
+  height: calc(100% - 40px);
+  background: var(--yellow);
+  transform: translateX(-50%) scaleY(0);
+  transform-origin: top center;
+}
+.apostrophe-thread__mark {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 0;
+  width: 46px;
+  height: auto;
+  transform: translateX(-50%);
+  overflow: visible;
+}
+.apostrophe-thread__note {
+  position: absolute;
+  top: 50%;
+  width: min(31vw, 460px);
+  opacity: 0;
+}
+.apostrophe-thread__note--left {
+  right: calc(50% + clamp(40px, 7vw, 110px));
+  text-align: right;
+}
+.apostrophe-thread__note--right {
+  left: calc(50% + clamp(40px, 7vw, 110px));
+}
+.apostrophe-thread__note span {
+  color: var(--label);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: clamp(10px, .8vw, 12px);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.apostrophe-thread__note p {
+  margin: 14px 0 0;
+  color: var(--bone);
+  font-size: clamp(22px, 1.8vw, 32px);
+  font-weight: 320;
+  line-height: 1.16;
+  letter-spacing: -.03em;
+}
+
+/* --------------------------------------------------------------------------
+   AVAILABILITY — same content / dark design
+   -------------------------------------------------------------------------- */
+.services-availability {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-items: center;
+  background: transparent;
+  color: var(--bone);
+}
+.services-availability__inner {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 50px;
+  padding-top: calc(var(--header-height) + 60px);
+  padding-bottom: 70px;
+}
+.services-availability .eyebrow { margin-bottom: 24px; }
+.services-availability h2 {
+  margin: 0;
+  font-size: clamp(5rem, 9vw, 11.5rem);
+  font-weight: 300;
+  line-height: .84;
+  letter-spacing: -.062em;
+}
+.services-availability__note {
+  margin: 28px 0 0;
+  color: var(--text-soft);
+  font-size: clamp(18px, 1.3vw, 23px);
+}
+.services-availability__cta { margin-bottom: 8px; }
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE
+   -------------------------------------------------------------------------- */
+@media (max-width: 980px) {
+  .film-hero__cinema-copy { width: min(36vw, 360px); }
+
+  .reels__heading {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .reels__heading .eyebrow,
+  .reels__help { grid-column: 1; }
+  .reels__heading h2 { font-size: clamp(4.3rem, 12vw, 7.6rem); }
+  .reels__intro { max-width: 34rem; }
+
+  .reel-viewer__layout {
+    grid-template-columns: minmax(170px, .7fr) auto minmax(120px, .55fr);
+    gap: 24px;
+    padding-inline: 24px;
+  }
+  .reel-viewer__media-shell { height: min(86dvh, 760px); }
+
+  .medals__spot {
+    left: 54%;
+    width: 39vw;
+  }
+  .medals__spot h2 { font-size: clamp(3.5rem, 8.8vw, 6.8rem); }
+  .medal-card ul { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 820px) {
+  .film-hero { height: 160svh; }
+  .film-hero__cinema-copy {
+    left: var(--page-pad);
+    bottom: 38px;
+    width: min(75vw, 480px);
+  }
+  .film-hero__cinema-copy h2 { font-size: clamp(3rem, 11vw, 5rem); }
+
+  .reels {
+    min-height: auto;
+    padding-top: 120px;
+    padding-bottom: 110px;
+  }
+  .reels__heading { margin-bottom: 44px; }
+  .reels__help { display: none; }
+  .reel-card { flex-basis: clamp(150px, 43vw, 210px); }
+
+  .reel-viewer__layout {
+    display: block;
+    padding: 0;
+  }
+  .reel-viewer__media-shell {
+    width: 100vw;
+    height: 100dvh;
+    aspect-ratio: auto;
+    border-radius: 0;
+  }
+  .reel-viewer__video { object-fit: cover; }
+  .reel-viewer__meta {
+    position: absolute;
+    z-index: 3;
+    left: 18px;
+    right: 18px;
+    bottom: 92px;
+    width: auto;
+    max-width: none;
+    padding-top: 90px;
+    background: linear-gradient(to top, rgba(0,0,0,.86), transparent);
+  }
+  .reel-viewer__meta h2 {
+    margin-top: 8px;
+    font-size: clamp(2.5rem, 12vw, 4.5rem);
+  }
+  .reel-viewer__kpis {
+    margin-top: 18px;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 8px;
+  }
+  .reel-viewer__kpi { padding-top: 8px; }
+  .reel-viewer__kpi strong { font-size: 1.6rem; }
+  .reel-viewer__controls {
+    position: absolute;
+    z-index: 4;
+    left: 18px;
+    right: 18px;
+    bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .reel-viewer__close {
+    top: calc(var(--header-height) + 10px);
+    right: 18px;
+  }
+
+  .medals__title {
+    top: 13%;
+    width: 94vw;
+  }
+  .medals__title h2 { font-size: clamp(3.4rem, 14vw, 6rem); }
+  .medals__spot {
+    left: 18px;
+    right: 18px;
+    top: auto;
+    bottom: 12%;
+    width: auto;
+    transform: none;
+  }
+  .medals__spot h2 {
+    margin-bottom: 12px;
+    font-size: clamp(3.1rem, 14vw, 5.2rem);
+  }
+  .medals__spot > p:last-child {
+    max-width: 34rem;
+    font-size: clamp(15px, 4vw, 18px);
+  }
+  .medals__index {
+    bottom: 20px;
+    left: 18px;
+  }
+
+  .medals__cards {
+    inset: calc(var(--header-height) + 8px) 12px 12px;
+    gap: 8px;
+  }
+  .medals__cards > .eyebrow { font-size: 8px; }
+  .medals__grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, minmax(0,1fr));
+    gap: 8px;
+  }
+  .medal-card {
+    padding: 10px 12px;
+    border-radius: 15px;
+    display: grid;
+    grid-template-columns: 58px minmax(0,1fr);
+    align-items: center;
+    column-gap: 10px;
+  }
+  .medal-card__badge {
+    top: 9px;
+    right: 11px;
+    font-size: 7px;
+  }
+  .medal-card__slot {
+    width: 44px;
+    margin: 0;
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .medal-card__body {
+    grid-column: 2;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 3px 8px;
+  }
+  .medal-card__eyebrow { grid-column: 1; margin: 0; font-size: 7px; }
+  .medal-card h3 { grid-column: 1; font-size: clamp(1.75rem, 7.4vw, 2.45rem); }
+  .medal-card__copy { grid-column: 1 / -1; margin: 4px 0 7px; font-size: 12px; line-height: 1.28; }
+  .medal-card ul { display: none; }
+  .medal-card .button {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 32px;
+    padding-inline: 12px;
+  }
+  .medal-card .button__label { font-size: 9px; }
+
+  .apostrophe-thread__note { display: none; }
+
+  .services-availability__inner {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 36px;
+  }
+  .services-availability h2 { font-size: clamp(4.3rem, 16vw, 7rem); }
+  .services-availability__cta { justify-self: start; }
+}
+
+@media (max-width: 540px) {
+  .film-sound {
+    right: 16px;
+    bottom: 24px;
+  }
+  .film-hero__opening { left: 18px; right: 18px; bottom: 90px; }
+  .film-hero__opening h1 { font-size: clamp(5.4rem, 25vw, 9rem); }
+  .reels__heading h2 { font-size: clamp(3.8rem, 17vw, 5.5rem); }
+  .reels__intro { font-size: 17px; }
+  .services-availability { min-height: 92svh; }
+}
+
+/* --------------------------------------------------------------------------
+   REDUCED MOTION
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .yellow-sweep__flash { display: none; }
+  .reels::before,
+  .reels::after,
+  .medals::before,
+  .medals::after,
+  .apostrophe-thread::before,
+  .apostrophe-thread::after,
+  .services-availability::before,
+  .services-availability::after { animation: none; }
+
+  .film-hero {
+    height: 100svh;
+  }
+  .film-hero__sticky { position: relative; }
+  .film-hero__cinema-copy { opacity: 1; transform: none; }
+
+  .reels__viewport {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+    padding-inline: var(--page-pad);
+  }
+  .reels__track { transform: none !important; }
+  .reel-card { opacity: 1 !important; transform: none !important; }
+  .reel-viewer__meta,
+  .reel-viewer__controls { opacity: 1 !important; transform: none !important; }
+
+  .medals {
+    height: auto;
+    min-height: 100svh;
+    padding: calc(var(--header-height) + 50px) 0 50px;
+  }
+  .medals__stage {
+    position: relative;
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+  }
+  .medals__title {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    margin: 0 var(--page-pad) 42px;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .medals__standard { --standard-fill: 1 !important; }
+  .medals__spot,
+  .medals__index { display: none; }
+  .medals__cards {
+    position: relative;
+    inset: auto;
+    margin: 0 var(--page-pad);
+    opacity: 1 !important;
+    pointer-events: auto;
+  }
+  .medal-card {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .medals__medal { pointer-events: none !important; }
+
+  .apostrophe-thread__line { transform: translateX(-50%) scaleY(1) !important; }
+  .apostrophe-thread__mark { top: calc(100% - 40px); transform: translateX(-50%) !important; }
+  .apostrophe-thread__note { opacity: 1 !important; }
+}
+
+body[data-page="film-services"] .film-hero__cinema-copy > p:last-child { font-size: 13px; }
+body[data-page="film-services"] .film-sound { font-size: 14px; }
+body[data-page="film-services"] .reel-card__meta span:last-child { font-size: 11px; }
+
+/* Final continuity pass: no standalone divider block between medals and availability. */
+.apostrophe-thread { display: none !important; height: 0 !important; min-height: 0 !important; }
+body[data-page="film-services"] .site-header { background: transparent; }
+body[data-page="film-services"] .site-header::before {
+  height: 150px;
+  background: linear-gradient(to bottom, rgba(5,6,10,.30) 0%, rgba(5,6,10,.10) 48%, rgba(5,6,10,0) 100%);
+}
+
+/* --------------------------------------------------------------------------
+   FINAL READABILITY PASS — Film & Services supporting copy.
+   No geometry, animation or header behavior is changed here.
+   -------------------------------------------------------------------------- */
+.film-hero__opening .eyebrow,
+.film-hero__cinema-copy .eyebrow,
+.reels__heading .eyebrow,
+.medals__title .eyebrow,
+.medals__spot .eyebrow,
+.medals__cards > .eyebrow,
+.services-availability .eyebrow { font-size: 13px; }
+
+.film-hero__cinema-copy > p:last-child { font-size: 14px !important; }
+.film-sound { font-size: 15px !important; }
+.reels__intro { font-size: clamp(19px, 1.58vw, 26px); }
+.reels__help { font-size: 12px; line-height: 1.6; }
+.reel-card__meta span:last-child { font-size: 12px !important; }
+.reel-viewer__kpi span { font-size: 12px; }
+.medals__index { font-size: 12px; }
+.medal-card__badge { font-size: 11px; }
+.medal-card__eyebrow { font-size: 11px; }
+.medal-card__copy { font-size: clamp(16px, 1.12vw, 19px); line-height: 1.42; }
+.medal-card ul { font-size: 15px; line-height: 1.35; }
+.services-availability__note { font-size: clamp(19px, 1.36vw, 24px); }
+
+@media (max-width: 820px) {
+  .medals__cards > .eyebrow { font-size: 10px; }
+  .medal-card__badge { font-size: 9px; }
+  .medal-card__eyebrow { font-size: 9px; }
+  .medal-card__copy { font-size: 13px; line-height: 1.3; }
+  .medal-card .button__label { font-size: 10px; }
+}

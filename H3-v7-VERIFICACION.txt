@@ -1,0 +1,52 @@
+MEDAL — H3 v7 FINAL
+
+BASE
+Medal_H3_v4_BrandImagesAndSmootherFlow.zip
+
+FIESTA
+Uses the exact user-provided Fiesta cabrito/fire Instagram crop:
+image(20261001-155913).png
+
+Processing:
+- removed magenta guide/grid lines
+- preserved the original 16:9 crop
+- upscaled to 2560×1440
+- light contrast/color/sharpness enhancement
+- final asset:
+  assets/img/work/fiesta-cabrito-fuego-final.webp
+
+No old Fiesta .webp experiments remain in assets/img/work.
+
+MEDAL SIZE
+The previous CSS-only enlargement was too subtle because the intro uses an SVG viewBox camera.
+
+This version changes ONLY the INITIAL camera framing:
+desktop logoFraction:
+0.58 -> 0.72
+
+And gives the SVG more physical width:
+clamp(460px, 58vw, 880px)
+->
+clamp(620px, 72vw, 1120px)
+
+ZOOM PROTECTION
+Unchanged:
+- APOSTROPHE_CENTER x = 257.475
+- APOSTROPHE_CENTER y = 48.8
+- finalHeight = 3.0
+- recenter timing
+- M/D/A/L fade timing
+- old Work copy fade timing
+- real white coverage trigger
+- H2 bone reveal
+- reverse scroll behavior
+
+INSTALL
+Expand-Archive "$env:USERPROFILE\Downloads\Medal_H3_v7_Final_FiestaCabrito_LargerMedal.zip" -DestinationPath . -Force
+npm run dev
+
+Then:
+Ctrl + Shift + R
+
+URL:
+http://localhost:5173/work/

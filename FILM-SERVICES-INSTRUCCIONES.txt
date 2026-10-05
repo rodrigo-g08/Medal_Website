@@ -1,0 +1,68 @@
+FILM & SERVICES · PRIMERA VERSION FUNCIONAL
+
+Ruta:
+/film-services/
+
+Construida sobre Medal Website H1-H6 v6 sin modificar Work.
+
+ESTRUCTURA
+1. Film hero
+   - Video Artech full screen.
+   - Loop, muted, playsinline.
+   - Control Sound on / Sound off.
+   - Transformacion por scroll a formato cinema aprox. 66vw con esquinas redondeadas.
+   - Copy: Every frame, directed. / Artech · Brand film · 0:47.
+
+2. Reels
+   - 3 piezas 9:16: Artech, Fiesta, Kjolle.
+   - Desktop: el reel activo aumenta, reproduce muted y muestra progreso amarillo.
+   - Mobile: activacion por visibilidad / interseccion.
+   - preload="none".
+
+3. Three medals. One standard.
+   - Bronze / Silver / Gold.
+   - Hover: giro 3D de la medalla.
+   - Click: navega al tramo correspondiente del recorrido.
+   - One standard usa relleno amarillo por scroll.
+
+4. Recorrido de servicios
+   - Bronze: The shoot.
+   - Silver: The brand.
+   - Gold: The launch.
+   - Recorrido sticky de aproximadamente 310svh.
+   - Barra amarilla de progreso.
+   - Gold transforma el entorno hacia hueso.
+
+5. How we protect your launch
+   - Direction first.
+   - Dates in writing.
+   - One team.
+
+6. Availability
+   - Lee total/ocupados desde src/data/site.json.
+   - Mes calculado en runtime.
+   - CTA a la consulta actual de la pagina principal.
+
+7. Footer
+   - Medal grande.
+   - Miami · Lima.
+   - info@medalusa.com.
+   - Navegacion.
+
+ARCHIVOS NUEVOS PRINCIPALES
+film-services/index.html
+src/css/pages/film-services.css
+src/js/pages/film-services.js
+src/js/modules/film-services.js
+assets/video/reels/*
+assets/img/film/film-hero-poster.jpg
+
+ARCHIVO MODIFICADO FUERA DE LA NUEVA RUTA
+vite.config.js
+Solo se agrego film-services/index.html como entrada del build.
+
+VALIDACION
+- Sintaxis JS verificada con node --check.
+- JSON verificado.
+- Referencias locales de assets verificadas.
+- npm build no pudo ejecutarse en el entorno de generacion porque npm registry no estuvo accesible; ejecutar npm run build localmente antes de deploy.

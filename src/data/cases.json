@@ -1,0 +1,37 @@
+[
+  {
+    "slug": "kjolle",
+    "name": "Kjolle",
+    "meta": "Restaurant · Lima",
+    "image": "/assets/img/medal-01-tasting-menu.jpg",
+    "position": "center"
+  },
+  {
+    "slug": "artech",
+    "name": "Artech",
+    "meta": "Classic car collection · Lima",
+    "image": "/assets/img/work/artech-classics.webp",
+    "position": "center"
+  },
+  {
+    "slug": "zub-zero",
+    "name": "Züb Zero",
+    "meta": "Healthy ice cream · Lima",
+    "image": "/assets/img/work/zub-zero-hero-cover.webp",
+    "position": "center"
+  },
+  {
+    "slug": "fiesta",
+    "name": "Fiesta",
+    "meta": "Peruvian restaurant · Peru",
+    "image": "/assets/img/work/fiesta-grill-wide.jpg",
+    "position": "center"
+  },
+  {
+    "slug": "food-freaks",
+    "name": "Food Freaks",
+    "meta": "Hospitality · Selected work",
+    "image": "/assets/img/medal-07-shared-table.jpg",
+    "position": "center"
+  }
+]

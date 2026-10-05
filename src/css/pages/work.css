@@ -1,0 +1,238 @@
+@import "../tokens.css";
+@import "../base.css";
+@import "../header.css";
+@import "../buttons.css";
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+.work-hero {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background: transparent;
+  isolation: isolate;
+}
+
+.work-hero__inner {
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  padding:
+    calc(var(--header-height) + clamp(38px, 7vh, 84px))
+    var(--page-pad)
+    clamp(28px, 5vh, 54px);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.work-hero__eyebrow {
+  align-self: start;
+  font-size: clamp(12px, .78vw, 14px);
+  letter-spacing: .15em;
+}
+
+.work-hero__brand-stage {
+  position: relative;
+  align-self: center;
+  justify-self: center;
+  width: clamp(760px, 84vw, 1560px);
+  transform-origin: 50% 50%;
+}
+
+.work-hero__brand {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  shape-rendering: geometricPrecision;
+}
+
+.work-hero__bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.work-hero__intro {
+  margin: 0;
+  max-width: 590px;
+  color: var(--text-soft);
+  font-size: clamp(18px, 1.45vw, 24px);
+  font-weight: 330;
+  line-height: 1.18;
+  letter-spacing: -.025em;
+}
+
+.work-hero__stage {
+  margin: 0;
+  min-width: 160px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  color: var(--label);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.work-hero__stage-line {
+  height: 1px;
+  background: rgba(242, 239, 232, .28);
+}
+
+.work-bone-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: grid;
+  align-items: center;
+  background: var(--bone);
+  color: var(--ink);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.work-bone-content {
+  width: min(100%, 1500px);
+  margin: 0 auto;
+  padding:
+    calc(var(--header-height) + clamp(46px, 7vh, 90px))
+    var(--page-pad)
+    clamp(52px, 8vh, 100px);
+  opacity: 0;
+}
+
+.work-bone__eyebrow {
+  margin-bottom: clamp(24px, 4vh, 44px);
+  color: rgba(5, 6, 10, .54);
+}
+
+.work-bone__title {
+  margin: 0;
+  max-width: 11ch;
+  font-size: clamp(4rem, 9vw, 10.5rem);
+  font-weight: 300;
+  font-stretch: 112%;
+  line-height: .88;
+  letter-spacing: -.055em;
+  text-wrap: balance;
+}
+
+.work-bone__line {
+  display: block;
+  white-space: nowrap;
+}
+
+.work-bone__line [data-bone-word] {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.work-bone__line [data-bone-word] + [data-bone-word] {
+  margin-left: .14em;
+}
+
+.work-h3-handoff {
+  min-height: 52svh;
+  background: var(--bone);
+}
+
+.site-header {
+  z-index: 100;
+}
+
+@media (max-width: 860px) {
+  .work-hero__inner {
+    padding-top: calc(var(--header-height) + 58px);
+    padding-bottom: 28px;
+  }
+
+  .work-hero__brand-stage {
+    width: min(92vw, 780px);
+  }
+
+  .work-hero__bottom {
+    display: grid;
+    gap: 32px;
+  }
+
+  .work-hero__intro {
+    max-width: 27rem;
+    font-size: clamp(18px, 5vw, 23px);
+  }
+
+  .work-hero__stage {
+    width: min(100%, 220px);
+    min-width: 0;
+  }
+
+  .work-bone__title {
+    max-width: 9ch;
+    font-size: clamp(4.2rem, 14vw, 8rem);
+  }
+}
+
+@media (max-width: 540px) {
+  .work-hero__inner {
+    padding-top: calc(var(--header-height) + 76px);
+  }
+
+  .work-hero__brand-stage {
+    width: 94vw;
+  }
+
+  .work-hero__intro br {
+    display: none;
+  }
+
+  .work-bone-content {
+    padding-top: calc(var(--header-height) + 90px);
+  }
+
+  .work-bone__title {
+    font-size: clamp(3.7rem, 17vw, 6rem);
+    line-height: .91;
+  }
+
+  .work-bone__line {
+    white-space: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-hero {
+    min-height: 100svh;
+    background: var(--ink);
+  }
+
+  .work-hero__brand-stage,
+  [data-work-copy] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .work-bone-cover {
+    position: relative;
+    min-height: 100svh;
+    opacity: 1 !important;
+  }
+
+  .work-bone-content,
+  [data-bone-word] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Final readability pass — Work supporting copy */
+.work-hero__eyebrow { font-size: clamp(14px, .92vw, 16px); }
+.work-hero__stage { font-size: 12px; }
+.work-bone__eyebrow { font-size: clamp(14px, .92vw, 16px); }
