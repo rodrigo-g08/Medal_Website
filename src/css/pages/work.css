@@ -231,3 +231,8 @@ main {
     transform: none !important;
   }
 }
+
+/* Final readability pass — Work supporting copy */
+.work-hero__eyebrow { font-size: clamp(14px, .92vw, 16px); }
+.work-hero__stage { font-size: 12px; }
+.work-bone__eyebrow { font-size: clamp(14px, .92vw, 16px); }

@@ -186,3 +186,12 @@ html.halos-ready .ambient {
     transition: none;
   }
 }
+
+/* --------------------------------------------------------------------------
+   FINAL READABILITY PASS — supporting copy only; primary display headings and
+   the site header remain unchanged.
+   -------------------------------------------------------------------------- */
+.eyebrow {
+  font-size: 13px;
+  line-height: 1.45;
+}

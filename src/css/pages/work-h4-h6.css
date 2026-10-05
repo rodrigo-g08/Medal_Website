@@ -496,3 +496,10 @@
     transform: none !important;
   }
 }
+
+/* Final readability pass — Work supporting labels */
+.work-beyond__caption { font-size: 12px; line-height: 1.35; }
+.work-result__copy { font-size: clamp(18px, 1.25vw, 22px); }
+.work-result__client { font-size: 13px; }
+.work-availability__slots-label { font-size: 12px; }
+.work-availability__secondary { font-size: 16px; }

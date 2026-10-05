@@ -261,3 +261,10 @@
     display: none;
   }
 }
+
+/* Final readability pass — case metadata */
+.work-case__meta,
+.work-case__count { font-size: clamp(16px, 1.04vw, 18px); }
+.work-hero__eyebrow,
+.work-bone__eyebrow { font-size: clamp(14px, .92vw, 16px); }
+.work-hero__stage { font-size: 13px; }

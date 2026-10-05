@@ -415,3 +415,9 @@ main {
     color: var(--label);
   }
 }
+
+/* Final readability pass — landing supporting text */
+.cover__work-eyebrow { font-size: clamp(14px, .92vw, 16px); }
+.cover__enter .eyebrow { font-size: clamp(14px, .92vw, 16px); }
+.cover__hero .eyebrow { font-size: 13px; }
+.cover__sound { font-size: 15px; }

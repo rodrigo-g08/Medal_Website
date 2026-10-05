@@ -217,3 +217,9 @@ body[data-page="confirmed"] .site-header__link.is-active { color: var(--yellow);
   .booking-confirmed__right { opacity: 1; transform: none; }
   .confirmed-entry { display: none; }
 }
+
+/* Final readability pass — confirmation supporting copy */
+.booking-confirmed__checklist p { font-size: clamp(17px, 1.1vw, 20px); }
+.booking-action { font-size: 14px; }
+.booking-confirmed__film-copy p:last-child { font-size: 16px; }
+.booking-confirmed__tag { font-size: 11px; }

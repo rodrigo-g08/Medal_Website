@@ -54,3 +54,7 @@
     transition-duration:.01ms !important; animation-duration:.01ms !important;
   }
 }
+
+/* Final readability pass */
+.button__label { font-size: 14px; }
+.button--compact .button__label { font-size: 12px; }

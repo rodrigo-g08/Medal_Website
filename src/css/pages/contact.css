@@ -556,3 +556,16 @@ body[data-page="contact"] .site-header__link.is-active { color: var(--yellow); }
   .contact-calendly__frame .calendly-inline-widget,
   .contact-calendly__frame iframe { min-height: 700px; height: 700px !important; }
 }
+
+/* Final readability pass — Contact supporting copy */
+.contact-stage__copy .eyebrow,
+.contact-outcomes__heading .eyebrow,
+.contact-scheduler__intro .eyebrow { font-size: 13px; }
+.contact-stage__meta span { font-size: 16px; }
+.contact-stage__pill { font-size: 12px !important; }
+.contact-scheduler__meta { font-size: 12px; }
+.schedule-panel__header small { font-size: 12px; }
+.schedule-grid__weekdays span { font-size: 12px; }
+.schedule-day { font-size: 17px; }
+.schedule-times__placeholder { font-size: 17px; }
+.schedule-time { font-size: 17px; }
