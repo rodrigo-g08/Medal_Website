@@ -1,0 +1,1064 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62.5..125,100..900;1,62.5..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+/* ==========================================================
+   MEDAL — WordPress / Elementor adaptation
+   Scoped under .medal-site to avoid affecting the rest of WP.
+   ========================================================== */
+
+.medal-site {
+  --ink: #05060a;
+  --bone: #f2efe8;
+  --text-soft: #d7dae0;
+  --mute: #aeb5bf;
+  --blue-soft: #7e9cff;
+  --line: rgba(242, 239, 232, .16);
+  --medal: #e0f53b;
+  --danger: #f09595;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  position: relative;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: 0;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--bone);
+  font: 300 16px/1.6 var(--font-display);
+  -webkit-font-smoothing: antialiased;
+  color-scheme: dark;
+}
+
+.medal-site,
+.medal-site *,
+.medal-site *::before,
+.medal-site *::after { box-sizing: border-box; }
+
+.medal-site img { display: block; max-width: 100%; }
+.medal-site a { color: inherit; text-decoration: none; }
+.medal-site a:hover { color: var(--blue-soft); }
+.medal-site :focus-visible { outline: 1px solid var(--blue-soft); outline-offset: 4px; }
+.medal-site h1,
+.medal-site h2,
+.medal-site p { margin-top: 0; }
+
+/* Elementor wrapper safeguards */
+.elementor-widget-html,
+.elementor-widget-html > .elementor-widget-container {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* ---------- Shared ---------- */
+.medal-site .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 20px;
+  font: 400 11px/1 var(--font-mono);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--bone);
+}
+
+.medal-site .eyebrow__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--medal);
+  flex: none;
+  animation: medalBlink 2.4s ease-in-out infinite;
+}
+
+@keyframes medalBlink { 50% { opacity: .25; } }
+
+.medal-site .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 24px;
+  background: var(--medal);
+  color: #0b0c0e;
+  border: 1px solid var(--medal);
+  font: 600 12px/1 var(--font-display);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.medal-site .btn:hover { background: transparent; color: var(--medal); }
+.medal-site .btn:active { transform: translateY(1px); }
+.medal-site .btn[aria-busy="true"] { opacity: .6; cursor: progress; }
+
+/* ==========================================================
+   HERO
+   ========================================================== */
+.medal-site .hero {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+.medal-site .hero__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  z-index: 0;
+}
+
+.medal-site .hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg,
+    rgba(5, 6, 10, .58) 0%,
+    rgba(5, 6, 10, .10) 34%,
+    rgba(5, 6, 10, .28) 60%,
+    rgba(5, 6, 10, .94) 100%);
+}
+
+.medal-site .hero__grid {
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  padding: clamp(24px, 4vw, 48px) clamp(20px, 5vw, 64px) clamp(28px, 4vw, 44px);
+}
+
+.medal-site .brand__logo {
+  width: 124px;
+  height: auto;
+}
+
+.medal-site .hero__copy { max-width: 36em; }
+
+.medal-site .hero__copy h1 {
+  margin: 0 0 22px;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-stretch: 112%;
+  font-size: clamp(40px, 6.4vw, 76px);
+  line-height: 1;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+
+.medal-site .making {
+  background-image: linear-gradient(90deg,
+    var(--medal) 0%, var(--medal) 56%,
+    rgba(126, 156, 255, .5) 56%, rgba(126, 156, 255, .5) 100%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-style: italic;
+  font-weight: 400;
+  animation: medalFillMaking 2.1s cubic-bezier(.19, .84, .4, 1) .45s both;
+}
+
+@keyframes medalFillMaking { to { background-position: 0% 0; } }
+
+.medal-site .hero__cta { align-self: flex-start; }
+
+.medal-site .hero__sound {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  margin: 0;
+  padding: 4px 0;
+  background: transparent;
+  border: 0;
+  color: var(--text-soft);
+  font: 400 10px/1 var(--font-mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color .2s ease, opacity .2s ease;
+}
+
+.medal-site .hero__sound:hover { color: var(--bone); }
+.medal-site .hero__sound:focus-visible { outline-offset: 6px; }
+
+.medal-site .hero__sound-icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(242, 239, 232, .72);
+  border-radius: 50%;
+  flex: 0 0 24px;
+  display: block;
+  font-size: 0;
+  transition: background .2s ease, border-color .2s ease;
+}
+
+.medal-site .hero__sound-icon::before {
+  content: "";
+  position: absolute;
+  left: 52%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 6px solid currentColor;
+  transform: translate(-45%, -50%);
+}
+
+.medal-site .hero__sound[aria-pressed="true"] .hero__sound-icon {
+  background: var(--medal);
+  color: #0b0c0e;
+  border-color: var(--medal);
+}
+
+/* ==========================================================
+   CONTACT SECTION
+   ========================================================== */
+.medal-site .message {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: clamp(72px, 8vw, 108px) clamp(20px, 5vw, 64px) clamp(72px, 8vw, 104px);
+  background: #03060a;
+  border-top: 1px solid rgba(242, 239, 232, .11);
+}
+
+.medal-site .mesh {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255,255,255,.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.009) 1px, transparent 1px),
+    linear-gradient(105deg, #071126 0%, #050914 25%, #04070c 55%, #03060a 100%);
+  background-size: 54px 54px, 54px 54px, auto;
+}
+
+.medal-site .mesh-orb {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: clamp(480px, 46vw, 850px);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(12px);
+  opacity: 1;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+.medal-site .mesh-orb--top {
+  background: radial-gradient(circle at 50% 50%,
+    rgba(45, 92, 255, .70) 0%,
+    rgba(24, 70, 238, .48) 19%,
+    rgba(13, 50, 192, .28) 38%,
+    rgba(7, 34, 140, .15) 53%,
+    rgba(4, 22, 90, .06) 65%,
+    transparent 79%);
+}
+
+.medal-site .mesh-orb--bottom {
+  background: radial-gradient(circle at 50% 50%,
+    rgba(25, 76, 255, .78) 0%,
+    rgba(14, 60, 230, .54) 19%,
+    rgba(8, 45, 182, .32) 39%,
+    rgba(5, 31, 128, .17) 54%,
+    rgba(3, 20, 80, .06) 67%,
+    transparent 79%);
+}
+
+.medal-site .message__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(330px, .92fr);
+  gap: clamp(50px, 8vw, 118px);
+  align-items: start;
+}
+
+.medal-site .message__text h2 {
+  max-width: 700px;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-stretch: 110%;
+  font-size: clamp(34px, 4vw, 56px);
+  line-height: .99;
+  letter-spacing: -.032em;
+  text-wrap: balance;
+}
+
+/* ---------- Form ---------- */
+.medal-site .contact-form {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 26px;
+  padding: 3px 0 0;
+  background: transparent;
+  border: 0;
+}
+
+.medal-site .field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.medal-site .field label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(242, 239, 232, .74);
+}
+
+.medal-site .field input,
+.medal-site .field textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 0 13px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(242, 239, 232, .38);
+  border-radius: 0;
+  color: var(--bone);
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 350;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color .2s ease, color .2s ease;
+  box-shadow: none;
+  outline: none;
+}
+
+.medal-site .field input::placeholder,
+.medal-site .field textarea::placeholder { color: rgba(215, 218, 224, .62); }
+
+.medal-site .field input:focus,
+.medal-site .field textarea:focus { border-bottom-color: var(--medal); }
+
+.medal-site .field.is-invalid input,
+.medal-site .field.is-invalid textarea { border-bottom-color: var(--danger); }
+
+.medal-site .field--message textarea {
+  min-height: 112px;
+  max-height: 220px;
+  padding-top: 10px;
+}
+
+.medal-site .hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.medal-site .form-foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: -1px;
+}
+
+.medal-site .form-status {
+  order: 2;
+  flex: 1 1 100%;
+  min-height: 18px;
+  margin: 0;
+  font-size: 12px;
+  color: var(--mute);
+}
+
+.medal-site .form-status:empty { min-height: 0; }
+.medal-site .form-status.is-error { color: var(--danger); }
+.medal-site .form-status.is-ok { color: var(--blue-soft); }
+
+/* ---------- Footer ---------- */
+.medal-site .site-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px clamp(20px, 5vw, 64px) 26px;
+  background: var(--ink);
+  border-top: 1px solid var(--line);
+  font: 400 10px/1 var(--font-mono);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+/* ==========================================================
+   TABLET / MOBILE
+   ========================================================== */
+@media (max-width: 980px) {
+  .medal-site .message { min-height: 88svh; }
+  .medal-site .message__inner { grid-template-columns: 1fr; gap: 52px; }
+  .medal-site .message__text h2 { max-width: 760px; }
+}
+
+@media (max-width: 720px) {
+  .medal-site .hero__grid {
+    gap: 28px;
+    padding: 28px 24px 34px;
+  }
+
+  .medal-site .brand__logo { width: 104px; }
+  .medal-site .hero__copy { max-width: 100%; }
+
+  .medal-site .hero__copy h1 {
+    font-size: clamp(40px, 12.4vw, 58px);
+    line-height: 1.02;
+    letter-spacing: -.03em;
+    max-width: 9em;
+  }
+
+  .medal-site .hero__sound {
+    font-size: 9px;
+    padding: 4px 0;
+  }
+
+  .medal-site .hero__sound span:last-child {
+    max-width: 74vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .medal-site .message {
+    min-height: auto;
+    padding: 82px 24px 88px;
+    align-items: flex-start;
+  }
+
+  .medal-site .message__inner {
+    gap: 52px;
+  }
+
+  .medal-site .message__text h2 {
+    font-size: clamp(36px, 10.2vw, 48px);
+    line-height: 1.09;
+    letter-spacing: -.026em;
+    max-width: 100%;
+    text-wrap: balance;
+  }
+
+  .medal-site .contact-form {
+    gap: 26px;
+  }
+
+  .medal-site .field label {
+    line-height: 1.35;
+  }
+
+  .medal-site .mesh-orb {
+    width: 650px;
+  }
+}
+
+@media (max-width: 560px) {
+  .medal-site .message {
+    padding: 72px 22px 82px;
+  }
+
+  .medal-site .message__text h2 {
+    font-size: clamp(34px, 10.5vw, 44px);
+    line-height: 1.12;
+    letter-spacing: -.02em;
+    max-width: 100%;
+  }
+
+  .medal-site .message__inner {
+    gap: 46px;
+  }
+
+  .medal-site .field input,
+  .medal-site .field textarea {
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .medal-site .field--message textarea {
+    min-height: 124px;
+  }
+
+  .medal-site .btn {
+    width: 100%;
+  }
+
+  .medal-site .hero__cta {
+    width: auto;
+  }
+
+  .medal-site .site-foot {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 390px) {
+  .medal-site .hero__grid {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .medal-site .hero__copy h1 {
+    font-size: clamp(38px, 12vw, 48px);
+    line-height: 1.04;
+  }
+
+  .medal-site .message {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .medal-site .message__text h2 {
+    font-size: clamp(32px, 10vw, 40px);
+    line-height: 1.13;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medal-site .making,
+  .medal-site .eyebrow__dot { animation: none !important; }
+  .medal-site .making { background-position: 0 0; }
+}
+
+/* ==========================================================
+   LIMPIEZA FINAL ELEMENTOR / WORDPRESS
+   Elimina cualquier franja exterior de la página
+   ========================================================== */
+
+html,
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #05060a !important;
+  overflow-x: hidden !important;
+}
+
+body.elementor-page {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Contenedores exteriores de Elementor */
+.elementor,
+.elementor-page,
+.elementor-section-wrap,
+.elementor-inner,
+.elementor-widget-wrap,
+.elementor-widget-html,
+.elementor-widget-html > .elementor-widget-container,
+.e-con,
+.e-con-inner {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Nuestra landing */
+.medal-site {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  border: 0 !important;
+}
+
+.medal-site .hero {
+  margin-top: 0 !important;
+  border-top: 0 !important;
+}
+
+.medal-site .message {
+  border-top: 0 !important;
+}
+
+.medal-site .site-foot {
+  margin-bottom: 0 !important;
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+}
+</style>
+
+<div class="medal-site">
+  <section class="hero" id="top">
+    <video class="hero__media" id="hero-video" autoplay muted loop playsinline preload="auto">
+      <source src="https://medalusa.com/wp-content/uploads/Meda_Video_Landing.mp4" type="video/mp4">
+    </video>
+    <div class="hero__scrim" aria-hidden="true"></div>
+
+    <div class="hero__grid">
+      <header class="brand">
+        <svg class="brand__logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 200" role="img" aria-label="Medal">
+          <polygon fill="#E0F53B" points="257.48 37.66 218.21 15.57 226.97 0 257.48 17.16 287.98 0 296.74 15.57 257.48 37.66"/>
+          <g fill="#FEFEFE">
+            <path d="M62.77,77.74,59.32,93.48h.43A41.84,41.84,0,0,1,76.56,79.25a52.86,52.86,0,0,1,22.21-4.53q10.35,0,17.680,4.53t9.27,14.87a34.77,34.77,0,0,1,7.12-7.86,52.7,52.7,0,0,1,9.27-6.15,48.82,48.82,0,0,1,10.450-4,44.21,44.21,0,0,1,10.89-1.4,46.4,46.4,0,0,1,12.61,1.73A33.85,33.85,0,0,1,187,81.62a25.11,25.11,0,0,1,7.55,8.84,26.81,26.81,0,0,1,2.8,12.5,52.12,52.12,0,0,1-1.08,10.46q-1.08,5.28-2.15,10.24l-13.8,65.54H149.65l14.66-70.5a40.45,40.45,0,0,0,.87-8,11,11,0,0,0-3.78-8.41,13.65,13.65,0,0,0-9.59-3.45,20.76,20.76,0,0,0-10.89,2.91,31.52,31.52,0,0,0-8.41,7.33,44,44,0,0,0-5.93,9.81,53.26,53.26,0,0,0-3.45,10.56l-12.5,59.72H79.8l14.66-70.5a41.16,41.16,0,0,0,.86-8,11,11,0,0,0-3.77-8.41A13.670,13.67,0,0,0,82,98.87a20.74,20.74,0,0,0-10.89,2.91,31.37,31.37,0,0,0-8.41,7.33,43.67,43.67,0,0,0-5.93,9.81,53.26,53.26,0,0,0-3.45,10.56L40.78,189.2H10.38L33.45,77.74Z"/>
+            <path d="M234.6,142.85v4.53q0,9.69,6,15.74t18.54,6a21.82,21.82,0,0,0,8.09-1.4,23.9,23.9,0,0,0,6.25-3.56,25.92,25.92,0,0,0,4.75-4.95q2-2.81,3.77-5.4h30.61A78.44,78.44,0,0,1,304,170.45a48.15,48.15,0,0,1-11.86,12,48.81,48.81,0,0,1-16.06,7.22A84.79,84.79,0,0,1,254.86,192a64.93,64.93,0,0,1-20.37-3,41,41,0,0,1-15.63-9.17,41.38,41.38,0,0,1-10-15.2,57.35,57.35,0,0,1-3.56-21.13,77.77,77.77,0,0,1,4.31-25.76,71.15,71.15,0,0,1,12.18-22,58.51,58.51,0,0,1,19.29-15.31,56.73,56.73,0,0,1,25.66-5.710,70.64,70.64,0,0,1,21.24,3,43.6,43.6,0,0,1,16.38,9.16,41.77,41.77,0,0,1,10.57,15.31,55.58,55.58,0,0,1,3.77,21.24A96.52,96.52,0,0,1,317,140.91H234.81A10.3,10.3,0,0,0,234.6,142.85ZM288.39,113a21.71,21.71,0,0,0-2.91-7.650,15.18,15.18,0,0,0-6.25-5.5q-4.11-2.06-10.78-2A31.33,31.33,0,0,0,257,99.73a28.8,28.8,0,0,0-8.63,5.17,30,30,0,0,0-6.14,7.55,58.61,58.61,0,0,0-4.2,9h51.1A48.35,48.35,0,0,0,288.39,113Z"/>
+            <path d="M399.74,175A30.21,30.21,0,0,1,385.62,188a47,47,0,0,1-19.29,4q-20.28,0-31.37-11.75t-11.11-32a99.67,99.67,0,0,1,3.67-26.95,72.47,72.47,0,0,1,11.21-23.5,58.14,58.14,0,0,1,19-16.71q11.43-6.36,26.95-6.36A42.5,42.5,0,0,1,403.3,79a24.65,24.65,0,0,1,12.61,13.59h.43l12.29-57.35h30.62L426.69,189.2H397.16l3-13.8ZM372.9,102.32a37.18,37.18,0,0,0-10.46,11.42,53.69,53.69,0,0,0-6,15.09,67.18,67.18,0,0,0-1.94,15.53,31.61,31.61,0,0,0,1.4,9.48,23.36,23.36,0,0,0,4.09,7.87,20.16,20.16,0,0,0,6.8,5.39,20.87,20.87,0,0,0,9.48,2.05,24.29,24.29,0,0,0,14.88-4.63,39.43,39.43,0,0,0,10.46-11.75,57.19,57.19,0,0,0,6.25-15.42,64.85,64.85,0,0,0,2.05-15.41q0-11-5.39-17.57t-16.6-6.58A25.17,25.17,0,0,0,372.9,102.32Z"/>
+            <path d="M467.65,94A40.31,40.31,0,0,1,479.73,82.7a50.21,50.21,0,0,1,15.95-6.15A90.16,90.16,0,0,1,514,74.72a120.36,120.36,0,0,1,15.73,1.08,53.32,53.32,0,0,1,15.1,4.2,29.53,29.53,0,0,1,11.32,8.84q4.410,5.72,4.2,15.2A89.06,89.06,0,0,1,558,122.8l-9.92,44.84a37.68,37.68,0,0,0-1.18,7.44q-.33,4.42-.33,7.65a23.19,23.19,0,0,0,1.08,6.47H517v-11a37.18,37.18,0,0,1-15.31,10.45A53.73,53.73,0,0,1,483,192a47.88,47.88,0,0,1-15.85-2.38,33.62,33.62,0,0,1-11.31-6.36,24.59,24.59,0,0,1-6.69-9.27A29.22,29.22,0,0,1,447,162.9q0-16.17,11.1-25.87T489.43,125q10.77-1.29,18.75-1.93a78.77,78.77,0,0,0,13.27-2c3.52-.94,6.14-2.3,7.86-4.1s2.59-4.49,2.59-8.08a11.17,11.17,0,0,0-1.94-6.9,14,14,0,0,0-4.85-4.1,20.78,20.78,0,0,0-6.25-2.05,40,40,0,0,0-6.36-.54,27.33,27.33,0,0,0-14.66,4q-6.48,4-8,12.4H461.19Q462.69,101,467.65,94Zm45.71,45.92q-6.67.76-13.37,1.19a62.38,62.38,0,0,0-8.4,1.4,23.71,23.71,0,0,0-7.23,2.91,14.94,14.94,0,0,0-5.07,5.28,16.84,16.84,0,0,0-1.93,8.52,10.27,10.27,0,0,0,5.06,9.37,21.86,21.86,0,0,0,11.75,3.13,28.38,28.38,0,0,0,12-2.26,26.37,26.37,0,0,0,8.19-5.83,27.4,27.4,0,0,0,5.28-8.080,76.29,76.29,0,0,0,3.24-9.060l3-10.78A30.92,30.92,0,0,1,513.36,139.94Z"/>
+            <path d="M627.62,35.27,594.85,189.2h-30.4L597,35.27Z"/>
+          </g>
+        </svg>
+      </header>
+
+      <div class="hero__copy">
+        <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>Studio update · Miami</p>
+        <h1>A new Medal<br>is in <span class="making">the making.</span></h1>
+        <a class="btn hero__cta" href="#contact">Send inquiry <span aria-hidden="true">→</span></a>
+      </div>
+
+      <button class="hero__sound" id="sound-toggle" type="button" aria-pressed="false">
+        <span class="hero__sound-icon" aria-hidden="true"></span>
+        <span>RIMAC 130 YEARS FILM · WESTIN HOTEL · <span id="sound-label">Sound off</span></span>
+      </button>
+    </div>
+  </section>
+
+  <section class="message" id="contact" aria-labelledby="contact-title">
+    <div class="mesh" aria-hidden="true">
+      <div class="mesh-orb mesh-orb--top"></div>
+      <div class="mesh-orb mesh-orb--bottom"></div>
+    </div>
+
+    <div class="message__inner">
+      <div class="message__text">
+        <h2 id="contact-title">We’re refining the Medal experience. Back soon.</h2>
+      </div>
+
+      <form class="contact-form" id="contact-form" novalidate>
+        <div class="field">
+          <label for="cf-name">Name</label>
+          <input id="cf-name" name="name" type="text" autocomplete="name" required placeholder="Your name">
+        </div>
+
+        <div class="field">
+          <label for="cf-email">Work email</label>
+          <input id="cf-email" name="email" type="email" autocomplete="email" required placeholder="name@company.com">
+        </div>
+
+        <div class="field field--message">
+          <label for="cf-brand">A few lines about your brand</label>
+          <textarea id="cf-brand" name="brand" rows="3" maxlength="900" required placeholder="Tell us what you're building, reworking or launching."></textarea>
+        </div>
+
+        <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="form-foot">
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+          <button class="btn" type="submit" id="cf-submit">Send inquiry <span aria-hidden="true">→</span></button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer class="site-foot">
+    <span>© Medal Studio</span>
+    <span>Miami · Lima</span>
+  </footer>
+</div>
+
+<script>
+/* ==========================================================
+   MEDAL — Elementor frontend JS
+   Video/audio + inquiry form + interactive mesh halos.
+   ========================================================== */
+
+(() => {
+  const root = document.querySelector('.medal-site');
+  if (!root || root.dataset.medalReady === '1') return;
+  root.dataset.medalReady = '1';
+
+  const CONFIG = {
+    formEndpoint: 'https://formsubmit.co/ajax/marcelo@medalusa.com',
+    fallbackEmail: 'marcelo@medalusa.com',
+    subject: 'New inquiry from medalusa.com',
+  };
+
+  /* ---------- Video / sound ---------- */
+  (() => {
+    const video = root.querySelector('#hero-video');
+    const toggle = root.querySelector('#sound-toggle');
+    const label = root.querySelector('#sound-label');
+    if (!video || !toggle || !label) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    video.muted = true;
+    video.volume = 1;
+
+    if (!reduceMotion) {
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+
+    toggle.addEventListener('click', () => {
+      video.muted = !video.muted;
+      const on = !video.muted;
+      toggle.setAttribute('aria-pressed', String(on));
+      label.textContent = on ? 'Sound on' : 'Sound off';
+      if (on) video.play().catch(() => {});
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && video.paused && !reduceMotion) {
+        video.play().catch(() => {});
+      }
+    });
+  })();
+
+  /* ---------- Inquiry form ---------- */
+  (() => {
+    const form = root.querySelector('#contact-form');
+    const statusEl = root.querySelector('#form-status');
+    const button = root.querySelector('#cf-submit');
+    if (!form || !statusEl || !button) return;
+
+    const setStatus = (text, type = '') => {
+      statusEl.textContent = text;
+      statusEl.className = `form-status${type ? ` is-${type}` : ''}`;
+    };
+
+    form.querySelectorAll('input, textarea').forEach((el) => {
+      el.addEventListener('input', () => {
+        el.closest('.field')?.classList.remove('is-invalid');
+        if (statusEl.classList.contains('is-error')) setStatus('');
+      });
+    });
+
+    const validate = () => {
+      let firstInvalid = null;
+
+      form.querySelectorAll('[required]').forEach((el) => {
+        const ok = el.value.trim() !== '' && el.checkValidity();
+        el.closest('.field')?.classList.toggle('is-invalid', !ok);
+        if (!ok && !firstInvalid) firstInvalid = el;
+      });
+
+      if (!firstInvalid) return true;
+
+      const email = form.elements.email;
+      const message = firstInvalid === email && email.value.trim()
+        ? 'Enter a valid email address.'
+        : 'Complete your name, work email and a few lines about your brand.';
+
+      setStatus(message, 'error');
+      firstInvalid.focus();
+      return false;
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      if (form.elements._honey.value) return;
+      if (!validate()) return;
+
+      button.setAttribute('aria-busy', 'true');
+      button.disabled = true;
+      setStatus('Sending…');
+
+      const data = {
+        name: form.elements.name.value.trim(),
+        email: form.elements.email.value.trim(),
+        brand: form.elements.brand.value.trim(),
+        message: form.elements.brand.value.trim(),
+        _subject: CONFIG.subject,
+        _replyto: form.elements.email.value.trim(),
+        _template: 'table',
+        _captcha: 'false',
+      };
+
+      try {
+        const response = await fetch(CONFIG.formEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        const json = await response.json().catch(() => ({}));
+        if (!response.ok || String(json.success) === 'false') {
+          throw new Error(json.message || response.statusText);
+        }
+
+        form.reset();
+        setStatus('Thank you. Your inquiry was sent successfully.', 'ok');
+      } catch (error) {
+        console.error('[Medal form]', error);
+        setStatus(`We could not send your message. Write to us directly at ${CONFIG.fallbackEmail}.`, 'error');
+      } finally {
+        button.removeAttribute('aria-busy');
+        button.disabled = false;
+      }
+    });
+  })();
+
+  /* ---------- Interactive halos ---------- */
+  (() => {
+    const section = root.querySelector('.message');
+    const form = root.querySelector('.contact-form');
+    const topOrb = root.querySelector('.mesh-orb--top');
+    const bottomOrb = root.querySelector('.mesh-orb--bottom');
+    if (!section || !topOrb || !bottomOrb) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mobileQuery = window.matchMedia('(max-width: 720px)');
+
+    const FOLLOW_SPEED = 0.055;
+    const RETURN_SPEED = 0.018;
+    const CORE_MAX_RADIUS = 92;
+    const CORE_MIN_RADIUS = 58;
+
+    const pointer = {
+      x: 0,
+      y: 0,
+      inside: false,
+      overForm: false,
+    };
+
+    const orbs = [
+      {
+        el: topOrb,
+        duration: 52000,
+        startX: .72,
+        startY: -.28,
+        travelX: -.72,
+        travelY: .12,
+        phase: 0,
+        x: 0,
+        y: 0,
+        autoX: 0,
+        autoY: 0,
+        initialized: false,
+        insideCore: false,
+        lastCoreEnter: 0,
+      },
+      {
+        el: bottomOrb,
+        duration: 58000,
+        startX: -.24,
+        startY: .58,
+        travelX: .82,
+        travelY: -.78,
+        phase: .22,
+        x: 0,
+        y: 0,
+        autoX: 0,
+        autoY: 0,
+        initialized: false,
+        insideCore: false,
+        lastCoreEnter: 0,
+      },
+    ];
+
+    let activeOrb = null;
+
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+    const smoothStep = (t) => t * t * (3 - 2 * t);
+    const pingPong = (value) => {
+      const t = value % 1;
+      return t < .5 ? smoothStep(t * 2) : smoothStep((1 - t) * 2);
+    };
+
+    const getCoreRadius = (orb) => clamp(orb.el.offsetWidth * .115, CORE_MIN_RADIUS, CORE_MAX_RADIUS);
+
+    const getOrbCenter = (orb) => ({
+      x: orb.x + orb.el.offsetWidth / 2,
+      y: orb.y + orb.el.offsetHeight / 2,
+    });
+
+    const distanceToOrb = (orb) => {
+      const center = getOrbCenter(orb);
+      return Math.hypot(pointer.x - center.x, pointer.y - center.y);
+    };
+
+    const releaseOrb = () => {
+      activeOrb = null;
+      orbs.forEach((orb) => { orb.insideCore = false; });
+    };
+
+    const evaluateCores = () => {
+      if (mobileQuery.matches || !pointer.inside || pointer.overForm) return;
+
+      const now = performance.now();
+      const candidates = [];
+
+      orbs.forEach((orb, index) => {
+        const distance = distanceToOrb(orb);
+        const radius = getCoreRadius(orb);
+        const isInside = distance <= radius;
+
+        if (isInside && !orb.insideCore) {
+          orb.lastCoreEnter = now;
+        }
+
+        orb.insideCore = isInside;
+
+        if (isInside) {
+          candidates.push({
+            index,
+            distance,
+            lastCoreEnter: orb.lastCoreEnter,
+          });
+        }
+      });
+
+      if (!candidates.length) return;
+
+      if (candidates.length === 1) {
+        activeOrb = candidates[0].index;
+        return;
+      }
+
+      candidates.sort((a, b) => {
+        if (b.lastCoreEnter !== a.lastCoreEnter) {
+          return b.lastCoreEnter - a.lastCoreEnter;
+        }
+        return a.distance - b.distance;
+      });
+
+      activeOrb = candidates[0].index;
+    };
+
+    const updatePointer = (event) => {
+      const rect = section.getBoundingClientRect();
+      pointer.x = clamp(event.clientX - rect.left, 0, rect.width);
+      pointer.y = clamp(event.clientY - rect.top, 0, rect.height);
+    };
+
+    section.addEventListener('pointerenter', (event) => {
+      if (mobileQuery.matches) return;
+      pointer.inside = true;
+      updatePointer(event);
+    });
+
+    section.addEventListener('pointermove', (event) => {
+      if (mobileQuery.matches) return;
+
+      pointer.inside = true;
+      pointer.overForm = event.target instanceof Element && Boolean(event.target.closest('.contact-form'));
+      updatePointer(event);
+
+      if (pointer.overForm) {
+        releaseOrb();
+        return;
+      }
+
+      evaluateCores();
+    });
+
+    section.addEventListener('pointerleave', () => {
+      pointer.inside = false;
+      pointer.overForm = false;
+      releaseOrb();
+    });
+
+    if (form) {
+      form.addEventListener('pointerenter', () => {
+        pointer.overForm = true;
+        releaseOrb();
+      });
+
+      form.addEventListener('pointerleave', () => {
+        pointer.overForm = false;
+      });
+    }
+
+    const animate = (time) => {
+      const rect = section.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+      const isMobile = mobileQuery.matches;
+      const reduced = reduceMotion.matches;
+
+      orbs.forEach((orb, index) => {
+        const progress = reduced ? .2 : (time / orb.duration + orb.phase) % 1;
+        const path = pingPong(progress);
+
+        let autoX = width * (orb.startX + orb.travelX * path);
+        let autoY = height * (orb.startY + orb.travelY * path);
+
+        if (!reduced) {
+          autoX += Math.sin(time / 9200 + index * 2.3) * 22;
+          autoY += Math.cos(time / 10800 + index * 1.7) * 18;
+        }
+
+        orb.autoX = autoX;
+        orb.autoY = autoY;
+
+        let targetX = autoX;
+        let targetY = autoY;
+
+        if (!isMobile && pointer.inside && !pointer.overForm && activeOrb === index) {
+          targetX = pointer.x - orb.el.offsetWidth / 2;
+          targetY = pointer.y - orb.el.offsetHeight / 2;
+
+          targetX = clamp(
+            targetX,
+            -orb.el.offsetWidth * .58,
+            width - orb.el.offsetWidth * .42
+          );
+
+          targetY = clamp(
+            targetY,
+            -orb.el.offsetHeight * .58,
+            height - orb.el.offsetHeight * .42
+          );
+        }
+
+        if (!orb.initialized) {
+          orb.x = autoX;
+          orb.y = autoY;
+          orb.initialized = true;
+        }
+
+        const followsPointer = activeOrb === index && pointer.inside && !pointer.overForm && !isMobile;
+        const easing = followsPointer ? FOLLOW_SPEED : RETURN_SPEED;
+
+        orb.x += (targetX - orb.x) * easing;
+        orb.y += (targetY - orb.y) * easing;
+
+        orb.el.style.transform = `translate3d(${orb.x}px, ${orb.y}px, 0)`;
+      });
+
+      requestAnimationFrame(animate);
+    };
+
+    requestAnimationFrame(animate);
+  })();
+})();
+</script>

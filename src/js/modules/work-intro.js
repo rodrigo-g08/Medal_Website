@@ -12,16 +12,16 @@ const LOGO_BOX = {
 
 const APOSTROPHE_CENTER = {
   x: 257.475,
-  y: 48.8,
+  y: 53.8,
 };
 
 const APOSTROPHE_POLYGON = [
-  [257.48, 67.66],
-  [218.21, 45.57],
-  [226.97, 30.00],
-  [257.48, 47.16],
-  [287.98, 30.00],
-  [296.74, 45.57],
+  [257.48, 72.66],
+  [218.21, 50.57],
+  [226.97, 35.00],
+  [257.48, 52.16],
+  [287.98, 35.00],
+  [296.74, 50.57],
 ];
 
 export function initWorkIntro() {
@@ -138,12 +138,12 @@ export function initWorkIntro() {
      * A tighter INITIAL SVG camera makes the full wordmark materially larger.
      * The apostrophe focus, final camera and zoom logic below are unchanged.
      */
-    let logoFraction = 0.72;
+    let logoFraction = 0.98;
 
     if (window.innerWidth <= 540) {
-      logoFraction = 0.84;
+      logoFraction = 0.96;
     } else if (window.innerWidth <= 860) {
-      logoFraction = 0.74;
+      logoFraction = 0.94;
     }
 
     const width =
@@ -450,11 +450,13 @@ export function initWorkIntro() {
         height,
       });
 
-    if (fullyWhite) {
+    const earlyTakeover = p >= 0.955;
+
+    if (fullyWhite || earlyTakeover) {
       showBoneScreen();
     } else if (
       boneVisible &&
-      p < 0.985
+      p < 0.94
     ) {
       hideBoneScreen();
     }

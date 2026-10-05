@@ -27,7 +27,6 @@
       <a class="site-header__link" href="/work/">Work</a>
       <a class="site-header__link is-active" href="/film-services/">Film &amp; Services</a>
       <a class="site-header__link" href="/contact/">Contact</a>
-
       <a class="button button--primary button--header" href="/contact/">
         <span class="button__label" data-label="Book a session">Book a session</span>
         <span class="button__arrow" aria-hidden="true">→</span>
@@ -38,15 +37,7 @@
       <a class="button button--primary button--compact" href="/contact/">
         <span class="button__label" data-label="Book a session">Book a session</span>
       </a>
-
-      <button
-        class="menu-toggle"
-        type="button"
-        aria-label="Open menu"
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-        data-menu-toggle
-      >
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
         <span></span><span></span>
       </button>
     </div>
@@ -66,31 +57,19 @@
     <section class="film-hero" data-film-hero data-theme="dark">
       <div class="film-hero__sticky">
         <div class="film-hero__frame" data-film-frame>
-          <video
-            class="film-hero__video"
-            data-film-video
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="metadata"
-            poster="/assets/img/film/film-hero-poster.jpg"
-          >
+          <video class="film-hero__video" data-film-video autoplay muted loop playsinline preload="metadata" poster="/assets/img/film/film-hero-poster.jpg">
             <source src="/assets/video/artech-classic-cars.mp4" type="video/mp4" />
           </video>
           <div class="film-hero__scrim" aria-hidden="true"></div>
-
           <div class="film-hero__opening" data-film-opening>
             <p class="eyebrow">Artech · Classic car collection</p>
             <h1 class="yellow-sweep yellow-sweep--block" data-yellow-sweep>Film</h1>
           </div>
-
           <button class="film-sound" type="button" data-film-sound aria-pressed="false">
             <span class="film-sound__dot" aria-hidden="true"></span>
             <span data-film-sound-label>Sound off</span>
           </button>
         </div>
-
         <div class="film-hero__cinema-copy" data-film-cinema-copy>
           <p class="eyebrow">Film direction · Medal</p>
           <h2 class="yellow-sweep yellow-sweep--block" data-yellow-sweep>Every frame,<br />directed.</h2>
@@ -105,213 +84,102 @@
           <p class="eyebrow">Reels</p>
           <h2 class="yellow-sweep yellow-sweep--block" data-yellow-sweep>Made for the feed.</h2>
           <p class="reels__intro">Short-form work still gets full direction. Framing, rhythm and product remain intentional even when the format moves fast.</p>
+          <p class="reels__help">Rest on a reel and it opens full screen, or select it to open now.</p>
         </div>
-
-        <div class="reels__row" data-reels-row>
-          <article class="reel-card" data-reel-card data-client="Artech">
-            <video muted loop playsinline preload="none" poster="/assets/img/strip/artech-dashboard.jpg">
-              <source src="/assets/video/reels/artech-reel.mp4" type="video/mp4" />
-            </video>
-            <div class="reel-card__shade" aria-hidden="true"></div>
-            <div class="reel-card__meta">
-              <span>Artech</span>
-              <span>Classic cars</span>
-            </div>
-            <span class="reel-card__progress" aria-hidden="true"><i></i></span>
-          </article>
-
-          <article class="reel-card" data-reel-card data-client="Fiesta">
-            <video muted loop playsinline preload="none" poster="/assets/img/work/fiesta-grill-wide.jpg">
-              <source src="/assets/video/reels/fiesta-reel.mp4" type="video/mp4" />
-            </video>
-            <div class="reel-card__shade" aria-hidden="true"></div>
-            <div class="reel-card__meta">
-              <span>Fiesta</span>
-              <span>Hospitality</span>
-            </div>
-            <span class="reel-card__progress" aria-hidden="true"><i></i></span>
-          </article>
-
-          <article class="reel-card" data-reel-card data-client="Kjolle">
-            <video muted loop playsinline preload="none" poster="/assets/img/medal-01-tasting-menu.jpg">
-              <source src="/assets/video/reels/kjolle-reel.mp4" type="video/mp4" />
-            </video>
-            <div class="reel-card__shade" aria-hidden="true"></div>
-            <div class="reel-card__meta">
-              <span>Kjolle</span>
-              <span>Food direction</span>
-            </div>
-            <span class="reel-card__progress" aria-hidden="true"><i></i></span>
-          </article>
-        </div>
+      </div>
+      <div class="reels__viewport" data-reels-viewport>
+        <div class="reels__track" data-reels-track></div>
       </div>
     </section>
 
-
-    <section class="services-intro services-intro--v2" data-services-intro data-theme="dark">
-      <div class="section-shell services-intro__inner">
-        <p class="eyebrow">Services</p>
-        <h2 class="yellow-sweep yellow-sweep--block" data-yellow-sweep>Three medals.<br />One standard.</h2>
-        <p class="services-intro__copy">Choose how deeply Medal enters the business. Production can begin with one shoot or extend through the entire brand and launch system. The standard of direction stays the same.</p>
-
-        <div class="medal-selector medal-selector--visual" data-medal-selector>
-          <button class="medal-choice" type="button" data-medal-target="bronze" aria-label="Explore Bronze Medal">
-            <span class="medal-choice__object" data-medal-object>
-              <img src="/assets/img/film/medals/bronze-medal.png" alt="Bronze Medal" />
-            </span>
-            <span class="medal-choice__title">Bronze Medal</span>
-            <span class="medal-choice__subtitle">The Shoot</span>
-            <span class="medal-choice__action">Explore Bronze <span aria-hidden="true">→</span></span>
-          </button>
-
-          <button class="medal-choice" type="button" data-medal-target="silver" aria-label="Explore Silver Medal">
-            <span class="medal-choice__object" data-medal-object>
-              <img src="/assets/img/film/medals/silver-medal.png" alt="Silver Medal" />
-            </span>
-            <span class="medal-choice__title">Silver Medal</span>
-            <span class="medal-choice__subtitle">The Brand</span>
-            <span class="medal-choice__action">Explore Silver <span aria-hidden="true">→</span></span>
-          </button>
-
-          <button class="medal-choice" type="button" data-medal-target="gold" aria-label="Explore Gold Medal">
-            <span class="medal-choice__object" data-medal-object>
-              <img src="/assets/img/film/medals/gold-medal.png" alt="Gold Medal" />
-            </span>
-            <span class="medal-choice__title">Gold Medal</span>
-            <span class="medal-choice__subtitle">The Launch</span>
-            <span class="medal-choice__action">Explore Gold <span aria-hidden="true">→</span></span>
-          </button>
+    <div class="reel-viewer" data-reel-viewer role="dialog" aria-modal="true" aria-hidden="true" aria-label="Reel viewer">
+      <div class="reel-viewer__backdrop" data-viewer-backdrop></div>
+      <button class="reel-viewer__close" type="button" data-viewer-close aria-label="Close reel">✕</button>
+      <div class="reel-viewer__layout">
+        <div class="reel-viewer__meta" data-viewer-meta>
+          <p class="eyebrow" data-viewer-category>Reel</p>
+          <h2 data-viewer-client></h2>
+          <div class="reel-viewer__kpis" data-viewer-kpis></div>
         </div>
-      </div>
-    </section>
-
-    <section class="medal-journey medal-journey--v2" data-medal-journey data-theme="dark">
-      <div class="medal-journey__pin" data-medal-pin>
-        <div class="medal-journey__index" aria-hidden="true">
-          <span data-service-index>01</span><span>/ 03</span>
+        <div class="reel-viewer__media-shell" data-viewer-shell>
+          <video class="reel-viewer__video" data-viewer-video playsinline loop preload="metadata"></video>
+          <span class="reel-viewer__progress" aria-hidden="true"><i data-viewer-progress></i></span>
         </div>
-
-        <div class="medal-journey__visual" data-service-visual>
-          <img class="service-medal-image" data-service-medal-image src="/assets/img/film/medals/bronze-medal.png" alt="Bronze Medal" />
-        </div>
-
-        <div class="medal-journey__copy" data-service-copy>
-          <p class="eyebrow" data-service-label>Bronze Medal · The Shoot</p>
-          <h2 class="yellow-sweep yellow-sweep--block" data-service-title data-service-yellow-title>The shoot.</h2>
-          <p class="medal-journey__lead" data-service-lead>For brands with the idea already defined. Medal turns it into a directed production where every frame answers the same brief.</p>
-          <ul data-service-list>
-            <li>Creative direction</li>
-            <li>Photography</li>
-            <li>Film</li>
-            <li>Shot list</li>
-            <li>Production</li>
-            <li>Final selects</li>
-          </ul>
-        </div>
-
-        <div class="medal-journey__rail" aria-hidden="true">
-          <span data-service-progress></span>
-        </div>
-
-        <div class="journey-exposure" aria-hidden="true">
-          <span class="journey-exposure__flare" data-journey-flare></span>
-          <span class="journey-exposure__bone" data-journey-bone></span>
-        </div>
-
-        <div class="journey-direction" data-journey-direction>
-          <div class="section-shell journey-direction__inner">
-            <p class="eyebrow">How Medal works</p>
-            <h2 class="yellow-sweep yellow-sweep--ink yellow-sweep--block" data-yellow-sweep data-direction-title>Production starts<br />with a decision,<br />not a camera.</h2>
-            <p class="journey-direction__lead">We align the idea, scope and route before production starts, so the team spends the shoot making the work better—not deciding what the work should be.</p>
-
-            <div class="journey-direction__grid">
-              <article>
-                <span>01</span>
-                <h3>Direction first</h3>
-                <p>Concept, visual direction and shot logic are defined before production.</p>
-              </article>
-              <article>
-                <span>02</span>
-                <h3>Scope without surprises</h3>
-                <p>Deliverables, timing and production are agreed before the first shoot day.</p>
-              </article>
-              <article>
-                <span>03</span>
-                <h3>One team, end to end</h3>
-                <p>Strategy, direction, production and delivery stay connected.</p>
-              </article>
-            </div>
+        <div class="reel-viewer__controls" data-viewer-controls>
+          <button type="button" data-viewer-replay>Replay</button>
+          <div class="reel-viewer__arrows">
+            <button type="button" data-viewer-prev aria-label="Previous reel">←</button>
+            <button type="button" data-viewer-next aria-label="Next reel">→</button>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="plan-select plan-select--cut" data-plan-select data-theme="dark">
-      <div class="plan-select__sticky" data-plan-sticky>
-        <div class="plan-select__dark-stage">
-          <div class="section-shell plan-select__inner">
-        <div class="plan-select__heading">
+    <section class="medals" data-medals data-theme="dark">
+      <div class="medals__stage" data-medals-stage>
+        <div class="medals__title" data-medals-title>
+          <p class="eyebrow">Services</p>
+          <h2>Three medals.<br /><span class="medals__standard" data-medals-standard>One standard.</span></h2>
+        </div>
+
+        <div class="medals__spot" data-spot="bronze">
+          <p class="eyebrow">Bronze Medal · The Shoot</p>
+          <h2 class="yellow-sweep yellow-sweep--block" data-spot-title>The Shoot</h2>
+          <p>For brands with the idea already defined. Medal turns it into a directed production where every frame answers the same brief.</p>
+        </div>
+        <div class="medals__spot" data-spot="silver">
+          <p class="eyebrow">Silver Medal · The Brand</p>
+          <h2 class="yellow-sweep yellow-sweep--block" data-spot-title>The Brand</h2>
+          <p>For businesses whose value has outgrown the way they show up. Medal builds one visual direction that can keep working across channels.</p>
+        </div>
+        <div class="medals__spot" data-spot="gold">
+          <p class="eyebrow">Gold Medal · The Launch</p>
+          <h2 class="yellow-sweep yellow-sweep--block" data-spot-title>The Launch</h2>
+          <p>For an opening, relaunch or campaign that needs one clear idea carried from first frame to the final rollout.</p>
+        </div>
+
+        <div class="medals__cards" data-medals-cards>
           <p class="eyebrow">Choose your Medal</p>
-          <h2 class="yellow-sweep yellow-sweep--block" data-plan-yellow-title>Select<br />your plan.</h2>
-          <p>Same standard. Different level of involvement. Choose the Medal that matches what the brand needs now.</p>
-        </div>
-
-        <div class="plan-grid" data-plan-grid>
-          <article class="plan-card" data-plan-card="bronze">
-            <button class="plan-card__medal" type="button" data-plan-medal="bronze" aria-label="Select Bronze Medal">
-              <img src="/assets/img/film/medals/bronze-medal.png" alt="Bronze Medal" />
-            </button>
-            <p class="plan-card__eyebrow">Bronze Medal</p>
-            <h3>The Shoot</h3>
-            <p class="plan-card__copy">Focused creative direction and production for a brand that already knows what it needs to say.</p>
-            <button class="plan-card__select" type="button" data-plan-select-button="bronze"><span>Select Bronze</span></button>
-          </article>
-
-          <article class="plan-card" data-plan-card="silver">
-            <button class="plan-card__medal" type="button" data-plan-medal="silver" aria-label="Select Silver Medal">
-              <img src="/assets/img/film/medals/silver-medal.png" alt="Silver Medal" />
-            </button>
-            <p class="plan-card__eyebrow">Silver Medal</p>
-            <h3>The Brand</h3>
-            <p class="plan-card__copy">A connected visual system for businesses whose value has outgrown the way the brand currently shows up.</p>
-            <button class="plan-card__select" type="button" data-plan-select-button="silver"><span>Select Silver</span></button>
-          </article>
-
-          <article class="plan-card" data-plan-card="gold">
-            <button class="plan-card__medal" type="button" data-plan-medal="gold" aria-label="Select Gold Medal">
-              <img src="/assets/img/film/medals/gold-medal.png" alt="Gold Medal" />
-            </button>
-            <p class="plan-card__eyebrow">Gold Medal</p>
-            <h3>The Launch</h3>
-            <p class="plan-card__copy">One clear idea carried from campaign direction through hero film, rollout and launch execution.</p>
-            <button class="plan-card__select" type="button" data-plan-select-button="gold"><span>Select Gold</span></button>
-          </article>
-        </div>
-
-        <div class="plan-select__decision" data-plan-decision aria-live="polite">
-          <p><span data-selected-plan>Bronze Medal</span> selected.</p>
-          <a class="button button--primary plan-select__cta" href="/contact/" data-plan-cta>
-            <span class="button__label" data-label="Start with Bronze">Start with Bronze</span>
-            <span class="button__arrow" aria-hidden="true">→</span>
-          </a>
-        </div>
-          </div>
-
-        </div>
-
-        <div class="medal-cut" aria-hidden="true" data-medal-cut>
-          <span class="medal-cut__panel medal-cut__panel--left" data-cut-left></span>
-          <span class="medal-cut__panel medal-cut__panel--right" data-cut-right></span>
-          <div class="medal-cut__note medal-cut__note--left" data-cut-note-left>
-            <span>Clarity before production</span>
-            <p>We define the route before the cameras roll.</p>
-          </div>
-          <span class="medal-cut__mark" data-cut-mark></span>
-          <div class="medal-cut__note medal-cut__note--right" data-cut-note-right>
-            <span>One standard</span>
-            <p>Different depth. Same direction.</p>
+          <div class="medals__grid">
+            <article class="medal-card" data-card="bronze">
+              <span class="medal-card__slot" data-card-slot="bronze" aria-hidden="true"></span>
+              <div class="medal-card__body">
+                <p class="medal-card__eyebrow">Bronze Medal</p>
+                <h3>The Shoot</h3>
+                <p class="medal-card__copy">Focused creative direction and production for a brand that already knows what it needs to say.</p>
+                <ul><li>Creative direction</li><li>Photography</li><li>Film</li><li>Shot list</li><li>Production</li><li>Final selects</li></ul>
+                <a class="button button--primary" href="/contact/"><span class="button__label" data-label="Start with Bronze">Start with Bronze</span><span class="button__arrow" aria-hidden="true">→</span></a>
+              </div>
+            </article>
+            <article class="medal-card" data-card="silver">
+              <span class="medal-card__slot" data-card-slot="silver" aria-hidden="true"></span>
+              <div class="medal-card__body">
+                <p class="medal-card__eyebrow">Silver Medal</p>
+                <h3>The Brand</h3>
+                <p class="medal-card__copy">A connected visual system for businesses whose value has outgrown the way the brand currently shows up.</p>
+                <ul><li>Brand direction</li><li>Visual system</li><li>Photography</li><li>Film</li><li>Content framework</li><li>Launch-ready assets</li></ul>
+                <a class="button button--primary" href="/contact/"><span class="button__label" data-label="Start with Silver">Start with Silver</span><span class="button__arrow" aria-hidden="true">→</span></a>
+              </div>
+            </article>
+            <article class="medal-card medal-card--gold" data-card="gold">
+              <span class="medal-card__badge">Most complete</span>
+              <span class="medal-card__slot" data-card-slot="gold" aria-hidden="true"></span>
+              <div class="medal-card__body">
+                <p class="medal-card__eyebrow">Gold Medal</p>
+                <h3>The Launch</h3>
+                <p class="medal-card__copy">One clear idea carried from campaign direction through hero film, rollout and launch execution.</p>
+                <ul><li>Launch concept</li><li>Campaign direction</li><li>Hero film</li><li>Photography</li><li>Rollout system</li><li>Launch execution</li></ul>
+                <a class="button button--primary" href="/contact/"><span class="button__label" data-label="Start with Gold">Start with Gold</span><span class="button__arrow" aria-hidden="true">→</span></a>
+              </div>
+            </article>
           </div>
         </div>
+
+        <button class="medals__medal" data-medal="bronze" type="button" aria-label="Go to Bronze Medal"><img src="/assets/img/film/medals/bronze-medal.png" alt="" /></button>
+        <button class="medals__medal" data-medal="silver" type="button" aria-label="Go to Silver Medal"><img src="/assets/img/film/medals/silver-medal.png" alt="" /></button>
+        <button class="medals__medal" data-medal="gold" type="button" aria-label="Go to Gold Medal"><img src="/assets/img/film/medals/gold-medal.png" alt="" /></button>
+
+        <div class="medals__index" data-medals-index aria-hidden="true"><span><b data-medals-index-value>01</b> / 03</span><i><b data-medals-index-bar></b></i></div>
       </div>
     </section>
 
@@ -319,18 +187,15 @@
       <div class="section-shell services-availability__inner">
         <div>
           <p class="eyebrow" data-service-month>October availability</p>
-          <h2 class="yellow-sweep yellow-sweep--block" data-yellow-sweep><span data-occupied-slots>4</span> of <span data-total-slots>6</span><br />slots in motion.</h2>
+          <h2 class="yellow-sweep yellow-sweep--block" data-yellow-sweep data-availability-title><span data-occupied-slots>4</span> of <span data-total-slots>6</span><br />slots in motion.</h2>
           <p class="services-availability__note"><span data-open-slots>2</span> monthly positions remain open.</p>
         </div>
-
         <a class="button button--primary services-availability__cta" href="/contact/">
           <span class="button__label" data-label="Book your Medal Session">Book your Medal Session</span>
           <span class="button__arrow" aria-hidden="true">→</span>
         </a>
       </div>
     </section>
-
-
   </main>
 
   <script type="module" src="/src/js/pages/film-services.js"></script>

@@ -136,34 +136,18 @@
               Choose the day.<br />
               <span class="text-sweep" data-sweep>We take care of the rest.</span>
             </h2>
-            <p class="contact-scheduler__lead">Calendly is not connected yet, but this mockup already explains the logic: choose a day, choose a time, and move straight into confirmation.</p>
+            <p class="contact-scheduler__lead">Choose a time directly in Calendly. Your booking is confirmed there and Medal takes care of the rest.</p>
             <p class="contact-scheduler__meta">Video call · English or Spanish · America/Lima</p>
           </div>
 
-          <div class="contact-scheduler__ui" data-scheduler>
-            <div class="schedule-panel schedule-panel--month">
-              <div class="schedule-panel__header">
-                <p>November 2026</p>
-                <div class="schedule-panel__nav" aria-hidden="true"><span>‹</span><span>›</span></div>
-              </div>
-              <div class="schedule-grid__weekdays" aria-hidden="true">
-                <span>MO</span><span>TU</span><span>WE</span><span>TH</span><span>FR</span><span>SA</span><span>SU</span>
-              </div>
-              <div class="schedule-grid" data-day-grid></div>
-            </div>
-
-            <div class="schedule-panel schedule-panel--times">
-              <div class="schedule-panel__header">
-                <p data-selected-day-label>Choose a day</p>
-                <small>30 min</small>
-              </div>
-              <div class="schedule-times" data-time-grid>
-                <p class="schedule-times__placeholder">Select a date to see available hours.</p>
-              </div>
-              <button class="button button--primary contact-scheduler__button" type="button" data-scheduler-confirm disabled>
-                <span class="button__label" data-label="Confirm session">Confirm session</span>
+          <div class="contact-calendly" data-scheduler>
+            <div class="contact-calendly__frame" data-calendly-inline aria-label="Calendly scheduling widget"></div>
+            <div class="contact-calendly__fallback" data-calendly-fallback>
+              <p>If the calendar does not load, open the Medal Session directly in Calendly.</p>
+              <a class="button button--primary" href="https://calendly.com/rgamero406/medal-session" target="_blank" rel="noopener noreferrer">
+                <span class="button__label" data-label="Open Calendly">Open Calendly</span>
                 <span class="button__arrow" aria-hidden="true">→</span>
-              </button>
+              </a>
             </div>
           </div>
         </div>

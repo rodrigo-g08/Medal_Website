@@ -116,26 +116,40 @@ export function initConfirmed() {
   const params = new URLSearchParams(window.location.search);
   const start = params.get("start");
   const end = params.get("end");
+  const source = params.get("source");
+  const fromCalendly = source === "calendly" || sessionStorage.getItem("medal-calendly-booked") === "1";
+  sessionStorage.removeItem("medal-calendly-booked");
   const booking = formatBooking(start);
 
   const dateEl = document.querySelector("[data-confirmed-date]");
   const timeEl = document.querySelector("[data-confirmed-time]");
-  if (dateEl) dateEl.textContent = booking.date;
-  if (timeEl) timeEl.textContent = booking.time;
+  if (fromCalendly && !start) {
+    if (dateEl) dateEl.textContent = "Session booked";
+    if (timeEl) timeEl.textContent = "Calendly confirmation sent";
+  } else {
+    if (dateEl) dateEl.textContent = booking.date;
+    if (timeEl) timeEl.textContent = booking.time;
+  }
 
   const calendar = document.querySelector("[data-add-calendar]");
   if (calendar) {
-    calendar.addEventListener("click", () => {
-      const actualStart = start || "2026-11-05T10:00:00-05:00";
-      const blob = makeCalendarFile(actualStart, end);
-      if (!blob) return;
-      const url = URL.createObjectURL(blob);
-      const anchor = document.createElement("a");
-      anchor.href = url;
-      anchor.download = "medal-session.ics";
-      anchor.click();
-      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-    });
+    if (fromCalendly && !start) {
+      calendar.textContent = "Calendar invite sent by Calendly";
+      calendar.disabled = true;
+      calendar.setAttribute("aria-disabled", "true");
+    } else {
+      calendar.addEventListener("click", () => {
+        const actualStart = start || "2026-11-05T10:00:00-05:00";
+        const blob = makeCalendarFile(actualStart, end);
+        if (!blob) return;
+        const url = URL.createObjectURL(blob);
+        const anchor = document.createElement("a");
+        anchor.href = url;
+        anchor.download = "medal-session.ics";
+        anchor.click();
+        window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+      });
+    }
   }
 
   const whatsapp = document.querySelector("[data-whatsapp-action]");

@@ -5,25 +5,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-const schedulerData = {
-  monthLabel: "November 2026",
-  year: 2026,
-  monthIndex: 10,
-  availableDays: [3, 4, 5, 6, 10, 12, 13, 17, 18, 24, 26],
-  timesByDay: {
-    3: ["09:30", "10:30", "12:00", "16:00"],
-    4: ["09:00", "10:30", "15:00"],
-    5: ["09:30", "10:00", "11:30", "15:00", "16:30"],
-    6: ["10:00", "12:30", "16:00"],
-    10: ["09:30", "11:00", "16:00"],
-    12: ["09:00", "10:30", "13:30", "17:00"],
-    13: ["09:30", "11:30", "15:30"],
-    17: ["10:00", "11:00", "16:00"],
-    18: ["09:30", "12:00", "16:30"],
-    24: ["09:00", "10:00", "11:30", "15:00"],
-    26: ["09:30", "10:30", "14:30", "16:00"],
-  },
-};
+const CALENDLY_URL = "https://calendly.com/rgamero406/medal-session";
+
 
 function prepareSweep(target) {
   if (!target || target.dataset.sweepPrepared === "true") return;
@@ -125,80 +108,6 @@ function initOutcomes() {
   });
 }
 
-function buildMonthGrid(container, onSelectDay, selectedDay) {
-  const firstWeekday = new Date(schedulerData.year, schedulerData.monthIndex, 1).getDay();
-  const offset = firstWeekday === 0 ? 6 : firstWeekday - 1;
-  const totalDays = new Date(schedulerData.year, schedulerData.monthIndex + 1, 0).getDate();
-  const totalCells = Math.ceil((offset + totalDays) / 7) * 7;
-  const fragment = document.createDocumentFragment();
-
-  for (let index = 0; index < totalCells; index += 1) {
-    const day = index - offset + 1;
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "schedule-day";
-
-    if (day < 1 || day > totalDays) {
-      button.classList.add("is-disabled");
-      button.disabled = true;
-      button.setAttribute("aria-hidden", "true");
-      fragment.append(button);
-      continue;
-    }
-
-    button.textContent = String(day);
-    const isAvailable = schedulerData.availableDays.includes(day);
-    if (!isAvailable) {
-      button.classList.add("is-disabled");
-      button.disabled = true;
-    } else {
-      button.classList.add("is-available");
-      button.addEventListener("click", () => onSelectDay(day));
-    }
-
-    if (day === selectedDay) button.classList.add("is-selected");
-    fragment.append(button);
-  }
-
-  container.innerHTML = "";
-  container.append(fragment);
-}
-
-function formatSelectedDay(day) {
-  if (!day) return "Choose a day";
-  const date = new Date(schedulerData.year, schedulerData.monthIndex, day);
-  return new Intl.DateTimeFormat("en", { weekday: "short", month: "short", day: "numeric" }).format(date);
-}
-
-function buildTimeSlots(container, day, selectedTime, onSelectTime) {
-  container.innerHTML = "";
-  const times = schedulerData.timesByDay[day] || [];
-  if (!day || !times.length) {
-    container.innerHTML = '<p class="schedule-times__placeholder">Select a date to see available hours.</p>';
-    return;
-  }
-
-  times.forEach((time) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "schedule-time";
-    button.textContent = time;
-    if (time === selectedTime) button.classList.add("is-selected");
-    button.addEventListener("click", () => onSelectTime(time));
-    container.append(button);
-  });
-}
-
-function toLimaISO(day, time) {
-  const [hours, minutes] = time.split(":").map(Number);
-  return `2026-11-${String(day).padStart(2, "0")}T${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:00-05:00`;
-}
-
-function addThirtyMinutes(iso) {
-  const date = new Date(iso);
-  return new Date(date.getTime() + 30 * 60 * 1000).toISOString();
-}
-
 function showConfirming(url) {
   const overlay = document.querySelector("[data-contact-confirming]");
   const curtain = overlay?.querySelector(".contact-confirming__curtain");
@@ -247,52 +156,72 @@ function showConfirming(url) {
     });
 }
 
+function loadCalendlyScript() {
+  if (window.Calendly?.initInlineWidget) return Promise.resolve(window.Calendly);
+
+  return new Promise((resolve, reject) => {
+    const existing = document.querySelector('script[data-medal-calendly]');
+    if (existing) {
+      existing.addEventListener('load', () => resolve(window.Calendly), { once: true });
+      existing.addEventListener('error', reject, { once: true });
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://assets.calendly.com/assets/external/widget.js';
+    script.async = true;
+    script.dataset.medalCalendly = 'true';
+    script.addEventListener('load', () => resolve(window.Calendly), { once: true });
+    script.addEventListener('error', reject, { once: true });
+    document.head.append(script);
+  });
+}
+
 function initScheduler() {
-  const section = document.querySelector("[data-contact-scheduler]");
+  const section = document.querySelector('[data-contact-scheduler]');
   if (!section) return;
-  const dayGrid = section.querySelector("[data-day-grid]");
-  const timeGrid = section.querySelector("[data-time-grid]");
-  const confirm = section.querySelector("[data-scheduler-confirm]");
-  const label = section.querySelector("[data-selected-day-label]");
-  const sweep = section.querySelector(".contact-scheduler__intro [data-sweep]");
+
+  const sweep = section.querySelector('.contact-scheduler__intro [data-sweep]');
+  const mount = section.querySelector('[data-calendly-inline]');
+  const shell = section.querySelector('.contact-calendly');
   prepareSweep(sweep);
 
   ScrollTrigger.create({
     trigger: section,
-    start: "top 60%",
+    start: 'top 60%',
     onEnter: () => playSweep(sweep),
     onEnterBack: () => playSweep(sweep),
   });
 
-  let selectedDay = 5;
-  let selectedTime = "10:00";
+  if (!mount) return;
 
-  const update = () => {
-    buildMonthGrid(dayGrid, (day) => {
-      selectedDay = day;
-      selectedTime = null;
-      update();
-    }, selectedDay);
+  loadCalendlyScript()
+    .then((Calendly) => {
+      if (!Calendly?.initInlineWidget) throw new Error('Calendly failed to initialize');
+      Calendly.initInlineWidget({
+        url: `${CALENDLY_URL}?hide_event_type_details=1&hide_gdpr_banner=1`,
+        parentElement: mount,
+        prefill: {},
+        utm: { utmSource: 'medalusa', utmMedium: 'website', utmCampaign: 'medal-session' },
+      });
+      shell?.classList.add('is-loaded');
+    })
+    .catch(() => shell?.classList.add('has-error'));
 
-    buildTimeSlots(timeGrid, selectedDay, selectedTime, (time) => {
-      selectedTime = time;
-      update();
-    });
+  const onCalendlyMessage = (event) => {
+    if (event.origin !== 'https://calendly.com') return;
+    const name = event.data?.event;
+    if (!name || !name.startsWith('calendly.')) return;
 
-    label.textContent = formatSelectedDay(selectedDay);
-    confirm.disabled = !(selectedDay && selectedTime);
+    if (name === 'calendly.event_scheduled') {
+      sessionStorage.setItem('medal-calendly-booked', '1');
+      showConfirming('/contact/confirmed/?phase=booked&source=calendly');
+    }
   };
 
-  update();
-
-  confirm?.addEventListener("click", () => {
-    if (!(selectedDay && selectedTime)) return;
-    const start = toLimaISO(selectedDay, selectedTime);
-    const end = addThirtyMinutes(start);
-    const url = `/contact/confirmed/?phase=booked&start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`;
-    showConfirming(url);
-  });
+  window.addEventListener('message', onCalendlyMessage);
 }
+
 
 export function initContact(lenis) {
   initScrollLinks(lenis);

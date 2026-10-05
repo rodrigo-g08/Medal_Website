@@ -499,3 +499,60 @@ body[data-page="contact"] .site-header__link.is-active { color: var(--yellow); }
   .contact-timeline__fill { transform: scaleY(1); }
   .contact-outcome__marker span { transform: scale(1); }
 }
+
+
+/* --------------------------------------------------------------------------
+   CALENDLY — live Medal Session embed
+   -------------------------------------------------------------------------- */
+.contact-calendly {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+  border: 1px solid rgba(242,239,232,.16);
+  border-radius: 28px;
+  overflow: hidden;
+  background: rgba(5,6,10,.52);
+  box-shadow: 0 24px 80px rgba(0,0,0,.28);
+  backdrop-filter: blur(14px);
+}
+.contact-calendly__frame {
+  position: relative;
+  width: 100%;
+  min-height: min(76svh, 780px);
+}
+.contact-calendly__frame .calendly-inline-widget,
+.contact-calendly__frame iframe {
+  width: 100% !important;
+  min-width: 320px !important;
+  height: min(76svh, 780px) !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+.contact-calendly__fallback {
+  display: none;
+  padding: 34px;
+  min-height: 280px;
+  align-content: center;
+  justify-items: start;
+  gap: 18px;
+}
+.contact-calendly.has-error .contact-calendly__frame { display: none; }
+.contact-calendly.has-error .contact-calendly__fallback { display: grid; }
+.contact-calendly__fallback p {
+  margin: 0;
+  max-width: 38rem;
+  color: var(--text-soft);
+  font-size: clamp(17px, 1.2vw, 21px);
+  line-height: 1.4;
+}
+@media (max-width: 1180px) {
+  .contact-calendly__frame,
+  .contact-calendly__frame .calendly-inline-widget,
+  .contact-calendly__frame iframe { min-height: 720px; height: 720px !important; }
+}
+@media (max-width: 840px) {
+  .contact-calendly { border-radius: 20px; }
+  .contact-calendly__frame,
+  .contact-calendly__frame .calendly-inline-widget,
+  .contact-calendly__frame iframe { min-height: 700px; height: 700px !important; }
+}

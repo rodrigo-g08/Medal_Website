@@ -6,6 +6,7 @@
 main {
   position: relative;
   z-index: 1;
+  background: transparent;
 }
 
 .section-shell {
@@ -14,14 +15,82 @@ main {
   padding-inline: var(--page-pad);
 }
 
+
+.reels,
+.medals,
+.apostrophe-thread,
+.services-availability {
+  isolation: isolate;
+}
+
+.reels::before,
+.reels::after,
+.medals::before,
+.medals::after,
+.apostrophe-thread::before,
+.apostrophe-thread::after,
+.services-availability::before,
+.services-availability::after {
+  content: "";
+  position: absolute;
+  width: clamp(420px, 38vw, 760px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(18px);
+  opacity: .58;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: 0;
+}
+
+.reels::before,
+.medals::before,
+.apostrophe-thread::before,
+.services-availability::before {
+  left: -10vw;
+  top: 6%;
+  background: radial-gradient(circle, rgba(45,92,255,.72) 0%, rgba(22,68,232,.38) 30%, rgba(7,34,140,.12) 58%, transparent 74%);
+  animation: filmHaloDriftA 24s ease-in-out infinite alternate;
+}
+
+.reels::after,
+.medals::after,
+.apostrophe-thread::after,
+.services-availability::after {
+  right: -12vw;
+  bottom: 4%;
+  background: radial-gradient(circle, rgba(25,76,255,.78) 0%, rgba(14,60,230,.42) 30%, rgba(3,20,80,.12) 58%, transparent 74%);
+  animation: filmHaloDriftB 28s ease-in-out infinite alternate;
+}
+
+.reels > *,
+.medals > *,
+.apostrophe-thread > *,
+.services-availability > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes filmHaloDriftA {
+  0% { transform: translate3d(-2%, -3%, 0) scale(1); }
+  50% { transform: translate3d(9%, 7%, 0) scale(1.06); }
+  100% { transform: translate3d(3%, 13%, 0) scale(.98); }
+}
+
+@keyframes filmHaloDriftB {
+  0% { transform: translate3d(3%, 4%, 0) scale(1); }
+  50% { transform: translate3d(-10%, -6%, 0) scale(1.05); }
+  100% { transform: translate3d(-5%, -14%, 0) scale(.97); }
+}
+
 /* --------------------------------------------------------------------------
-   H8 · FILM HERO / CINEMA TRANSFORM
+   FILM HERO — preserved behavior
    -------------------------------------------------------------------------- */
 .film-hero {
   position: relative;
   height: 190svh;
-  background: transparent;
   color: var(--bone);
+  background: transparent;
 }
 
 .film-hero__sticky {
@@ -37,8 +106,8 @@ main {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: calc(100svh + var(--header-height) + var(--header-height));
   transform: translate(-50%, -50%);
   overflow: hidden;
   border-radius: 0;
@@ -68,7 +137,7 @@ main {
   z-index: 2;
   left: var(--page-pad);
   right: var(--page-pad);
-  bottom: clamp(48px, 7vh, 84px);
+  bottom: clamp(84px, 11vh, 132px);
 }
 
 .film-hero__opening .eyebrow {
@@ -89,7 +158,7 @@ main {
   position: absolute;
   z-index: 4;
   right: var(--page-pad);
-  bottom: clamp(34px, 5vh, 58px);
+  bottom: clamp(76px, 9.5vh, 118px);
   min-height: 42px;
   padding: 0 16px;
   display: inline-flex;
@@ -122,42 +191,67 @@ main {
 
 .film-hero__cinema-copy {
   position: absolute;
-  z-index: 5;
-  left: max(var(--page-pad), calc(50% - 33vw));
-  bottom: clamp(28px, 4.8vh, 54px);
+  left: var(--page-pad);
+  bottom: clamp(48px, 7vh, 82px);
+  width: min(28vw, 420px);
   opacity: 0;
-  transform: translateY(20px);
-  pointer-events: none;
+  transform: translateY(18px);
 }
 
 .film-hero__cinema-copy .eyebrow {
-  margin-bottom: 12px;
+  margin-bottom: 18px;
 }
 
 .film-hero__cinema-copy h2 {
-  margin: 0;
-  font-size: clamp(3.4rem, 6.6vw, 7.8rem);
+  margin: 0 0 22px;
+  font-size: clamp(3.1rem, 5.25vw, 6.9rem);
   font-weight: 300;
-  line-height: .88;
+  line-height: .86;
   letter-spacing: -.055em;
 }
 
 .film-hero__cinema-copy > p:last-child {
-  margin: 16px 0 0;
-  color: rgba(242,239,232,.64);
+  margin: 0;
+  color: var(--label);
   font-family: "IBM Plex Mono", monospace;
-  font-size: 11px;
-  letter-spacing: .12em;
+  font-size: 10px;
+  letter-spacing: .14em;
   text-transform: uppercase;
 }
 
 /* --------------------------------------------------------------------------
-   REELS
+   APPROVED YELLOW SWEEP
+   -------------------------------------------------------------------------- */
+.yellow-sweep {
+  --sweep-base: var(--bone);
+  position: relative;
+  display: grid;
+  width: fit-content;
+  color: var(--sweep-base);
+}
+
+.yellow-sweep--block { width: fit-content; }
+.yellow-sweep__base,
+.yellow-sweep__flash {
+  grid-area: 1 / 1;
+  display: block;
+  white-space: inherit;
+}
+.yellow-sweep__base { color: var(--sweep-base); }
+.yellow-sweep__flash {
+  color: var(--yellow);
+  clip-path: inset(0 100% 0 0);
+  pointer-events: none;
+  will-change: clip-path;
+}
+
+/* --------------------------------------------------------------------------
+   REELS — continuous strip + full-screen viewer
    -------------------------------------------------------------------------- */
 .reels {
   position: relative;
   min-height: 100svh;
-  padding: clamp(110px, 15vh, 180px) 0 clamp(120px, 16vh, 190px);
+  padding: clamp(120px, 16vh, 190px) 0 clamp(110px, 15vh, 180px);
   background: transparent;
   color: var(--bone);
   overflow: hidden;
@@ -165,62 +259,84 @@ main {
 
 .reels__heading {
   display: grid;
-  grid-template-columns: 1fr minmax(260px, 430px);
-  column-gap: 56px;
+  grid-template-columns: minmax(0, 1.1fr) minmax(260px, .9fr);
+  column-gap: clamp(40px, 8vw, 130px);
   align-items: end;
-  margin-bottom: clamp(60px, 9vh, 110px);
+  margin-bottom: clamp(54px, 8vh, 86px);
 }
 
 .reels__heading .eyebrow {
   grid-column: 1 / -1;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .reels__heading h2 {
   margin: 0;
-  font-size: clamp(4.5rem, 9vw, 10.8rem);
+  font-size: clamp(4.7rem, 8.7vw, 11rem);
   font-weight: 300;
   line-height: .86;
   letter-spacing: -.06em;
 }
 
 .reels__intro {
-  margin: 0 0 .7em;
-  color: rgba(215,218,224,.68);
-  font-size: clamp(17px, 1.25vw, 22px);
+  margin: 0;
+  max-width: 620px;
+  color: var(--text-soft);
+  font-size: clamp(18px, 1.5vw, 25px);
   line-height: 1.28;
   letter-spacing: -.025em;
 }
 
-.reels__row {
+.reels__help {
+  grid-column: 2;
+  margin: 18px 0 0;
+  color: var(--label);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  line-height: 1.55;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.reels__viewport {
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+}
+
+.reels__track {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(18px, 2.6vw, 42px);
-  min-height: min(72svh, 860px);
+  width: max-content;
+  will-change: transform;
+}
+
+.reels__segment {
+  display: flex;
+  gap: 18px;
+  padding-right: 18px;
 }
 
 .reel-card {
   position: relative;
-  flex: 0 1 330px;
-  width: min(24vw, 330px);
+  flex: 0 0 clamp(150px, 17vw, 236px);
   aspect-ratio: 9 / 16;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
   overflow: hidden;
-  border-radius: 16px;
-  background: rgba(242,239,232,.05);
-  transform: scale(.94);
-  opacity: .62;
-  transition: transform 520ms var(--ease-medal), opacity 420ms ease, filter 420ms ease;
+  background: #0b0c10;
+  color: var(--bone);
   cursor: pointer;
-}
-
-.reel-card.is-active {
-  transform: scale(1.08);
+  text-align: left;
+  transform: scale(1);
   opacity: 1;
-  z-index: 4;
+  transition: transform .45s var(--ease-medal), opacity .35s ease;
+  isolation: isolate;
 }
 
-.reel-card video {
+.reel-card video,
+.reel-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -229,7 +345,8 @@ main {
 .reel-card__shade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(5,6,10,.72), transparent 42%);
+  z-index: 1;
+  background: linear-gradient(to top, rgba(5,6,10,.78), rgba(5,6,10,.04) 48%);
   pointer-events: none;
 }
 
@@ -238,39 +355,35 @@ main {
   z-index: 2;
   left: 16px;
   right: 16px;
-  bottom: 18px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 12px;
-  color: var(--bone);
+  bottom: 16px;
+  display: grid;
+  gap: 3px;
 }
 
 .reel-card__meta span:first-child {
-  font-size: 20px;
-  font-weight: 550;
+  font-size: clamp(18px, 1.45vw, 24px);
+  font-weight: 420;
+  letter-spacing: -.025em;
 }
 
 .reel-card__meta span:last-child {
-  max-width: 45%;
-  color: rgba(242,239,232,.68);
+  color: rgba(242,239,232,.66);
   font-family: "IBM Plex Mono", monospace;
   font-size: 9px;
-  line-height: 1.35;
-  letter-spacing: .1em;
-  text-align: right;
+  letter-spacing: .12em;
   text-transform: uppercase;
 }
 
 .reel-card__progress {
   position: absolute;
   z-index: 3;
-  left: 16px;
-  right: 16px;
-  bottom: 8px;
+  left: 0;
+  right: 0;
+  top: 0;
   height: 2px;
-  background: rgba(242,239,232,.18);
-  overflow: hidden;
+  background: rgba(242,239,232,.16);
+  opacity: 0;
+  transition: opacity .2s ease;
 }
 
 .reel-card__progress i {
@@ -282,2019 +395,760 @@ main {
   transform-origin: left center;
 }
 
-/* --------------------------------------------------------------------------
-   THREE MEDALS INTRO
-   -------------------------------------------------------------------------- */
-.services-intro {
-  position: relative;
-  min-height: 100svh;
-  padding: clamp(120px, 17vh, 190px) 0 clamp(100px, 14vh, 160px);
-  background: transparent;
+.reels.has-hover .reel-card { opacity: .42; }
+.reels.has-hover .reel-card.is-hovered {
+  opacity: 1;
+  transform: scale(1.08);
+  z-index: 5;
+}
+.reel-card.is-hovered .reel-card__progress { opacity: 1; }
+
+/* Viewer */
+.reel-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: none;
   color: var(--bone);
+  overflow: hidden;
 }
-
-.services-intro__inner {
-  min-height: 74svh;
-  display: grid;
-  align-content: center;
-}
-
-.services-intro__inner > .eyebrow {
-  margin-bottom: 22px;
-}
-
-.services-intro h2 {
-  margin: 0;
-  max-width: 10ch;
-  font-size: clamp(5rem, 10vw, 12rem);
-  font-weight: 300;
-  line-height: .84;
-  letter-spacing: -.06em;
-}
-
-.services-intro h2 [data-standard-fill] {
-  display: inline-block;
-  background: linear-gradient(90deg, var(--yellow) 0 50%, var(--bone) 50% 100%);
-  background-size: 200% 100%;
-  background-position: 100% 0;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.services-intro__copy {
-  margin: clamp(28px, 5vh, 48px) 0 0 auto;
-  width: min(100%, 460px);
-  color: rgba(215,218,224,.68);
-  font-size: clamp(17px, 1.25vw, 22px);
-  line-height: 1.3;
-  letter-spacing: -.025em;
-}
-
-.medal-selector {
-  margin-top: clamp(70px, 10vh, 110px);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(24px, 4vw, 64px);
-}
-
-.medal-choice {
-  padding: 0;
-  display: grid;
-  justify-items: center;
-  border: 0;
-  background: transparent;
-  color: var(--bone);
-  cursor: pointer;
-  perspective: 1000px;
-}
-
-.medal-choice__disc {
-  position: relative;
-  width: clamp(138px, 12vw, 188px);
-  aspect-ratio: 1;
-  transform-style: preserve-3d;
-  transition: transform .9s cubic-bezier(.2,.72,.18,1);
-}
-
-.medal-choice:hover .medal-choice__disc,
-.medal-choice:focus-visible .medal-choice__disc {
-  transform: rotateY(180deg);
-}
-
-.medal-choice__face {
+.reel-viewer.is-open { display: block; }
+.reel-viewer__backdrop {
   position: absolute;
   inset: 0;
+  background: #000;
+  opacity: 0;
+}
+.reel-viewer__layout {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
   display: grid;
-  place-items: center;
-  border-radius: 50%;
-  backface-visibility: hidden;
-  border: 1px solid rgba(242,239,232,.22);
-  box-shadow: inset 0 0 0 7px rgba(5,6,10,.10), 0 22px 50px rgba(0,0,0,.24);
-  font-family: "IBM Plex Mono", monospace;
-  text-transform: uppercase;
+  grid-template-columns: minmax(220px, 1fr) auto minmax(180px, 1fr);
+  align-items: center;
+  gap: clamp(34px, 5vw, 82px);
+  padding: clamp(54px, 7vh, 86px) clamp(30px, 5vw, 86px);
 }
-
-.medal-choice__face--front {
-  font-family: "Archivo", sans-serif;
-  font-size: clamp(4.2rem, 6vw, 7rem);
+.reel-viewer__meta,
+.reel-viewer__controls {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.reel-viewer__meta {
+  justify-self: end;
+  width: min(100%, 360px);
+}
+.reel-viewer__meta h2 {
+  margin: 16px 0 0;
+  font-size: clamp(3.1rem, 5vw, 6.2rem);
   font-weight: 300;
-  letter-spacing: -.06em;
+  line-height: .9;
+  letter-spacing: -.055em;
 }
-
-.medal-choice__face--back {
-  transform: rotateY(180deg);
-  font-size: 11px;
-  letter-spacing: .13em;
+.reel-viewer__kpis {
+  margin-top: 40px;
+  display: grid;
+  gap: 22px;
 }
-
-.medal-choice--bronze .medal-choice__face {
-  background: radial-gradient(circle at 34% 28%, #d6a17b, #9c5f38 53%, #5f3019 100%);
+.reel-viewer__kpis:empty { display: none; }
+.reel-viewer__kpi {
+  padding-top: 12px;
+  border-top: 1px solid rgba(242,239,232,.22);
 }
-
-.medal-choice--silver .medal-choice__face {
-  background: radial-gradient(circle at 34% 28%, #f1f4f7, #b8c0c9 53%, #707a86 100%);
-  color: #171a20;
+.reel-viewer__kpi strong {
+  display: block;
+  font-size: clamp(2.2rem, 3.5vw, 4.4rem);
+  font-weight: 320;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  transition: color .9s ease;
 }
-
-.medal-choice--gold .medal-choice__face {
-  background: radial-gradient(circle at 34% 28%, #ffe89c, #d8b35a 53%, #89651d 100%);
-  color: #17130a;
-}
-
-.medal-choice__title {
-  margin-top: 24px;
-  font-size: clamp(20px, 1.6vw, 26px);
-  font-weight: 520;
-}
-
-.medal-choice__subtitle {
-  margin-top: 5px;
-  color: rgba(215,218,224,.58);
+.reel-viewer__kpi strong.is-counting { color: var(--yellow); transition: none; }
+.reel-viewer__kpi span {
+  display: block;
+  margin-top: 8px;
+  color: var(--label);
   font-family: "IBM Plex Mono", monospace;
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: .12em;
   text-transform: uppercase;
 }
-
-/* --------------------------------------------------------------------------
-   MEDAL JOURNEY
-   -------------------------------------------------------------------------- */
-.medal-journey {
+.reel-viewer__media-shell {
   position: relative;
-  height: 310svh;
-  background: transparent;
-}
-
-.medal-journey__pin {
-  position: sticky;
-  top: 0;
-  height: 100svh;
+  height: min(92dvh, 880px);
+  aspect-ratio: 9 / 16;
+  justify-self: center;
   overflow: hidden;
-  display: grid;
-  grid-template-columns: 1.08fr .92fr;
-  align-items: center;
-  gap: clamp(40px, 6vw, 100px);
-  padding: calc(var(--header-height) + 34px) var(--page-pad) 54px;
-  color: var(--bone);
-  transition: background 600ms ease, color 600ms ease;
+  border-radius: 18px;
+  background: #0a0a0a;
+  transform-origin: top left;
+  will-change: transform;
 }
-
-.medal-journey__pin.is-gold-light {
-  background: var(--bone);
-  color: var(--ink);
+.reel-viewer__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000;
 }
-
-.medal-journey__index {
+.reel-viewer__progress {
   position: absolute;
-  left: var(--page-pad);
-  top: calc(var(--header-height) + 28px);
-  display: flex;
-  gap: 7px;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 10px;
-  letter-spacing: .13em;
-}
-
-.medal-journey__visual {
-  display: grid;
-  place-items: center;
-}
-
-.service-medal {
-  position: relative;
-  width: min(42vw, 570px);
-  aspect-ratio: 1;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  box-shadow: 0 48px 100px rgba(0,0,0,.28), inset 0 0 0 1px rgba(255,255,255,.15);
-  will-change: transform, background;
-}
-
-.service-medal--bronze {
-  background: radial-gradient(circle at 34% 26%, #e1b48e, #a36740 47%, #6a351c 78%, #3e1b0c 100%);
-}
-
-.service-medal--silver {
-  background: radial-gradient(circle at 34% 26%, #f5f7f9, #c4cbd3 47%, #7c8690 78%, #4a525b 100%);
-  color: #11141a;
-}
-
-.service-medal--gold {
-  background: radial-gradient(circle at 34% 26%, #fff0b2, #ddb85f 47%, #9f7924 78%, #60430d 100%);
-  color: #17130a;
-}
-
-.service-medal__ring {
-  position: absolute;
-  inset: 7%;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  opacity: .26;
-}
-
-.service-medal__ring::before,
-.service-medal__ring::after {
-  content: "";
-  position: absolute;
-  inset: 8%;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  opacity: .32;
-}
-
-.service-medal__ring::after {
-  inset: 18%;
-}
-
-.service-medal__letter {
-  font-size: clamp(8rem, 16vw, 18rem);
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -.08em;
-}
-
-.medal-journey__copy {
-  max-width: 600px;
-}
-
-.medal-journey__copy .eyebrow {
-  margin-bottom: 20px;
-}
-
-.medal-journey__copy h2 {
-  margin: 0;
-  font-size: clamp(4.5rem, 8vw, 10rem);
-  font-weight: 300;
-  line-height: .84;
-  letter-spacing: -.06em;
-}
-
-.medal-journey__lead {
-  margin: clamp(24px, 4vh, 38px) 0 0;
-  max-width: 32rem;
-  color: rgba(215,218,224,.72);
-  font-size: clamp(17px, 1.35vw, 23px);
-  line-height: 1.32;
-  letter-spacing: -.026em;
-}
-
-.medal-journey__pin.is-gold-light .medal-journey__lead {
-  color: rgba(5,6,10,.66);
-}
-
-.medal-journey__copy ul {
-  margin: clamp(32px, 5vh, 48px) 0 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 13px 28px;
-}
-
-.medal-journey__copy li {
-  padding-top: 12px;
-  border-top: 1px solid rgba(242,239,232,.22);
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 10px;
-  line-height: 1.35;
-  letter-spacing: .11em;
-  text-transform: uppercase;
-}
-
-.medal-journey__pin.is-gold-light .medal-journey__copy li {
-  border-color: rgba(5,6,10,.18);
-}
-
-.medal-journey__rail {
-  position: absolute;
-  right: clamp(18px, 2.4vw, 38px);
-  top: 18vh;
-  bottom: 18vh;
-  width: 2px;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
   background: rgba(242,239,232,.15);
 }
-
-.medal-journey__pin.is-gold-light .medal-journey__rail {
-  background: rgba(5,6,10,.12);
-}
-
-.medal-journey__rail span {
+.reel-viewer__progress i {
   display: block;
   width: 100%;
   height: 100%;
   background: var(--yellow);
-  transform: scaleY(0);
-  transform-origin: top center;
-}
-
-/* --------------------------------------------------------------------------
-   RISK / AVAILABILITY
-   -------------------------------------------------------------------------- */
-.launch-protection,
-.services-availability {
-  position: relative;
-  z-index: 2;
-  background: var(--bone);
-  color: var(--ink);
-}
-
-.launch-protection {
-  padding: clamp(120px, 17vh, 190px) 0 clamp(110px, 14vh, 160px);
-}
-
-.launch-protection__inner > .eyebrow {
-  color: rgba(5,6,10,.48);
-  margin-bottom: clamp(28px, 4vh, 48px);
-}
-
-.launch-protection h2 {
-  margin: 0;
-  max-width: 12ch;
-  font-size: clamp(4.5rem, 8.8vw, 10.8rem);
-  font-weight: 300;
-  line-height: .87;
-  letter-spacing: -.058em;
-}
-
-.launch-protection__grid {
-  margin-top: clamp(80px, 11vh, 130px);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(28px, 4vw, 70px);
-}
-
-.launch-protection__grid article {
-  border-top: 1px solid rgba(5,6,10,.18);
-  padding-top: 18px;
-}
-
-.launch-protection__grid article > span {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 10px;
-  letter-spacing: .13em;
-}
-
-.launch-protection__grid h3 {
-  margin: 44px 0 12px;
-  font-size: clamp(1.8rem, 2.5vw, 3rem);
-  font-weight: 420;
-  line-height: 1;
-  letter-spacing: -.04em;
-}
-
-.launch-protection__grid p {
-  margin: 0;
-  max-width: 24rem;
-  color: rgba(5,6,10,.62);
-  font-size: 17px;
-  line-height: 1.35;
-}
-
-.services-availability {
-  padding: clamp(90px, 12vh, 140px) 0 clamp(120px, 16vh, 190px);
-}
-
-.services-availability__inner {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 56px;
-}
-
-.services-availability .eyebrow {
-  color: rgba(5,6,10,.48);
-  margin-bottom: 24px;
-}
-
-.services-availability h2 {
-  margin: 0;
-  font-size: clamp(4.8rem, 9vw, 11rem);
-  font-weight: 300;
-  line-height: .83;
-  letter-spacing: -.06em;
-}
-
-.button--dark-on-light {
-  color: var(--bone);
-  border: 1px solid var(--ink);
-  background: var(--ink);
-}
-
-.button--dark-on-light::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: -1px;
-  border-radius: inherit;
-  background: var(--yellow);
   transform: scaleX(0);
-  transform-origin: right center;
-  transition: transform 350ms var(--ease-fill);
-}
-
-.button--dark-on-light:hover::before,
-.button--dark-on-light:focus-visible::before {
-  transform: scaleX(1);
   transform-origin: left center;
 }
-
-.button--dark-on-light:hover .button__label::after,
-.button--dark-on-light:focus-visible .button__label::after {
-  clip-path: inset(0 0 0 0);
+.reel-viewer__controls {
+  justify-self: start;
+  display: grid;
+  gap: 26px;
 }
-
-.services-availability__cta {
-  min-height: 58px;
-  padding-inline: 26px;
-  flex: 0 0 auto;
+.reel-viewer__controls button,
+.reel-viewer__close {
+  border: 1px solid rgba(242,239,232,.34);
+  background: rgba(5,6,10,.7);
+  color: var(--bone);
+  cursor: pointer;
+}
+.reel-viewer__controls > button {
+  min-width: 120px;
+  min-height: 46px;
+  border-radius: 999px;
+}
+.reel-viewer__arrows {
+  display: flex;
+  gap: 10px;
+}
+.reel-viewer__arrows button,
+.reel-viewer__close {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+}
+.reel-viewer__close {
+  position: absolute;
+  z-index: 4;
+  top: calc(var(--header-height) + 18px);
+  right: 22px;
+  background: rgba(5,6,10,.86);
+  border-color: rgba(242,239,232,.42);
+  box-shadow: 0 10px 24px rgba(0,0,0,.24);
 }
 
 /* --------------------------------------------------------------------------
-   FOOTER
+   SINGLE MEDAL SCENE
    -------------------------------------------------------------------------- */
-.medal-footer {
+.medals {
   position: relative;
-  z-index: 2;
-  min-height: 86svh;
-  padding: clamp(110px, 15vh, 170px) var(--page-pad) 36px;
-  display: grid;
-  align-content: space-between;
+  height: 560svh;
   background: transparent;
   color: var(--bone);
 }
-
-.medal-footer__brand img {
-  width: min(76vw, 1100px);
-  height: auto;
+.medals__stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  background: transparent;
 }
-
-.medal-footer__grid {
-  margin-top: clamp(80px, 13vh, 150px);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 36px;
-  padding-top: 24px;
-  border-top: 1px solid rgba(242,239,232,.14);
+.medals__title {
+  position: absolute;
+  z-index: 2;
+  top: 15%;
+  left: 50%;
+  width: min(92vw, 1200px);
+  transform: translateX(-50%);
+  text-align: center;
+  will-change: opacity, transform;
 }
-
-.medal-footer__grid .eyebrow {
+.medals__title .eyebrow {
   margin-bottom: 18px;
 }
-
-.medal-footer__grid p,
-.medal-footer__grid a {
+.medals__title h2 {
   margin: 0;
-  font-size: clamp(18px, 1.35vw, 22px);
+  font-size: clamp(4.8rem, 8.2vw, 10.8rem);
+  font-weight: 300;
+  line-height: .84;
+  letter-spacing: -.06em;
 }
-
-.medal-footer__grid nav {
-  display: grid;
-  justify-items: start;
-  gap: 8px;
+.medals__standard {
+  --standard-fill: 0;
+  background: linear-gradient(90deg,
+    var(--yellow) 0%,
+    var(--yellow) calc(var(--standard-fill) * 100%),
+    var(--bone) calc(var(--standard-fill) * 100%),
+    var(--bone) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
-
-.medal-footer__grid nav .eyebrow {
-  margin-bottom: 10px;
+.medals__medal {
+  position: absolute;
+  z-index: 8;
+  left: 0;
+  top: 0;
+  width: 100px;
+  height: 100px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transform-origin: center center;
+  will-change: transform, opacity;
 }
-
-.medal-footer__grid a {
-  transition: color 220ms ease;
+.medals__medal img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(1.16) contrast(1.08) saturate(1.08) drop-shadow(0 22px 34px rgba(0,0,0,.55));
 }
-
-.medal-footer__grid a:hover {
-  color: var(--yellow);
+.medals__medal:hover img { transform: translateY(-6px); }
+.medals__medal img { transition: transform .25s var(--ease-medal); }
+.medals__spot {
+  position: absolute;
+  z-index: 4;
+  left: 55.5%;
+  top: 50%;
+  width: min(36vw, 560px);
+  transform: translateY(-50%);
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity, transform;
 }
-
-.medal-footer__bottom {
-  margin-top: clamp(70px, 10vh, 110px);
+.medals__spot .eyebrow { margin-bottom: 20px; }
+.medals__spot h2 {
+  margin: 0 0 24px;
+  font-size: clamp(56px, 8.8vw, 138px);
+  font-weight: 300;
+  line-height: .82;
+  letter-spacing: -.062em;
+}
+.medals__spot > p:last-child {
+  margin: 0;
+  max-width: 34rem;
+  color: var(--text-soft);
+  font-size: clamp(18px, 1.35vw, 23px);
+  line-height: 1.34;
+  letter-spacing: -.022em;
+}
+.medals__index {
+  position: absolute;
+  z-index: 6;
+  left: var(--page-pad);
+  bottom: 34px;
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  color: rgba(215,218,224,.52);
+  align-items: center;
+  gap: 14px;
+  color: var(--label);
   font-family: "IBM Plex Mono", monospace;
   font-size: 10px;
-  letter-spacing: .1em;
+  letter-spacing: .12em;
+  opacity: 0;
+}
+.medals__index i {
+  position: relative;
+  display: block;
+  width: 120px;
+  height: 2px;
+  background: rgba(242,239,232,.20);
+  overflow: hidden;
+}
+.medals__index i b {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--yellow);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.medals__cards {
+  position: absolute;
+  z-index: 3;
+  inset: calc(var(--header-height) + 22px) var(--page-pad) 34px;
+  opacity: 0;
+  pointer-events: none;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 18px;
+}
+.medals__cards > .eyebrow { align-self: start; font-size: 12px; }
+.medals__grid {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 1.7vw, 30px);
+}
+.medal-card {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  padding: clamp(24px, 2.35vw, 38px);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(242,239,232,.34);
+  border-radius: 22px;
+  background: rgba(5,6,10,.36);
+  color: var(--bone);
+  transform: translateY(24px);
+  opacity: 0;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: background .32s ease, border-color .32s ease, color .32s ease, box-shadow .32s ease;
+}
+.medal-card.is-selected {
+  background: var(--bone);
+  border-color: var(--bone);
+  color: var(--ink);
+  box-shadow: 0 18px 44px rgba(0,0,0,.16);
+}
+.medal-card__badge {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  color: rgba(242,239,232,.56);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .12em;
   text-transform: uppercase;
 }
+.medal-card__slot {
+  display: block;
+  width: clamp(52px, 4.9vw, 68px);
+  aspect-ratio: 1;
+  margin-bottom: 26px;
+}
+.medal-card__body {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  padding-top: 4px;
+}
+.medal-card__eyebrow {
+  margin: 0 0 12px;
+  color: var(--label);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.medal-card.is-selected .medal-card__eyebrow { color: rgba(5,6,10,.55); }
+.medal-card h3 {
+  margin: 0;
+  font-size: clamp(2.8rem, 4.2vw, 5.7rem);
+  font-weight: 320;
+  line-height: .93;
+  letter-spacing: -.05em;
+}
+.medal-card__copy {
+  margin: 18px 0 22px;
+  max-width: 36rem;
+  color: var(--text-soft);
+  font-size: clamp(15px, 1.08vw, 18px);
+  line-height: 1.4;
+}
+.medal-card.is-selected .medal-card__copy { color: rgba(5,6,10,.70); }
+.medal-card ul {
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 9px 18px;
+  color: rgba(242,239,232,.82);
+  font-size: 14px;
+}
+.medal-card li::before {
+  content: "✓";
+  margin-right: 7px;
+  color: var(--yellow);
+}
+.medal-card.is-selected ul { color: rgba(5,6,10,.68); }
+.medal-card .button { margin-top: auto; width: fit-content; }
+.medal-card.is-selected .medal-card__badge { color: rgba(5,6,10,.55); }
+.medal-card.is-selected .button--primary {
+  color: var(--bone);
+  border-color: rgba(5,6,10,.22);
+  background: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   APOSTROPHE THREAD
+   -------------------------------------------------------------------------- */
+.apostrophe-thread {
+  position: relative;
+  height: 42vh;
+  min-height: 260px;
+  overflow: hidden;
+  background: transparent;
+}
+.apostrophe-thread__line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 2px;
+  height: calc(100% - 40px);
+  background: var(--yellow);
+  transform: translateX(-50%) scaleY(0);
+  transform-origin: top center;
+}
+.apostrophe-thread__mark {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 0;
+  width: 46px;
+  height: auto;
+  transform: translateX(-50%);
+  overflow: visible;
+}
+.apostrophe-thread__note {
+  position: absolute;
+  top: 50%;
+  width: min(31vw, 460px);
+  opacity: 0;
+}
+.apostrophe-thread__note--left {
+  right: calc(50% + clamp(40px, 7vw, 110px));
+  text-align: right;
+}
+.apostrophe-thread__note--right {
+  left: calc(50% + clamp(40px, 7vw, 110px));
+}
+.apostrophe-thread__note span {
+  color: var(--label);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: clamp(10px, .8vw, 12px);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.apostrophe-thread__note p {
+  margin: 14px 0 0;
+  color: var(--bone);
+  font-size: clamp(22px, 1.8vw, 32px);
+  font-weight: 320;
+  line-height: 1.16;
+  letter-spacing: -.03em;
+}
+
+/* --------------------------------------------------------------------------
+   AVAILABILITY — same content / dark design
+   -------------------------------------------------------------------------- */
+.services-availability {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-items: center;
+  background: transparent;
+  color: var(--bone);
+}
+.services-availability__inner {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 50px;
+  padding-top: calc(var(--header-height) + 60px);
+  padding-bottom: 70px;
+}
+.services-availability .eyebrow { margin-bottom: 24px; }
+.services-availability h2 {
+  margin: 0;
+  font-size: clamp(5rem, 9vw, 11.5rem);
+  font-weight: 300;
+  line-height: .84;
+  letter-spacing: -.062em;
+}
+.services-availability__note {
+  margin: 28px 0 0;
+  color: var(--text-soft);
+  font-size: clamp(18px, 1.3vw, 23px);
+}
+.services-availability__cta { margin-bottom: 8px; }
 
 /* --------------------------------------------------------------------------
    RESPONSIVE
    -------------------------------------------------------------------------- */
 @media (max-width: 980px) {
+  .film-hero__cinema-copy { width: min(36vw, 360px); }
+
   .reels__heading {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 22px;
   }
+  .reels__heading .eyebrow,
+  .reels__help { grid-column: 1; }
+  .reels__heading h2 { font-size: clamp(4.3rem, 12vw, 7.6rem); }
+  .reels__intro { max-width: 34rem; }
 
-  .reels__heading .eyebrow {
-    grid-column: 1;
+  .reel-viewer__layout {
+    grid-template-columns: minmax(170px, .7fr) auto minmax(120px, .55fr);
+    gap: 24px;
+    padding-inline: 24px;
   }
+  .reel-viewer__media-shell { height: min(86dvh, 760px); }
 
-  .reels__intro {
-    max-width: 36rem;
+  .medals__spot {
+    left: 54%;
+    width: 39vw;
   }
-
-  .reel-card {
-    width: min(29vw, 300px);
-  }
-
-  .medal-journey__pin {
-    grid-template-columns: 1fr 1fr;
-    gap: 34px;
-  }
-
-  .service-medal {
-    width: min(43vw, 480px);
-  }
-
-  .launch-protection__grid {
-    grid-template-columns: 1fr;
-    gap: 54px;
-  }
-
-  .launch-protection__grid h3 {
-    margin-top: 24px;
-  }
+  .medals__spot h2 { font-size: clamp(3.5rem, 8.8vw, 6.8rem); }
+  .medal-card ul { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 760px) {
-  .film-hero {
-    height: 160svh;
-  }
-
-
-  .film-hero__opening h1 {
-    font-size: clamp(5.4rem, 25vw, 9rem);
-  }
-
-  .film-sound {
-    right: 20px;
-    bottom: 22px;
-  }
-
+@media (max-width: 820px) {
+  .film-hero { height: 160svh; }
   .film-hero__cinema-copy {
-    left: 22px;
-    bottom: 26px;
+    left: var(--page-pad);
+    bottom: 38px;
+    width: min(75vw, 480px);
   }
+  .film-hero__cinema-copy h2 { font-size: clamp(3rem, 11vw, 5rem); }
 
-  .film-hero__cinema-copy h2 {
-    font-size: clamp(3.4rem, 15vw, 6rem);
+  .reels {
+    min-height: auto;
+    padding-top: 120px;
+    padding-bottom: 110px;
   }
+  .reels__heading { margin-bottom: 44px; }
+  .reels__help { display: none; }
+  .reel-card { flex-basis: clamp(150px, 43vw, 210px); }
 
-  .reels,
-  .services-intro,
-  .launch-protection {
-    padding-top: 104px;
+  .reel-viewer__layout {
+    display: block;
+    padding: 0;
   }
-
-  .reels__heading h2,
-  .services-intro h2,
-  .launch-protection h2,
-  .services-availability h2 {
-    font-size: clamp(4.3rem, 20vw, 7.2rem);
+  .reel-viewer__media-shell {
+    width: 100vw;
+    height: 100dvh;
+    aspect-ratio: auto;
+    border-radius: 0;
   }
-
-  .reels__row {
-    justify-content: flex-start;
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    padding: 18px 20px 28px;
-    margin-inline: calc(var(--page-pad) * -1);
-    scrollbar-width: none;
+  .reel-viewer__video { object-fit: cover; }
+  .reel-viewer__meta {
+    position: absolute;
+    z-index: 3;
+    left: 18px;
+    right: 18px;
+    bottom: 92px;
+    width: auto;
+    max-width: none;
+    padding-top: 90px;
+    background: linear-gradient(to top, rgba(0,0,0,.86), transparent);
   }
-
-  .reels__row::-webkit-scrollbar { display: none; }
-
-  .reel-card {
-    flex: 0 0 min(72vw, 310px);
-    width: min(72vw, 310px);
-    scroll-snap-align: center;
-    opacity: .72;
+  .reel-viewer__meta h2 {
+    margin-top: 8px;
+    font-size: clamp(2.5rem, 12vw, 4.5rem);
   }
-
-  .reel-card.is-active {
-    transform: scale(1.03);
-  }
-
-  .medal-selector {
-    grid-template-columns: 1fr;
-    gap: 56px;
-  }
-
-  .medal-choice__disc {
-    width: 150px;
-  }
-
-  .medal-journey {
-    height: 340svh;
-  }
-
-  .medal-journey__pin {
-    grid-template-columns: 1fr;
-    grid-template-rows: .9fr 1.1fr;
-    align-items: end;
-    padding: calc(var(--header-height) + 42px) 22px 34px;
-  }
-
-  .medal-journey__visual {
-    align-self: end;
-  }
-
-  .service-medal {
-    width: min(68vw, 360px);
-  }
-
-  .medal-journey__copy {
-    align-self: start;
-  }
-
-  .medal-journey__copy h2 {
-    font-size: clamp(4rem, 18vw, 6.6rem);
-  }
-
-  .medal-journey__copy ul {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .services-availability__inner {
-    display: grid;
-    align-items: start;
-    gap: 54px;
-  }
-
-  .services-availability__cta {
-    width: 100%;
-  }
-
-  .medal-footer {
-    min-height: 80svh;
-    padding-inline: 22px;
-  }
-
-  .medal-footer__brand img {
-    width: 88vw;
-  }
-
-  .medal-footer__grid {
-    grid-template-columns: 1fr;
-    gap: 44px;
-  }
-
-  .medal-footer__bottom {
-    display: grid;
+  .reel-viewer__kpis {
+    margin-top: 18px;
+    grid-template-columns: repeat(3, minmax(0,1fr));
     gap: 8px;
   }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reel-card,
-  .medal-choice__disc,
-  .medal-journey__pin {
-    transition: none;
+  .reel-viewer__kpi { padding-top: 8px; }
+  .reel-viewer__kpi strong { font-size: 1.6rem; }
+  .reel-viewer__controls {
+    position: absolute;
+    z-index: 4;
+    left: 18px;
+    right: 18px;
+    bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
-}
-
-/* ========================================================================== 
-   FILM & SERVICES V2 — APPROVED MEDALS / LARGE TYPOGRAPHY / PLAN SELECTOR
-   ========================================================================== */
-
-body[data-page="film-services"] .eyebrow {
-  font-size: clamp(11px, .78vw, 13px);
-  line-height: 1.45;
-  letter-spacing: .15em;
-}
-
-/* Yellow sweep: white -> Medal yellow -> white on dark, ink -> yellow -> ink on bone. */
-.yellow-sweep {
-  --sweep-base: var(--bone);
-  display: inline-block;
-  color: transparent;
-  background-image: linear-gradient(
-    90deg,
-    var(--sweep-base) 0%,
-    var(--sweep-base) 35%,
-    var(--yellow) 46%,
-    var(--yellow) 55%,
-    var(--sweep-base) 66%,
-    var(--sweep-base) 100%
-  );
-  background-size: 300% 100%;
-  background-position: 100% 0;
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-
-.yellow-sweep--ink { --sweep-base: var(--ink); }
-
-/* Slightly increase all important support copy. */
-.reels__intro,
-.services-intro__copy {
-  font-size: clamp(20px, 1.48vw, 26px);
-  line-height: 1.28;
-}
-
-.reel-card__meta span:first-child { font-size: clamp(20px, 1.45vw, 25px); }
-.reel-card__meta span:last-child { font-size: 10px; }
-
-/* --------------------------------------------------------------------------
-   THREE MEDALS — REAL ASSETS
-   -------------------------------------------------------------------------- */
-.services-intro--v2 {
-  min-height: 120svh;
-  padding-top: clamp(130px, 16vh, 190px);
-  padding-bottom: clamp(110px, 14vh, 170px);
-}
-
-.services-intro--v2 .services-intro__inner {
-  min-height: 94svh;
-}
-
-.services-intro--v2 h2 {
-  max-width: 10.5ch;
-  font-size: clamp(5.6rem, 10.4vw, 12.8rem);
-}
-
-.services-intro--v2 .services-intro__copy {
-  width: min(100%, 600px);
-  margin-top: clamp(30px, 5vh, 54px);
-}
-
-.medal-selector--visual {
-  margin-top: clamp(74px, 10vh, 116px);
-  gap: clamp(22px, 3.6vw, 62px);
-  align-items: start;
-}
-
-.medal-selector--visual .medal-choice {
-  min-width: 0;
-  padding: 0 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  text-align: center;
-  transform-style: preserve-3d;
-}
-
-.medal-choice__object {
-  position: relative;
-  display: block;
-  width: clamp(220px, 20.5vw, 330px);
-  aspect-ratio: 1;
-  transform-style: preserve-3d;
-  will-change: transform, opacity;
-}
-
-.medal-choice__object img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 30px 42px rgba(0,0,0,.32));
-  transform: translateZ(0);
-  transition: filter 350ms ease, transform 350ms var(--ease-medal);
-}
-
-.medal-choice:hover .medal-choice__object img,
-.medal-choice:focus-visible .medal-choice__object img {
-  transform: translateY(-8px) scale(1.018);
-  filter: drop-shadow(0 38px 52px rgba(0,0,0,.40));
-}
-
-.medal-choice.is-selected .medal-choice__object img {
-  filter: drop-shadow(0 0 32px rgba(224,245,59,.12)) drop-shadow(0 38px 56px rgba(0,0,0,.42));
-}
-
-.medal-selector--visual .medal-choice__title {
-  margin-top: 22px;
-  font-size: clamp(27px, 2.05vw, 36px);
-  font-weight: 520;
-  line-height: 1;
-  letter-spacing: -.035em;
-}
-
-.medal-selector--visual .medal-choice__subtitle {
-  margin-top: 10px;
-  color: rgba(242,239,232,.74);
-  font-size: clamp(12px, .86vw, 14px);
-  letter-spacing: .12em;
-}
-
-.medal-choice__action {
-  min-height: 46px;
-  margin-top: 22px;
-  padding: 0 19px;
-  display: inline-flex;
-  align-items: center;
-  gap: 16px;
-  border: 1px solid rgba(242,239,232,.28);
-  border-radius: 999px;
-  color: var(--bone);
-  font-size: clamp(14px, 1vw, 16px);
-  font-weight: 520;
-  transition: background 300ms ease, color 300ms ease, border-color 300ms ease;
-}
-
-.medal-choice:hover .medal-choice__action,
-.medal-choice:focus-visible .medal-choice__action,
-.medal-choice.is-selected .medal-choice__action {
-  border-color: var(--yellow);
-  background: var(--yellow);
-  color: var(--ink);
-}
-
-/* --------------------------------------------------------------------------
-   MEDAL JOURNEY — SAME REAL OBJECT, MUCH LARGER CONTENT
-   -------------------------------------------------------------------------- */
-.medal-journey--v2 {
-  height: 330svh;
-}
-
-.medal-journey--v2 .medal-journey__pin {
-  grid-template-columns: 1.02fr .98fr;
-  gap: clamp(44px, 5vw, 88px);
-  background: transparent;
-  color: var(--bone);
-  perspective: 1500px;
-}
-
-.service-medal-image {
-  width: min(43vw, 620px);
-  max-height: 72svh;
-  object-fit: contain;
-  filter: drop-shadow(0 42px 62px rgba(0,0,0,.38));
-  transform-style: preserve-3d;
-  will-change: transform, opacity;
-}
-
-.medal-journey--v2 .medal-journey__copy {
-  max-width: 690px;
-}
-
-.medal-journey--v2 .medal-journey__copy .eyebrow {
-  margin-bottom: 24px;
-}
-
-.medal-journey--v2 .medal-journey__copy h2 {
-  font-size: clamp(5.2rem, 8.6vw, 10.8rem);
-}
-
-.medal-journey--v2 .medal-journey__lead {
-  max-width: 37rem;
-  font-size: clamp(21px, 1.55vw, 27px);
-  line-height: 1.28;
-}
-
-.medal-journey--v2 .medal-journey__copy ul {
-  margin-top: clamp(34px, 5vh, 54px);
-  gap: 16px 32px;
-}
-
-.medal-journey--v2 .medal-journey__copy li {
-  padding-top: 14px;
-  font-size: clamp(11px, .82vw, 13px);
-  line-height: 1.4;
-}
-
-.medal-journey--v2 .medal-journey__index {
-  font-size: 12px;
-}
-
-/* --------------------------------------------------------------------------
-   LAST LIGHT SCREEN — NEW INTENT
-   -------------------------------------------------------------------------- */
-.direction-principle {
-  position: relative;
-  z-index: 3;
-  min-height: 118svh;
-  padding: clamp(120px, 16vh, 190px) 0 clamp(120px, 16vh, 190px);
-  background: var(--bone);
-  color: var(--ink);
-}
-
-.direction-principle__inner {
-  min-height: 88svh;
-  display: grid;
-  align-content: center;
-}
-
-.direction-principle .eyebrow {
-  margin-bottom: clamp(30px, 4vh, 48px);
-  color: rgba(5,6,10,.48);
-}
-
-.direction-principle h2 {
-  margin: 0;
-  max-width: 11ch;
-  font-size: clamp(5.2rem, 9.6vw, 12rem);
-  font-weight: 300;
-  line-height: .84;
-  letter-spacing: -.061em;
-}
-
-.direction-principle__lead {
-  margin: clamp(34px, 5vh, 54px) 0 0 auto;
-  width: min(100%, 650px);
-  color: rgba(5,6,10,.70);
-  font-size: clamp(21px, 1.55vw, 27px);
-  line-height: 1.28;
-  letter-spacing: -.026em;
-}
-
-.direction-principle__grid {
-  margin-top: clamp(82px, 11vh, 132px);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(32px, 4vw, 72px);
-}
-
-.direction-principle__grid article {
-  padding-top: 20px;
-  border-top: 1px solid rgba(5,6,10,.18);
-}
-
-.direction-principle__grid article > span {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 11px;
-  letter-spacing: .13em;
-}
-
-.direction-principle__grid h3 {
-  margin: 48px 0 18px;
-  max-width: 12ch;
-  font-size: clamp(2.15rem, 2.9vw, 3.8rem);
-  font-weight: 420;
-  line-height: .98;
-  letter-spacing: -.045em;
-}
-
-.direction-principle__grid p {
-  margin: 0;
-  max-width: 29rem;
-  color: rgba(5,6,10,.66);
-  font-size: clamp(18px, 1.25vw, 22px);
-  line-height: 1.38;
-}
-
-/* --------------------------------------------------------------------------
-   SELECT YOUR PLAN — DARK AGAIN, HALOS VISIBLE
-   -------------------------------------------------------------------------- */
-.plan-select {
-  position: relative;
-  z-index: 2;
-  min-height: 150svh;
-  padding: clamp(180px, 23vh, 260px) 0 clamp(130px, 17vh, 190px);
-  background: transparent;
-  color: var(--bone);
-  overflow: hidden;
-}
-
-.plan-select::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: 0 0 auto;
-  height: clamp(170px, 22vh, 260px);
-  background: linear-gradient(to bottom, var(--bone) 0%, rgba(5,6,10,.96) 70%, rgba(5,6,10,0) 100%);
-  pointer-events: none;
-}
-
-.plan-select__inner {
-  min-height: 116svh;
-  display: grid;
-  align-content: center;
-}
-
-.plan-select__heading {
-  display: grid;
-  grid-template-columns: 1.25fr .75fr;
-  gap: 40px 70px;
-  align-items: end;
-}
-
-.plan-select__heading .eyebrow {
-  grid-column: 1 / -1;
-}
-
-.plan-select__heading h2 {
-  margin: 0;
-  font-size: clamp(5.6rem, 10.2vw, 12.8rem);
-  font-weight: 300;
-  line-height: .84;
-  letter-spacing: -.061em;
-}
-
-.plan-select__heading > p:last-child {
-  margin: 0 0 .55em;
-  max-width: 37rem;
-  color: rgba(215,218,224,.72);
-  font-size: clamp(20px, 1.48vw, 26px);
-  line-height: 1.3;
-  letter-spacing: -.026em;
-}
-
-.plan-grid {
-  margin-top: clamp(86px, 12vh, 140px);
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(24px, 3.6vw, 60px);
-}
-
-.plan-card {
-  min-width: 0;
-  padding: 0 0 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  transition: opacity 420ms ease, transform 520ms var(--ease-medal);
-}
-
-.plan-card.is-muted {
-  opacity: .42;
-  transform: scale(.975);
-}
-
-.plan-card__medal {
-  width: 100%;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-  perspective: 1400px;
-}
-
-.plan-card__medal img {
-  width: min(100%, 300px);
-  margin-inline: auto;
-  aspect-ratio: 1;
-  object-fit: contain;
-  filter: drop-shadow(0 32px 46px rgba(0,0,0,.32));
-  transform-style: preserve-3d;
-  will-change: transform;
-  transition: transform 350ms var(--ease-medal), filter 350ms ease;
-}
-
-.plan-card:not(.is-selected) .plan-card__medal:hover img,
-.plan-card:not(.is-selected) .plan-card__medal:focus-visible img {
-  transform: translateY(-10px) scale(1.018);
-  filter: drop-shadow(0 42px 58px rgba(0,0,0,.42));
-}
-
-.plan-card__eyebrow {
-  margin: 28px 0 0;
-  color: rgba(215,218,224,.65);
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 12px;
-  letter-spacing: .13em;
-  text-transform: uppercase;
-}
-
-.plan-card h3 {
-  margin: 10px 0 0;
-  font-size: clamp(2.6rem, 3.7vw, 4.8rem);
-  font-weight: 410;
-  line-height: .96;
-  letter-spacing: -.052em;
-}
-
-.plan-card__copy {
-  margin: 22px 0 0;
-  min-height: 6.3em;
-  color: rgba(215,218,224,.70);
-  font-size: clamp(18px, 1.22vw, 22px);
-  line-height: 1.38;
-}
-
-.plan-card__select {
-  position: relative;
-  min-height: 58px;
-  margin-top: 30px;
-  padding: 0 22px;
-  border: 1px solid rgba(242,239,232,.28);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--bone);
-  cursor: pointer;
-  overflow: hidden;
-  font-size: 16px;
-  font-weight: 540;
-  transition: background 320ms ease, color 320ms ease, border-color 320ms ease;
-}
-
-.plan-card__select:hover,
-.plan-card__select:focus-visible,
-.plan-card.is-selected .plan-card__select {
-  border-color: var(--yellow);
-  background: var(--yellow);
-  color: var(--ink);
-}
-
-.plan-card.is-selected {
-  opacity: 1;
-  transform: none;
-}
-
-.plan-select__decision {
-  margin-top: clamp(70px, 9vh, 112px);
-  padding-top: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 30px;
-  border-top: 1px solid rgba(242,239,232,.14);
-  opacity: 0;
-  transform: translateY(18px);
-  pointer-events: none;
-  transition: opacity 350ms ease, transform 450ms var(--ease-medal);
-}
-
-.plan-select__decision.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-.plan-select__decision p {
-  margin: 0;
-  font-size: clamp(24px, 2vw, 34px);
-  letter-spacing: -.035em;
-}
-
-.plan-select__decision [data-selected-plan] { color: var(--yellow); }
-.plan-select__cta { min-height: 60px; padding-inline: 28px; }
-
-/* --------------------------------------------------------------------------
-   AVAILABILITY — FOUR OF SIX, DARK WITH HALOS
-   -------------------------------------------------------------------------- */
-.services-availability--dark {
-  position: relative;
-  z-index: 2;
-  min-height: 86svh;
-  padding: clamp(120px, 16vh, 180px) 0;
-  display: grid;
-  align-items: center;
-  background: transparent;
-  color: var(--bone);
-}
-
-.services-availability--dark .services-availability__inner {
-  width: min(100%, 1600px);
-}
-
-.services-availability--dark .eyebrow {
-  margin-bottom: 24px;
-  color: rgba(215,218,224,.62);
-}
-
-.services-availability--dark h2 {
-  color: var(--bone);
-  font-size: clamp(5rem, 9.4vw, 11.5rem);
-}
-
-.services-availability__note {
-  margin: 28px 0 0;
-  color: rgba(215,218,224,.68);
-  font-size: clamp(20px, 1.45vw, 25px);
-}
-
-/* Keep the established Medal footer exactly as the closing system. */
-.medal-footer {
-  border-top: 0;
-}
-
-@media (max-width: 1100px) {
-  .medal-choice__object { width: clamp(190px, 24vw, 260px); }
-  .plan-card__medal img { width: min(100%, 250px); }
-  .plan-select__heading { grid-template-columns: 1fr; }
-  .plan-select__heading .eyebrow { grid-column: 1; }
-  .plan-select__heading > p:last-child { margin-bottom: 0; }
-}
-
-@media (max-width: 860px) {
-  .medal-selector--visual,
-  .plan-grid,
-  .direction-principle__grid {
+  .reel-viewer__close {
+    top: calc(var(--header-height) + 10px);
+    right: 18px;
+  }
+
+  .medals__title {
+    top: 13%;
+    width: 94vw;
+  }
+  .medals__title h2 { font-size: clamp(3.4rem, 14vw, 6rem); }
+  .medals__spot {
+    left: 18px;
+    right: 18px;
+    top: auto;
+    bottom: 12%;
+    width: auto;
+    transform: none;
+  }
+  .medals__spot h2 {
+    margin-bottom: 12px;
+    font-size: clamp(3.1rem, 14vw, 5.2rem);
+  }
+  .medals__spot > p:last-child {
+    max-width: 34rem;
+    font-size: clamp(15px, 4vw, 18px);
+  }
+  .medals__index {
+    bottom: 20px;
+    left: 18px;
+  }
+
+  .medals__cards {
+    inset: calc(var(--header-height) + 8px) 12px 12px;
+    gap: 8px;
+  }
+  .medals__cards > .eyebrow { font-size: 8px; }
+  .medals__grid {
     grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, minmax(0,1fr));
+    gap: 8px;
   }
-
-  .medal-selector--visual { gap: 70px; }
-  .medal-choice__object { width: min(68vw, 320px); }
-
-  .medal-journey--v2 {
-    height: auto;
+  .medal-card {
+    padding: 10px 12px;
+    border-radius: 15px;
+    display: grid;
+    grid-template-columns: 58px minmax(0,1fr);
+    align-items: center;
+    column-gap: 10px;
   }
+  .medal-card__badge {
+    top: 9px;
+    right: 11px;
+    font-size: 7px;
+  }
+  .medal-card__slot {
+    width: 44px;
+    margin: 0;
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .medal-card__body {
+    grid-column: 2;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 3px 8px;
+  }
+  .medal-card__eyebrow { grid-column: 1; margin: 0; font-size: 7px; }
+  .medal-card h3 { grid-column: 1; font-size: clamp(1.75rem, 7.4vw, 2.45rem); }
+  .medal-card__copy { grid-column: 1 / -1; margin: 4px 0 7px; font-size: 12px; line-height: 1.28; }
+  .medal-card ul { display: none; }
+  .medal-card .button {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 32px;
+    padding-inline: 12px;
+  }
+  .medal-card .button__label { font-size: 9px; }
 
-  .medal-journey--v2 .medal-journey__pin {
-    position: relative;
+  .apostrophe-thread__note { display: none; }
+
+  .services-availability__inner {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 36px;
+  }
+  .services-availability h2 { font-size: clamp(4.3rem, 16vw, 7rem); }
+  .services-availability__cta { justify-self: start; }
+}
+
+@media (max-width: 540px) {
+  .film-sound {
+    right: 16px;
+    bottom: 24px;
+  }
+  .film-hero__opening { left: 18px; right: 18px; bottom: 90px; }
+  .film-hero__opening h1 { font-size: clamp(5.4rem, 25vw, 9rem); }
+  .reels__heading h2 { font-size: clamp(3.8rem, 17vw, 5.5rem); }
+  .reels__intro { font-size: 17px; }
+  .services-availability { min-height: 92svh; }
+}
+
+/* --------------------------------------------------------------------------
+   REDUCED MOTION
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .yellow-sweep__flash { display: none; }
+  .reels::before,
+  .reels::after,
+  .medals::before,
+  .medals::after,
+  .apostrophe-thread::before,
+  .apostrophe-thread::after,
+  .services-availability::before,
+  .services-availability::after { animation: none; }
+
+  .film-hero {
+    height: 100svh;
+  }
+  .film-hero__sticky { position: relative; }
+  .film-hero__cinema-copy { opacity: 1; transform: none; }
+
+  .reels__viewport {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+    padding-inline: var(--page-pad);
+  }
+  .reels__track { transform: none !important; }
+  .reel-card { opacity: 1 !important; transform: none !important; }
+  .reel-viewer__meta,
+  .reel-viewer__controls { opacity: 1 !important; transform: none !important; }
+
+  .medals {
     height: auto;
     min-height: 100svh;
-    grid-template-columns: 1fr;
-    padding-top: calc(var(--header-height) + 78px);
-    padding-bottom: 86px;
+    padding: calc(var(--header-height) + 50px) 0 50px;
   }
-
-  .service-medal-image { width: min(76vw, 520px); }
-  .medal-journey__rail { display: none; }
-
-  .direction-principle__grid article { min-height: 220px; }
-
-  .plan-grid { gap: 78px; }
-  .plan-card__copy { min-height: auto; }
-  .plan-card__medal img { width: min(70vw, 310px); }
-
-  .services-availability--dark .services-availability__inner,
-  .plan-select__decision {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-}
-
-@media (max-width: 720px) {
-  .services-intro--v2 h2,
-  .plan-select__heading h2,
-  .direction-principle h2 {
-    font-size: clamp(4.4rem, 19vw, 7.4rem);
-  }
-
-  .services-intro__copy,
-  .reels__intro,
-  .direction-principle__lead,
-  .plan-select__heading > p:last-child {
-    font-size: 19px;
-  }
-
-  .medal-selector--visual .medal-choice__title { font-size: 30px; }
-  .medal-choice__action { width: min(100%, 260px); justify-content: center; }
-
-  .medal-journey--v2 .medal-journey__copy h2 {
-    font-size: clamp(4.5rem, 18vw, 7rem);
-  }
-
-  .medal-journey--v2 .medal-journey__lead { font-size: 20px; }
-  .medal-journey--v2 .medal-journey__copy ul { grid-template-columns: 1fr; }
-
-  .direction-principle__grid h3 { font-size: 34px; }
-  .direction-principle__grid p { font-size: 18px; }
-
-  .plan-card h3 { font-size: 44px; }
-  .plan-card__copy { font-size: 18px; }
-  .plan-select__decision { align-items: stretch; }
-  .plan-select__cta { width: 100%; }
-
-  .services-availability--dark h2 {
-    font-size: clamp(4.5rem, 18vw, 7.2rem);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .medal-choice__object,
-  .service-medal-image,
-  .plan-card__medal img {
-    transform: none !important;
-  }
-}
-
-/* Small-copy legibility pass for Film & Services only. */
-body[data-page="film-services"] .film-hero__cinema-copy > p:last-child {
-  font-size: 13px;
-}
-body[data-page="film-services"] .film-sound {
-  font-size: 14px;
-}
-body[data-page="film-services"] .reel-card__meta span:last-child {
-  font-size: 11px;
-}
-
-/* ========================================================================== 
-   FILM & SERVICES V3 — SCROLL TRANSITIONS / ADAPTIVE HEADER / TITLE LIGHT
-   ========================================================================== */
-
-/* The yellow light must travel through the letters, then leave the title in
-   its native color. Multi-line titles are supported. */
-.yellow-sweep--block {
-  display: block;
-  width: fit-content;
-  max-width: 100%;
-}
-
-/* Film-only header hard states. These override the generic IntersectionObserver
-   during the two mixed-background transition scenes. */
-body[data-page="film-services"].film-header-dark .site-header {
-  color: var(--bone) !important;
-}
-body[data-page="film-services"].film-header-dark .site-header::before {
-  opacity: 1 !important;
-}
-body[data-page="film-services"].film-header-dark .site-header__brand {
-  filter: none !important;
-}
-body[data-page="film-services"].film-header-light .site-header {
-  color: var(--ink) !important;
-}
-body[data-page="film-services"].film-header-light .site-header::before {
-  opacity: 0 !important;
-}
-body[data-page="film-services"].film-header-light .site-header__brand {
-  filter: brightness(0) !important;
-}
-body[data-page="film-services"].film-header-light .site-header__link.is-active,
-body[data-page="film-services"].film-header-dark .site-header__link.is-active {
-  color: var(--yellow) !important;
-}
-
-/* --------------------------------------------------------------------------
-   METAL EXPOSURE — GOLD MEDAL BECOMES THE BONE SCREEN
-   -------------------------------------------------------------------------- */
-.metal-exposure {
-  position: relative;
-  z-index: 4;
-  height: 175svh;
-  background: transparent;
-}
-
-.metal-exposure__sticky {
-  position: sticky;
-  top: 0;
-  height: 100svh;
-  overflow: hidden;
-}
-
-.metal-exposure__stage {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  background: transparent;
-}
-
-.metal-exposure__medal {
-  position: absolute;
-  z-index: 2;
-  left: 50%;
-  top: 50%;
-  width: min(45vw, 650px);
-  height: auto;
-  transform: translate(-50%, -50%) translateX(-17vw) scale(.94);
-  transform-origin: center;
-  filter: drop-shadow(0 42px 74px rgba(0,0,0,.42));
-  will-change: transform, filter, opacity;
-}
-
-.metal-exposure__flare {
-  position: absolute;
-  z-index: 3;
-  left: 50%;
-  top: 50%;
-  width: 28vmin;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,252,236,.98) 0%, rgba(255,245,200,.78) 28%, rgba(224,245,59,.18) 52%, transparent 76%);
-  filter: blur(12px);
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(.4);
-  pointer-events: none;
-  will-change: transform, opacity;
-}
-
-.metal-exposure__bone {
-  position: absolute;
-  z-index: 4;
-  inset: 0;
-  background: var(--bone);
-  clip-path: circle(0% at 50% 50%);
-  will-change: clip-path;
-  pointer-events: none;
-}
-
-/* Direction now continues directly from the exposure transition. */
-.direction-principle {
-  margin-top: -1px;
-  border: 0;
-}
-
-/* --------------------------------------------------------------------------
-   MEDAL CUT — BONE PANELS OPEN TO REVEAL SELECT YOUR PLAN
-   -------------------------------------------------------------------------- */
-.plan-select.plan-select--cut {
-  height: 245svh;
-  min-height: 0;
-  padding: 0;
-  overflow: visible;
-  background: transparent;
-}
-
-.plan-select.plan-select--cut::before {
-  display: none;
-}
-
-.plan-select__sticky {
-  position: sticky;
-  top: 0;
-  height: 100svh;
-  overflow: hidden;
-  background: transparent;
-}
-
-.plan-select__dark-stage {
-  position: absolute;
-  z-index: 2;
-  inset: 0;
-  background: transparent;
-}
-
-.plan-select.plan-select--cut .plan-select__inner {
-  height: 100%;
-  min-height: 0;
-  padding-top: calc(var(--header-height) + clamp(24px, 4vh, 46px));
-  padding-bottom: clamp(24px, 4vh, 42px);
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  align-content: stretch;
-}
-
-.plan-select.plan-select--cut .plan-select__heading {
-  grid-template-columns: 1.12fr .88fr;
-  gap: 22px 70px;
-  align-items: end;
-}
-
-.plan-select.plan-select--cut .plan-select__heading h2 {
-  font-size: clamp(4.6rem, 8.4vw, 10.5rem);
-  line-height: .82;
-}
-
-.plan-select.plan-select--cut .plan-select__heading > p:last-child {
-  max-width: 34rem;
-  font-size: clamp(19px, 1.35vw, 24px);
-}
-
-.plan-select.plan-select--cut .plan-grid {
-  align-self: center;
-  margin-top: clamp(26px, 4vh, 52px);
-  gap: clamp(24px, 3.3vw, 54px);
-}
-
-.plan-select.plan-select--cut .plan-card__medal img {
-  width: min(100%, clamp(170px, 16vw, 245px));
-}
-
-.plan-select.plan-select--cut .plan-card__eyebrow {
-  margin-top: 16px;
-}
-
-.plan-select.plan-select--cut .plan-card h3 {
-  margin-top: 7px;
-  font-size: clamp(2.25rem, 3vw, 4rem);
-}
-
-.plan-select.plan-select--cut .plan-card__copy {
-  min-height: 4.8em;
-  margin-top: 14px;
-  font-size: clamp(17px, 1.1vw, 20px);
-}
-
-.plan-select.plan-select--cut .plan-card__select {
-  min-height: 50px;
-  margin-top: 18px;
-}
-
-.plan-select.plan-select--cut .plan-select__decision {
-  margin-top: clamp(20px, 3vh, 34px);
-  padding-top: 18px;
-}
-
-.medal-cut {
-  position: absolute;
-  z-index: 20;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.medal-cut__panel {
-  position: absolute;
-  top: -2%;
-  bottom: -2%;
-  width: 62%;
-  background: var(--bone);
-  will-change: transform;
-}
-
-.medal-cut__panel--left {
-  left: -6%;
-  clip-path: polygon(0 0, 100% 0, 82% 50%, 100% 100%, 0 100%);
-}
-
-.medal-cut__panel--right {
-  right: -6%;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 18% 50%);
-}
-
-.medal-cut__mark {
-  position: absolute;
-  z-index: 3;
-  left: 50%;
-  top: 50%;
-  width: clamp(42px, 4vw, 64px);
-  height: clamp(24px, 2.2vw, 36px);
-  background: var(--yellow);
-  clip-path: polygon(0 0, 50% 48%, 100% 0, 100% 36%, 50% 84%, 0 36%);
-  transform: translate(-50%, -50%);
-  filter: drop-shadow(0 7px 18px rgba(224,245,59,.22));
-  will-change: transform, opacity;
-}
-
-/* Remove any visible rules that read as section blocks in this flow. */
-.plan-select,
-.services-availability--dark,
-.direction-principle,
-.metal-exposure {
-  border-top: 0 !important;
-  border-bottom: 0 !important;
-}
-
-/* Availability is now the actual ending. */
-.services-availability--dark {
-  margin-top: -1px;
-  min-height: 92svh;
-}
-
-@media (max-width: 980px) {
-  .metal-exposure__medal {
-    width: min(62vw, 560px);
-    transform: translate(-50%, -50%) translateX(-10vw) scale(.94);
-  }
-
-  .plan-select.plan-select--cut {
-    height: auto;
-    min-height: 100svh;
-    padding: calc(var(--header-height) + 80px) 0 110px;
-  }
-
-  .plan-select__sticky {
+  .medals__stage {
     position: relative;
     height: auto;
     min-height: 100svh;
     overflow: visible;
   }
-
-  .plan-select__dark-stage {
+  .medals__title {
     position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    margin: 0 var(--page-pad) 42px;
+    transform: none !important;
+    opacity: 1 !important;
   }
-
-  .plan-select.plan-select--cut .plan-select__inner {
-    height: auto;
-    padding-top: 0;
-    padding-bottom: 0;
-    display: block;
+  .medals__standard { --standard-fill: 1 !important; }
+  .medals__spot,
+  .medals__index { display: none; }
+  .medals__cards {
+    position: relative;
+    inset: auto;
+    margin: 0 var(--page-pad);
+    opacity: 1 !important;
+    pointer-events: auto;
   }
-
-  .plan-select.plan-select--cut .plan-select__heading {
-    grid-template-columns: 1fr;
+  .medal-card {
+    opacity: 1 !important;
+    transform: none !important;
   }
+  .medals__medal { pointer-events: none !important; }
 
-  .plan-select.plan-select--cut .plan-grid {
-    margin-top: 72px;
-  }
-
-  .medal-cut {
-    display: none;
-  }
+  .apostrophe-thread__line { transform: translateX(-50%) scaleY(1) !important; }
+  .apostrophe-thread__mark { top: calc(100% - 40px); transform: translateX(-50%) !important; }
+  .apostrophe-thread__note { opacity: 1 !important; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .metal-exposure {
-    height: 100svh;
-    background: var(--bone);
-  }
-  .metal-exposure__medal,
-  .metal-exposure__flare {
-    display: none;
-  }
-  .metal-exposure__bone {
-    clip-path: none;
-  }
-}
-
-/* ========================================================================== 
-   FILM & SERVICES V4 — CONTINUOUS GOLD TRANSITION / TRUE YELLOW SWEEP
-   ========================================================================== */
-
-/* The title always owns a solid base color. The temporary yellow copy is
-   clipped over it and disappears completely after every pass. */
-.yellow-sweep {
-  --sweep-base: var(--bone);
-  position: relative;
-  display: inline-grid;
-  color: var(--sweep-base) !important;
-  background: none !important;
-  background-image: none !important;
-  -webkit-background-clip: initial !important;
-  background-clip: initial !important;
-  -webkit-text-fill-color: currentColor;
-}
-
-.yellow-sweep--block {
-  display: grid;
-  width: fit-content;
-  max-width: 100%;
-}
-
-.yellow-sweep--ink { --sweep-base: var(--ink); }
-
-.yellow-sweep__base,
-.yellow-sweep__flash {
-  grid-area: 1 / 1;
-  display: block;
-  width: 100%;
-  color: inherit;
-  -webkit-text-fill-color: currentColor;
-}
-
-.yellow-sweep__base {
-  position: relative;
-  z-index: 1;
-  color: var(--sweep-base);
-}
-
-.yellow-sweep__flash {
-  position: relative;
-  z-index: 2;
-  color: var(--yellow);
-  clip-path: inset(0 100% 0 0);
-  will-change: clip-path;
-  pointer-events: none;
-}
-
-/* Service names must always finish in white on the dark halo field. */
-.medal-journey--v2 .medal-journey__copy h2,
-.medal-journey--v2 .medal-journey__copy h2 .yellow-sweep__base {
-  color: var(--bone) !important;
-  --sweep-base: var(--bone);
-}
-
-.plan-select__heading h2,
-.plan-select__heading h2 .yellow-sweep__base,
-.services-intro--v2 h2,
-.services-intro--v2 h2 .yellow-sweep__base,
-.services-availability--dark h2,
-.services-availability--dark h2 .yellow-sweep__base {
-  --sweep-base: var(--bone);
-  color: var(--bone) !important;
-}
-
-/* --------------------------------------------------------------------------
-   GOLD → BONE — SAME GOLD MEDAL, SAME PINNED SCENE
-   -------------------------------------------------------------------------- */
-.medal-journey--v2 {
-  height: 470svh;
-}
-
-.medal-journey--v2 .medal-journey__pin {
-  isolation: isolate;
-}
-
-.medal-journey--v2 .medal-journey__index,
-.medal-journey--v2 .medal-journey__visual,
-.medal-journey--v2 .medal-journey__copy,
-.medal-journey--v2 .medal-journey__rail {
-  position: relative;
-  z-index: 3;
-}
-
-.medal-journey--v2 .medal-journey__index,
-.medal-journey--v2 .medal-journey__rail {
-  position: absolute;
-}
-
-.journey-exposure {
-  position: absolute;
-  z-index: 5;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.journey-exposure__flare {
-  position: absolute;
-  z-index: 1;
-  left: 31%;
-  top: 50%;
-  width: 24vmin;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,253,242,.99) 0%, rgba(255,247,210,.88) 28%, rgba(224,245,59,.18) 52%, transparent 76%);
-  filter: blur(12px);
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(.25);
-  will-change: transform, opacity;
-}
-
-.journey-exposure__bone {
-  position: absolute;
-  z-index: 2;
-  inset: 0;
-  background: var(--bone);
-  clip-path: circle(0% at 31% 50%);
-  will-change: clip-path;
-}
-
-.journey-direction {
-  position: absolute;
-  z-index: 7;
-  inset: 0;
-  display: grid;
-  background: transparent;
-  color: var(--ink);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  will-change: opacity, transform;
-}
-
-.journey-direction__inner {
-  min-height: 100svh;
-  padding-top: calc(var(--header-height) + clamp(42px, 7vh, 86px));
-  padding-bottom: clamp(42px, 7vh, 84px);
-  display: grid;
-  align-content: center;
-}
-
-.journey-direction .eyebrow {
-  margin-bottom: clamp(24px, 3.5vh, 42px);
-  color: rgba(5,6,10,.48);
-}
-
-.journey-direction h2 {
-  margin: 0;
-  max-width: 11ch;
-  --sweep-base: var(--ink);
-  color: var(--ink) !important;
-  font-size: clamp(5.2rem, 9.25vw, 11.7rem);
-  font-weight: 300;
-  line-height: .84;
-  letter-spacing: -.061em;
-}
-
-.journey-direction h2 .yellow-sweep__base {
-  color: var(--ink) !important;
-}
-
-.journey-direction__lead {
-  margin: clamp(30px, 4.5vh, 50px) 0 0 auto;
-  width: min(100%, 650px);
-  color: rgba(5,6,10,.70);
-  font-size: clamp(21px, 1.55vw, 27px);
-  line-height: 1.28;
-  letter-spacing: -.026em;
-}
-
-.journey-direction__grid {
-  margin-top: clamp(64px, 8vh, 104px);
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(30px, 4vw, 70px);
-}
-
-.journey-direction__grid article {
-  padding-top: 18px;
-  border-top: 1px solid rgba(5,6,10,.18);
-}
-
-.journey-direction__grid article > span {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 11px;
-  letter-spacing: .13em;
-}
-
-.journey-direction__grid h3 {
-  margin: 36px 0 16px;
-  max-width: 12ch;
-  font-size: clamp(2.15rem, 2.9vw, 3.8rem);
-  font-weight: 420;
-  line-height: .98;
-  letter-spacing: -.045em;
-}
-
-.journey-direction__grid p {
-  margin: 0;
-  max-width: 29rem;
-  color: rgba(5,6,10,.66);
-  font-size: clamp(18px, 1.25vw, 22px);
-  line-height: 1.38;
-}
-
-/* Old standalone exposure/light screen no longer participates in the flow. */
-.metal-exposure,
-.direction-principle {
-  display: none !important;
-}
-
-/* --------------------------------------------------------------------------
-   MEDAL CUT INTERSTITIAL — COPY AROUND THE BRAND MARK
-   -------------------------------------------------------------------------- */
-.medal-cut__note {
-  position: absolute;
-  z-index: 4;
-  top: 50%;
-  width: min(27vw, 390px);
-  color: var(--ink);
-  transform: translateY(-50%);
-  will-change: opacity, transform;
-}
-
-.medal-cut__note--left {
-  left: clamp(44px, 10vw, 170px);
-  text-align: right;
-}
-
-.medal-cut__note--right {
-  right: clamp(44px, 10vw, 170px);
-  text-align: left;
-}
-
-.medal-cut__note span {
-  display: block;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: clamp(10px, .72vw, 12px);
-  line-height: 1.3;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-}
-
-.medal-cut__note p {
-  margin: 14px 0 0;
-  font-size: clamp(21px, 1.55vw, 27px);
-  line-height: 1.18;
-  letter-spacing: -.032em;
-}
-
-/* Remove any residual rules between the new continuous scenes. */
-.medal-journey--v2,
-.plan-select.plan-select--cut,
-.services-availability--dark {
-  border-top: 0 !important;
-  border-bottom: 0 !important;
-}
-
-@media (max-width: 980px) {
-  .medal-journey--v2 {
-    height: auto;
-  }
-
-  .journey-exposure,
-  .journey-direction {
-    display: none;
-  }
-
-  .medal-cut__note {
-    display: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .yellow-sweep__flash {
-    display: none;
-  }
-}
-
-
-/* ========================================================================== 
-   FILM & SERVICES V5 — TYPOGRAPHY / TRANSITION AIR / INTERSTITIAL BALANCE
-   ========================================================================== */
-
-/* 1) Interstitial notes around the diamond need stronger presence. */
-.medal-cut__note {
-  width: min(30vw, 460px);
-}
-
-.medal-cut__note span {
-  font-size: clamp(11px, .86vw, 13px);
-  letter-spacing: .16em;
-}
-
-.medal-cut__note p {
-  margin-top: 16px;
-  font-size: clamp(26px, 1.9vw, 34px);
-  line-height: 1.16;
-  letter-spacing: -.032em;
-}
-
-/* 2) The white strategic screen should arrive with more air and no clipping. */
-.journey-direction__inner {
-  min-height: 100svh;
-  padding-top: calc(var(--header-height) + clamp(76px, 9vh, 118px));
-  padding-bottom: clamp(44px, 6vh, 72px);
-  align-content: start;
-}
-
-.journey-direction h2 {
-  max-width: 9.2ch;
-  font-size: clamp(4.25rem, 7.15vw, 8.9rem);
-  line-height: .90;
-}
-
-.journey-direction__lead {
-  margin-top: clamp(24px, 3.8vh, 36px);
-  width: min(100%, 600px);
-  font-size: clamp(18px, 1.22vw, 22px);
-  line-height: 1.34;
-}
-
-.journey-direction__grid {
-  margin-top: clamp(44px, 6vh, 70px);
-  gap: clamp(28px, 3vw, 56px);
-}
-
-.journey-direction__grid article {
-  min-width: 0;
-}
-
-.journey-direction__grid h3 {
-  margin: 28px 0 12px;
-  max-width: 11ch;
-  font-size: clamp(1.8rem, 2.35vw, 3rem);
-  line-height: 1.02;
-}
-
-.journey-direction__grid p {
-  max-width: 24rem;
-  font-size: clamp(16px, 1.02vw, 19px);
-  line-height: 1.36;
-}
-
-/* 3) Slight extra space inside the pinned gold scene so the exposure feels less crowded. */
-.medal-journey--v2 .medal-journey__pin {
-  padding-top: calc(var(--header-height) + 54px);
-  padding-bottom: 64px;
-}
-
-.medal-journey--v2 .medal-journey__copy h2 {
-  font-size: clamp(4.7rem, 7.5vw, 9.4rem);
-}
-
-.medal-journey--v2 .medal-journey__lead {
-  font-size: clamp(19px, 1.34vw, 23px);
-}
-
-/* 4) Mobile / narrower desktop adjustments for the same scenes. */
-@media (max-width: 1280px) {
-  .journey-direction__inner {
-    padding-top: calc(var(--header-height) + clamp(64px, 7.5vh, 94px));
-  }
-
-  .journey-direction h2 {
-    font-size: clamp(4rem, 6.6vw, 7.8rem);
-  }
-
-  .journey-direction__grid h3 {
-    font-size: clamp(1.7rem, 2.15vw, 2.5rem);
-  }
-}
-
-@media (max-width: 980px) {
-  .medal-cut__note {
-    display: none;
-  }
-
-  .journey-direction__inner {
-    padding-top: calc(var(--header-height) + 56px);
-    padding-bottom: 42px;
-  }
-
-  .journey-direction h2 {
-    font-size: clamp(3.8rem, 11vw, 6.6rem);
-    line-height: .92;
-  }
-
-  .journey-direction__lead {
-    width: 100%;
-    font-size: 18px;
-  }
-
-  .journey-direction__grid {
-    grid-template-columns: 1fr;
-    margin-top: 42px;
-    gap: 26px;
-  }
-
-  .journey-direction__grid h3 {
-    margin-top: 22px;
-    font-size: 30px;
-  }
-
-  .journey-direction__grid p {
-    font-size: 17px;
-  }
-}
-
-@media (max-width: 720px) {
-  .journey-direction__inner {
-    padding-top: calc(var(--header-height) + 48px);
-    padding-bottom: 34px;
-  }
-
-  .journey-direction h2 {
-    font-size: clamp(3.4rem, 14.5vw, 5.6rem);
-  }
+body[data-page="film-services"] .film-hero__cinema-copy > p:last-child { font-size: 13px; }
+body[data-page="film-services"] .film-sound { font-size: 14px; }
+body[data-page="film-services"] .reel-card__meta span:last-child { font-size: 11px; }
+
+/* Final continuity pass: no standalone divider block between medals and availability. */
+.apostrophe-thread { display: none !important; height: 0 !important; min-height: 0 !important; }
+body[data-page="film-services"] .site-header { background: transparent; }
+body[data-page="film-services"] .site-header::before {
+  height: 150px;
+  background: linear-gradient(to bottom, rgba(5,6,10,.30) 0%, rgba(5,6,10,.10) 48%, rgba(5,6,10,0) 100%);
 }

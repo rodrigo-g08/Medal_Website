@@ -30,13 +30,15 @@ main {
 
 .work-hero__eyebrow {
   align-self: start;
+  font-size: clamp(12px, .78vw, 14px);
+  letter-spacing: .15em;
 }
 
 .work-hero__brand-stage {
   position: relative;
   align-self: center;
   justify-self: center;
-  width: clamp(620px, 72vw, 1120px);
+  width: clamp(760px, 84vw, 1560px);
   transform-origin: 50% 50%;
 }
 

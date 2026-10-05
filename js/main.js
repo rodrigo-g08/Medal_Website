@@ -1,1155 +1,160 @@
-/* ==========================================================
-   Medal — Página provisional
-   1. Control de sonido del video de portada.
-   2. Envío del formulario al correo de Medal (FormSubmit).
-   ========================================================== */
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { initMedalShell } from "/src/js/main.js";
 
-/* ---------- Configuración ---------- */
-const CONFIG = {
-  formEndpoint: 'https://formsubmit.co/ajax/info@medalusa.com',
-  fallbackEmail: 'info@medalusa.com',
-  subject: 'New inquiry from medalusa.com',
-};
+gsap.registerPlugin(ScrollTrigger);
 
-/* ---------- 1. Video de portada ---------- */
-(function heroVideo() {
-  const video = document.getElementById('hero-video');
-  const toggle = document.getElementById('sound-toggle');
-  const label = document.getElementById('sound-label');
-  if (!video || !toggle) return;
+const clamp = (value, min = 0, max = 1) => Math.min(Math.max(value, min), max);
+const ramp = (p, a, b) => clamp((p - a) / Math.max(b - a, 0.0001));
+const easeInOutCubic = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion) {
-    video.removeAttribute('autoplay');
-    video.pause();
-  }
+history.scrollRestoration = "manual";
 
-  // Los navegadores bloquean el autoplay con audio. El video arranca
-  // silenciado y el primer clic del visitante habilita la pista original.
-  video.muted = true;
-  video.volume = 1;
+const { lenis } = initMedalShell();
 
-  toggle.addEventListener('click', () => {
+function initCoverSound() {
+  const video = document.querySelector("[data-cover-video]");
+  const button = document.querySelector("[data-cover-sound]");
+  const label = document.querySelector("[data-cover-sound-label]");
+  if (!video || !button) return;
+
+  button.addEventListener("click", async () => {
     video.muted = !video.muted;
-    const on = !video.muted;
-    toggle.setAttribute('aria-pressed', String(on));
-    label.textContent = on ? 'Sound on' : 'Sound off';
-    if (on) video.play().catch(() => {});
-  });
-
-  // Si el navegador pausa el video (pestaña oculta, ahorro de batería),
-  // se reanuda al volver, salvo que el visitante prefiera menos movimiento.
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && video.paused && !reduceMotion) {
-      video.play().catch(() => {});
+    button.setAttribute("aria-pressed", String(!video.muted));
+    if (label) label.textContent = video.muted ? "Sound off" : "Sound on";
+    if (!video.muted) {
+      video.volume = 1;
+      try { await video.play(); } catch (_) {}
     }
   });
-})();
+}
 
-/* ---------- 2. Formulario ---------- */
-(function contactForm() {
-  const form = document.getElementById('contact-form');
-  const statusEl = document.getElementById('form-status');
-  const button = document.getElementById('cf-submit');
-  if (!form) return;
+function initCover() {
+  const cover = document.querySelector("[data-cover]");
+  const stage = document.querySelector("[data-cover-stage]");
+  const hole = document.querySelector("[data-cover-hole]");
+  const gate = document.querySelector("[data-cover-gate]");
+  const hero = document.querySelector("[data-cover-hero]");
+  const scrim = document.querySelector("[data-cover-scrim]");
+  const solid = document.querySelector("[data-cover-solid]");
+  const halos = document.querySelector("[data-cover-halos]");
+  const headerBrand = document.querySelector("[data-cover-header-brand]");
+  const line = document.querySelector("[data-cover-line]");
+  const workEyebrow = document.querySelector("[data-cover-work-eyebrow]");
+  const enter = document.querySelector("[data-cover-enter]");
+  const bar = document.querySelector("[data-cover-bar]");
 
-  const defaultStatus = statusEl.textContent;
-  const setStatus = (text, type = '') => {
-    statusEl.textContent = text;
-    statusEl.className = `form-status${type ? ` is-${type}` : ''}`;
+  if (!cover || !stage || !hole || !gate) return;
+
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduced) return;
+
+  const F = { x: 112.67, y: 106, r: 17.9 };
+  const C = { x: 319, y: 96 };
+  let W = 0;
+  let H = 0;
+  let S0 = 1;
+  let S1 = 1;
+  let navigated = false;
+
+  const measure = () => {
+    const rect = stage.getBoundingClientRect();
+    W = Math.max(1, rect.width);
+    H = Math.max(1, rect.height);
+
+    // Match Work's actual opening logo fraction without changing Work itself.
+    let workFraction = 0.84;
+    if (W <= 540) workFraction = 0.90;
+    else if (W <= 860) workFraction = 0.82;
+
+    S1 = Math.min(W * workFraction, H * 1.5) / 640;
+    const d = Math.hypot(C.x - F.x, C.y - F.y);
+    S0 = (Math.hypot(W, H) / 2 + d * S1) * 1.12 / F.r;
+    gate.setAttribute("viewBox", `0 0 ${W} ${H}`);
   };
 
-  form.querySelectorAll('input, textarea').forEach((el) => {
-    el.addEventListener('input', () => {
-      el.closest('.field')?.classList.remove('is-invalid');
-      if (statusEl.classList.contains('is-error')) setStatus(defaultStatus);
-    });
-  });
-
-  function validate() {
-    let firstInvalid = null;
-    form.querySelectorAll('[required]').forEach((el) => {
-      const ok = el.value.trim() !== '' && el.checkValidity();
-      el.closest('.field')?.classList.toggle('is-invalid', !ok);
-      if (!ok && !firstInvalid) firstInvalid = el;
-    });
-    if (firstInvalid) {
-      const email = form.elements.email;
-      const msg = firstInvalid === email && email.value.trim()
-        ? 'Enter a valid email address.'
-        : 'Complete your name, work email and a few lines about your brand.';
-      setStatus(msg, 'error');
-      firstInvalid.focus();
-      return false;
-    }
-    return true;
-  }
-
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    if (form.elements._honey.value) return; // bot
-    if (!validate()) return;
-
-    button.setAttribute('aria-busy', 'true');
-    button.disabled = true;
-    setStatus('Sending…');
-
-    const data = {
-      name: form.elements.name.value.trim(),
-      email: form.elements.email.value.trim(),
-      brand: form.elements.brand.value.trim(),
-      message: form.elements.brand.value.trim(),
-      _subject: CONFIG.subject,
-      _replyto: form.elements.email.value.trim(),
-      _template: 'table',
-      _captcha: 'false',
-    };
-
-    try {
-      const res = await fetch(CONFIG.formEndpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(data),
-      });
-      const json = await res.json().catch(() => ({}));
-      if (!res.ok || String(json.success) === 'false') throw new Error(json.message || res.statusText);
-      form.reset();
-      setStatus('Thank you. Your inquiry was sent successfully.', 'ok');
-    } catch (err) {
-      console.error('[Medal form]', err);
-      setStatus(`We could not send your message. Write to us directly at ${CONFIG.fallbackEmail}.`, 'error');
-    } finally {
-      button.removeAttribute('aria-busy');
-      button.disabled = false;
-    }
-  });
-})();
-
-/* ==========================================================
-   MEDAL — HALOS INTERACTIVOS V2
-
-   - Sin cursor: recorrido automático.
-   - Cursor normal: no ocurre nada.
-   - Cursor sobre el núcleo de un halo:
-     ese halo empieza a seguirlo.
-   - Si entra al núcleo del otro halo:
-     cambia el halo activo.
-   - Al entrar al formulario:
-     se libera cualquier halo.
-   - Mobile:
-     solo animación automática.
-   ========================================================== */
-
-(function interactiveMesh() {
-
-  const section =
-    document.querySelector('.message');
-
-  const form =
-    document.querySelector('.contact-form');
-
-  const topOrb =
-    document.querySelector('.mesh-orb--top');
-
-  const bottomOrb =
-    document.querySelector('.mesh-orb--bottom');
-
-
-  if (
-    !section ||
-    !topOrb ||
-    !bottomOrb
-  ) return;
-
-
-
-  /* ========================================================
-     MEDIA QUERIES
-     ======================================================== */
-
-  const reduceMotion =
-    window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    );
-
-
-  const mobileQuery =
-    window.matchMedia(
-      '(max-width: 720px)'
-    );
-
-
-
-  /* ========================================================
-     AJUSTES
-     ======================================================== */
-
-  /*
-     Qué tan rápido sigue al mouse
-     una vez capturado.
-
-     Más bajo = más flotante.
-  */
-  const FOLLOW_SPEED = 0.055;
-
-
-  /*
-     Qué tan suavemente regresa
-     a su recorrido natural.
-  */
-  const RETURN_SPEED = 0.018;
-
-
-  /*
-     Tamaño máximo del núcleo invisible.
-     No cambia visualmente el halo.
-  */
-  const CORE_MAX_RADIUS = 92;
-
-
-  /*
-     Tamaño mínimo del núcleo.
-  */
-  const CORE_MIN_RADIUS = 58;
-
-
-
-  /* ========================================================
-     CURSOR
-     ======================================================== */
-
-  const pointer = {
-
-    x: 0,
-    y: 0,
-
-    inside: false,
-
-    overForm: false
-
+  const placeHole = (p) => {
+    const t = easeInOutCubic(ramp(p, 0.16, 0.60));
+    const s = S0 * Math.pow(S1 / S0, t);
+    const tx = W / 2 - F.x * s - (C.x - F.x) * S1;
+    const ty = H / 2 - F.y * s - (C.y - F.y) * S1;
+    hole.setAttribute("transform", `translate(${tx} ${ty}) scale(${s})`);
   };
 
+  const updateScene = (p) => {
+    placeHole(p);
 
+    const heroOut = ramp(p, 0.05, 0.15);
+    gsap.set(hero, { opacity: 1 - heroOut, y: -30 * heroOut });
+    gsap.set(scrim, { opacity: 1 - ramp(p, 0.20, 0.50) });
+    gsap.set(gate, { opacity: ramp(p, 0.12, 0.18) });
+    gsap.set(halos, { opacity: ramp(p, 0.40, 0.62) });
+    gsap.set(headerBrand, { opacity: 1 - ramp(p, 0.50, 0.60) });
 
-  /* ========================================================
-     HALOS
-     ======================================================== */
+    const lineOpacity = ramp(p, 0.58, 0.64) * (1 - ramp(p, 0.70, 0.75));
+    gsap.set(line, { opacity: lineOpacity, y: 12 * (1 - lineOpacity) });
 
-  const orbs = [
+    const solidOpacity = ramp(p, 0.72, 0.82);
+    gsap.set(solid, { opacity: solidOpacity });
 
-    {
+    const workIn = ramp(p, 0.80, 0.86);
+    gsap.set(workEyebrow, { opacity: workIn, y: 10 * (1 - workIn) });
+    gsap.set(enter, { opacity: workIn, y: 12 * (1 - workIn) });
+    enter?.classList.toggle("is-visible", workIn > 0.92);
 
-      el: topOrb,
+    gsap.set(bar, { scaleX: ramp(p, 0.86, 0.995) });
+  };
 
-      /*
-         Halo superior:
-         derecha → izquierda → derecha
-      */
-      duration: 52000,
+  measure();
+  updateScene(0);
 
-      startX: .72,
-      startY: -.28,
-
-      travelX: -.72,
-      travelY: .12,
-
-      phase: 0,
-
-      x: 0,
-      y: 0,
-
-      autoX: 0,
-      autoY: 0,
-
-      initialized: false,
-
-      insideCore: false,
-
-      lastCoreEnter: 0
-
+  const trigger = ScrollTrigger.create({
+    trigger: cover,
+    start: "top top",
+    end: "bottom bottom",
+    scrub: 0.4,
+    invalidateOnRefresh: true,
+    onRefresh: (self) => {
+      measure();
+      updateScene(self.progress);
     },
-
-
-    {
-
-      el: bottomOrb,
-
-      /*
-         Halo inferior:
-         izquierda inferior →
-         derecha superior →
-         regreso.
-      */
-      duration: 58000,
-
-      startX: -.24,
-      startY: .58,
-
-      travelX: .82,
-      travelY: -.78,
-
-      phase: .22,
-
-      x: 0,
-      y: 0,
-
-      autoX: 0,
-      autoY: 0,
-
-      initialized: false,
-
-      insideCore: false,
-
-      lastCoreEnter: 0
-
-    }
-
-  ];
-
-
-
-  /*
-     null = ningún halo sigue al cursor.
-
-     0 = halo superior.
-     1 = halo inferior.
-  */
-
-  let activeOrb = null;
-
-
-
-  /* ========================================================
-     HELPERS
-     ======================================================== */
-
-  function clamp(
-    value,
-    min,
-    max
-  ) {
-
-    return Math.min(
-      Math.max(
-        value,
-        min
-      ),
-      max
-    );
-
-  }
-
-
-
-  function smoothStep(t) {
-
-    return (
-      t *
-      t *
-      (
-        3 -
-        2 * t
-      )
-    );
-
-  }
-
-
-
-  function pingPong(value) {
-
-    const t =
-      value % 1;
-
-
-    if (
-      t < .5
-    ) {
-
-      return smoothStep(
-        t * 2
-      );
-
-    }
-
-
-    return smoothStep(
-
-      (
-        1 - t
-      ) *
-      2
-
-    );
-
-  }
-
-
-
-  /*
-     Devuelve el radio invisible
-     del núcleo de cada halo.
-  */
-
-  function getCoreRadius(orb) {
-
-    const calculated =
-      orb.el.offsetWidth * .115;
-
-
-    return clamp(
-
-      calculated,
-
-      CORE_MIN_RADIUS,
-
-      CORE_MAX_RADIUS
-
-    );
-
-  }
-
-
-
-  /*
-     Centro actual del halo.
-  */
-
-  function getOrbCenter(orb) {
-
-    return {
-
-      x:
-        orb.x +
-        orb.el.offsetWidth / 2,
-
-      y:
-        orb.y +
-        orb.el.offsetHeight / 2
-
-    };
-
-  }
-
-
-
-  /*
-     Distancia cursor → núcleo.
-  */
-
-  function distanceToOrb(orb) {
-
-    const center =
-      getOrbCenter(orb);
-
-
-    return Math.hypot(
-
-      pointer.x -
-      center.x,
-
-      pointer.y -
-      center.y
-
-    );
-
-  }
-
-
-
-  /* ========================================================
-     DETECCIÓN DE NÚCLEOS
-     ======================================================== */
-
-  function evaluateCores() {
-
-    /*
-       Mobile nunca interactúa.
-    */
-
-    if (
-      mobileQuery.matches ||
-      !pointer.inside ||
-      pointer.overForm
-    ) {
-
-      return;
-
-    }
-
-
-    const now =
-      performance.now();
-
-
-    const candidates = [];
-
-
-    orbs.forEach(
-
-      (orb, index) => {
-
-        const distance =
-          distanceToOrb(orb);
-
-
-        const radius =
-          getCoreRadius(orb);
-
-
-        const isInside =
-          distance <= radius;
-
-
-
-        /*
-           Registramos cuándo ENTRÓ
-           al núcleo.
-
-           No actualizamos esto
-           continuamente mientras
-           permanece dentro.
-        */
-
-        if (
-          isInside &&
-          !orb.insideCore
-        ) {
-
-          orb.lastCoreEnter =
-            now;
-
-        }
-
-
-        orb.insideCore =
-          isInside;
-
-
-
-        if (
-          isInside
-        ) {
-
-          candidates.push({
-
-            index,
-
-            distance,
-
-            lastCoreEnter:
-              orb.lastCoreEnter
-
-          });
-
-        }
-
+    onUpdate: (self) => {
+      updateScene(self.progress);
+      if (self.progress >= 0.995 && self.direction > 0 && !navigated) {
+        navigated = true;
+        window.location.assign("/work/");
       }
-
-    );
-
-
-
-    /*
-       Si no entró a ningún núcleo,
-       no pasa absolutamente nada.
-    */
-
-    if (
-      candidates.length === 0
-    ) {
-
-      return;
-
-    }
-
-
-
-    /*
-       Si solamente hay uno,
-       ese halo se activa.
-    */
-
-    if (
-      candidates.length === 1
-    ) {
-
-      activeOrb =
-        candidates[0].index;
-
-      return;
-
-    }
-
-
-
-    /*
-       Si el cursor está dentro
-       de ambos núcleos simultáneamente:
-
-       gana el núcleo al que entró
-       más recientemente.
-    */
-
-    candidates.sort(
-
-      (a, b) => {
-
-        if (
-          b.lastCoreEnter !==
-          a.lastCoreEnter
-        ) {
-
-          return (
-            b.lastCoreEnter -
-            a.lastCoreEnter
-          );
-
-        }
-
-
-        /*
-           Si ocurrieron exactamente
-           al mismo tiempo,
-           usamos el más cercano.
-        */
-
-        return (
-          a.distance -
-          b.distance
-        );
-
-      }
-
-    );
-
-
-    activeOrb =
-      candidates[0].index;
-
-  }
-
-
-
-  /* ========================================================
-     POINTER
-     ======================================================== */
-
-  section.addEventListener(
-
-    'pointerenter',
-
-    (event) => {
-
-      if (
-        mobileQuery.matches
-      ) return;
-
-
-      pointer.inside =
-        true;
-
-
-      updatePointer(
-        event
-      );
-
-    }
-
-  );
-
-
-
-  section.addEventListener(
-
-    'pointermove',
-
-    (event) => {
-
-      if (
-        mobileQuery.matches
-      ) return;
-
-
-      pointer.inside =
-        true;
-
-
-      /*
-         IMPORTANTE:
-
-         si estamos encima del formulario,
-         ningún halo nos sigue.
-      */
-
-      pointer.overForm =
-        Boolean(
-          event.target.closest(
-            '.contact-form'
-          )
-        );
-
-
-      updatePointer(
-        event
-      );
-
-
-
-      if (
-        pointer.overForm
-      ) {
-
-        releaseOrb();
-
-        return;
-
-      }
-
-
-      evaluateCores();
-
-    }
-
-  );
-
-
-
-  section.addEventListener(
-
-    'pointerleave',
-
-    () => {
-
-      pointer.inside =
-        false;
-
-      pointer.overForm =
-        false;
-
-
-      releaseOrb();
-
-    }
-
-  );
-
-
-
-  /*
-     Protección adicional:
-     en cuanto entras al formulario,
-     el halo activo vuelve a su ruta.
-  */
-
-  if (form) {
-
-    form.addEventListener(
-
-      'pointerenter',
-
-      () => {
-
-        pointer.overForm =
-          true;
-
-
-        releaseOrb();
-
-      }
-
-    );
-
-
-    form.addEventListener(
-
-      'pointerleave',
-
-      () => {
-
-        pointer.overForm =
-          false;
-
-      }
-
-    );
-
-  }
-
-
-
-  function updatePointer(event) {
-
-    const rect =
-      section.getBoundingClientRect();
-
-
-    pointer.x =
-
-      clamp(
-
-        event.clientX -
-        rect.left,
-
-        0,
-
-        rect.width
-
-      );
-
-
-    pointer.y =
-
-      clamp(
-
-        event.clientY -
-        rect.top,
-
-        0,
-
-        rect.height
-
-      );
-
-  }
-
-
-
-  /* ========================================================
-     LIBERAR HALO
-     ======================================================== */
-
-  function releaseOrb() {
-
-    activeOrb =
-      null;
-
-
-    orbs.forEach(
-
-      orb => {
-
-        orb.insideCore =
-          false;
-
-      }
-
-    );
-
-  }
-
-
-
-  /* ========================================================
-     ANIMACIÓN PRINCIPAL
-     ======================================================== */
-
-  function animate(time) {
-
-    const rect =
-      section.getBoundingClientRect();
-
-
-    const width =
-      rect.width;
-
-
-    const height =
-      rect.height;
-
-
-    const isMobile =
-      mobileQuery.matches;
-
-
-    const reduced =
-      reduceMotion.matches;
-
-
-
-    orbs.forEach(
-
-      (
-        orb,
-        index
-      ) => {
-
-
-        /* ================================================
-           1. TRAYECTORIA NATURAL
-           ================================================ */
-
-        let progress;
-
-
-        if (
-          reduced
-        ) {
-
-          progress =
-            .2;
-
-        } else {
-
-          progress =
-
-            (
-              time /
-              orb.duration +
-              orb.phase
-            ) % 1;
-
-        }
-
-
-        const path =
-          pingPong(
-            progress
-          );
-
-
-
-        let autoX =
-
-          width *
-
-          (
-            orb.startX +
-            orb.travelX *
-            path
-          );
-
-
-        let autoY =
-
-          height *
-
-          (
-            orb.startY +
-            orb.travelY *
-            path
-          );
-
-
-
-        /*
-           Respiración orgánica.
-        */
-
-        if (
-          !reduced
-        ) {
-
-          autoX +=
-
-            Math.sin(
-
-              time /
-              9200 +
-
-              index *
-              2.3
-
-            ) *
-
-            22;
-
-
-          autoY +=
-
-            Math.cos(
-
-              time /
-              10800 +
-
-              index *
-              1.7
-
-            ) *
-
-            18;
-
-        }
-
-
-
-        orb.autoX =
-          autoX;
-
-
-        orb.autoY =
-          autoY;
-
-
-
-        /* ================================================
-           2. TARGET
-           ================================================ */
-
-        let targetX =
-          autoX;
-
-
-        let targetY =
-          autoY;
-
-
-
-        /*
-           Solo UNO puede seguir
-           al cursor a la vez.
-        */
-
-        if (
-          !isMobile &&
-          pointer.inside &&
-          !pointer.overForm &&
-          activeOrb === index
-        ) {
-
-
-          targetX =
-
-            pointer.x -
-            orb.el.offsetWidth /
-            2;
-
-
-          targetY =
-
-            pointer.y -
-            orb.el.offsetHeight /
-            2;
-
-
-
-          /*
-             Permitimos que parte
-             del halo salga del cuadro,
-             pero nunca completamente.
-          */
-
-          targetX =
-            clamp(
-
-              targetX,
-
-              -orb.el.offsetWidth *
-              .58,
-
-              width -
-              orb.el.offsetWidth *
-              .42
-
-            );
-
-
-          targetY =
-            clamp(
-
-              targetY,
-
-              -orb.el.offsetHeight *
-              .58,
-
-              height -
-              orb.el.offsetHeight *
-              .42
-
-            );
-
-        }
-
-
-
-        /* ================================================
-           3. PRIMER FRAME
-           ================================================ */
-
-        if (
-          !orb.initialized
-        ) {
-
-          orb.x =
-            autoX;
-
-
-          orb.y =
-            autoY;
-
-
-          orb.initialized =
-            true;
-
-        }
-
-
-
-        /* ================================================
-           4. INTERPOLACIÓN
-           ================================================ */
-
-        const followsPointer =
-
-          activeOrb === index &&
-          pointer.inside &&
-          !pointer.overForm &&
-          !isMobile;
-
-
-
-        const easing =
-
-          followsPointer
-            ? FOLLOW_SPEED
-            : RETURN_SPEED;
-
-
-
-        orb.x +=
-
-          (
-            targetX -
-            orb.x
-          ) *
-          easing;
-
-
-
-        orb.y +=
-
-          (
-            targetY -
-            orb.y
-          ) *
-          easing;
-
-
-
-        orb.el.style.transform =
-
-          `translate3d(
-            ${orb.x}px,
-            ${orb.y}px,
-            0
-          )`;
-
-      }
-
-    );
-
-
-
-    requestAnimationFrame(
-      animate
-    );
-
-  }
-
-
-
-  requestAnimationFrame(
-    animate
-  );
-
-})();
+      if (self.progress < 0.97) navigated = false;
+    },
+  });
+
+  enter?.addEventListener("click", () => {
+    const travel = Math.max(0, cover.offsetHeight - window.innerHeight);
+    const destination = cover.offsetTop + travel * 0.84;
+    if (lenis?.scrollTo) lenis.scrollTo(destination, { duration: 1.05 });
+    else window.scrollTo({ top: destination, behavior: "smooth" });
+  });
+
+  window.addEventListener("resize", () => {
+    measure();
+    updateScene(trigger.progress);
+  }, { passive: true });
+}
+
+function resetHomePosition() {
+  const reset = () => {
+    if (lenis?.scrollTo) lenis.scrollTo(0, { immediate: true, force: true });
+    else window.scrollTo(0, 0);
+    requestAnimationFrame(() => ScrollTrigger.refresh());
+  };
+
+  if (document.readyState === "complete") reset();
+  else window.addEventListener("load", reset, { once: true });
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted) reset();
+  });
+}
+
+initCoverSound();
+initCover();
+resetHomePosition();
