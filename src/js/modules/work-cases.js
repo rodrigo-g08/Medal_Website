@@ -4,7 +4,7 @@ import cases from "../../data/cases.json";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const INTRO = 0.20;
+const INTRO = 0.04;
 const HOLD = 0.74;
 const TRANSITION = 0.58;
 const FADE_TO_BLACK = 0.17;
@@ -62,6 +62,8 @@ function buildCasesSection() {
       <div class="work-cases__fade" data-cases-fade aria-hidden="true"></div>
       <div class="work-cases__bone" data-cases-bone aria-hidden="true"></div>
 
+      <button class="work-cases__skip" type="button" data-cases-skip aria-label="Skip to the photographs"><svg viewBox="218 0 79 78" aria-hidden="true"><polygon fill="currentColor" opacity="0.45" transform="translate(0 0)" points="257.48 37.66 218.21 15.57 226.97 0 257.48 17.16 287.98 0 296.74 15.57 257.48 37.66"/><polygon fill="currentColor" opacity="0.7" transform="translate(0 20)" points="257.48 37.66 218.21 15.57 226.97 0 257.48 17.16 287.98 0 296.74 15.57 257.48 37.66"/><polygon fill="currentColor" opacity="1" transform="translate(0 40)" points="257.48 37.66 218.21 15.57 226.97 0 257.48 17.16 287.98 0 296.74 15.57 257.48 37.66"/></svg><span>Skip to photos</span></button>
+
       <div class="work-cases__progress" aria-hidden="true">
         <span class="work-cases__progress-fill" data-cases-progress></span>
       </div>
@@ -71,7 +73,10 @@ function buildCasesSection() {
   return section;
 }
 
-export function initWorkCases() {
+let lenisRef = null;
+
+export function initWorkCases(lenis = null) {
+  lenisRef = lenis;
   const section = buildCasesSection();
   if (!section) return;
 
@@ -96,7 +101,6 @@ export function initWorkCases() {
     return;
   }
 
-  gsap.set(bone, { opacity: 1 });
   if (fade) gsap.set(fade, { opacity: 0 });
 
   layers.forEach((layer, index) => {
@@ -131,17 +135,8 @@ export function initWorkCases() {
       anticipatePin: 1,
       invalidateOnRefresh: true,
 
-      onEnter: () => {
-        header?.classList.add("header--light");
-      },
-
       onEnterBack: () => {
-        const p = timeline.scrollTrigger?.progress ?? 0;
-        header?.classList.toggle("header--light", p < 0.035);
-      },
-
-      onUpdate: (self) => {
-        header?.classList.toggle("header--light", self.progress < 0.035);
+        header?.classList.remove("header--light");
       },
 
       onLeave: () => {
@@ -154,15 +149,62 @@ export function initWorkCases() {
     },
   });
 
-  timeline.to(
-    bone,
-    {
-      opacity: 0,
-      duration: INTRO,
-      ease: "power2.inOut",
-    },
-    0
-  );
+  /*
+   * Fundido entre «Every brand, a different standard.» y la primera foto.
+   * La sección de casos queda fijada justo debajo de la pantalla clara; al
+   * seguir bajando, la pantalla clara se disuelve y deja ver la foto. No hay
+   * un borde que separe a ambas.
+   */
+  gsap.set(bone, { opacity: 0 });
+
+  const hero = document.querySelector("[data-work-intro]");
+  if (hero) {
+    const overlap = () => {
+      section.style.marginTop = `${-hero.offsetHeight}px`;
+    };
+    overlap();
+    ScrollTrigger.addEventListener("refreshInit", overlap);
+
+    // Mientras el inicio de Work sigue en pantalla, los casos esperan ocultos debajo.
+    const setVisible = (self) => {
+      section.style.opacity = self.isActive ? "" : "0";
+      section.style.pointerEvents = self.isActive ? "" : "none";
+    };
+    section.style.opacity = "0";
+    section.style.pointerEvents = "none";
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: "max",
+      onToggle: setVisible,
+      onRefresh: setVisible,
+    });
+
+    gsap.fromTo(
+      hero,
+      { opacity: 1 },
+      {
+        opacity: 0,
+        ease: "none",
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: () => `+=${window.innerHeight * 0.5}`,
+          scrub: true,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            header?.classList.toggle("header--light", self.progress < 0.5);
+            hero.style.pointerEvents = self.progress > 0.5 ? "none" : "";
+          },
+          onLeaveBack: () => {
+            header?.classList.add("header--light");
+            hero.style.pointerEvents = "";
+          },
+        },
+      }
+    );
+  }
 
   let cursor = INTRO;
 
@@ -251,3 +293,21 @@ export function initWorkCases() {
     )
   ).then(() => ScrollTrigger.refresh());
 }
+
+// Salto opcional: baja directo a «More than a portfolio».
+document.addEventListener("click", (event) => {
+  const skip = event.target.closest?.("[data-cases-skip]");
+  if (!skip) return;
+  const target = document.querySelector("[data-work-beyond]");
+  if (!target) return;
+  const top = target.getBoundingClientRect().top + window.scrollY;
+  // Bajada lenta y suave: arranca y frena despacio.
+  if (lenisRef?.scrollTo) {
+    lenisRef.scrollTo(top, {
+      duration: 3.2,
+      easing: (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2),
+    });
+  } else {
+    window.scrollTo({ top, behavior: "smooth" });
+  }
+});

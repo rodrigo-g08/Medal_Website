@@ -19,7 +19,9 @@ main {
 
 .cover {
   position: relative;
-  height: 460svh;
+  height: 240svh;
+  /* El inicio de Work queda justo debajo del último cuadro de la portada. */
+  margin-bottom: -100svh;
   background: var(--ink);
 }
 
@@ -83,7 +85,7 @@ main {
 }
 
 .cover__gate [data-cover-hole] {
-  transform-box: fill-box;
+  transform-box: view-box;
   transform-origin: 0 0;
   will-change: transform;
 }
@@ -421,3 +423,32 @@ main {
 .cover__enter .eyebrow { font-size: clamp(14px, .92vw, 16px); }
 .cover__hero .eyebrow { font-size: 13px; }
 .cover__sound { font-size: 15px; }
+
+
+/* --------------------------------------------------------------------------
+   PORTADA → WORK EN UNA SOLA PÁGINA
+   El video se aleja hasta quedar dentro de «medal»; esa palabra es el inicio
+   de Work. Al terminar, la escena de la portada cede su lugar al Work real.
+   -------------------------------------------------------------------------- */
+.cover .cover__work {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  min-height: 0;
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+/* Mientras dura la portada, los halos globales se ven por encima de ella. */
+body.is-cover .ambient {
+  z-index: 60;
+  mix-blend-mode: screen;
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cover { margin-bottom: 0; }
+  .cover__stage { min-height: 100svh; }
+  .cover .cover__work { display: none; }
+}

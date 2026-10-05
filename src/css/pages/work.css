@@ -141,7 +141,8 @@ main {
 }
 
 .work-h3-handoff {
-  min-height: 52svh;
+  display: none;
+  min-height: 6svh;
   background: var(--bone);
 }
 
@@ -236,3 +237,9 @@ main {
 .work-hero__eyebrow { font-size: clamp(14px, .92vw, 16px); }
 .work-hero__stage { font-size: 12px; }
 .work-bone__eyebrow { font-size: clamp(14px, .92vw, 16px); }
+
+
+/* La pantalla clara queda por encima de la primera foto para poder fundirse con ella. */
+.work-hero {
+  z-index: 5;
+}

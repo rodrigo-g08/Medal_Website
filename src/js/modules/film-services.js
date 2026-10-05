@@ -496,8 +496,6 @@ function initMedals(lenis) {
   const title = stage.querySelector("[data-medals-title]");
   const standard = stage.querySelector("[data-medals-standard]");
   const medals = SERVICES.map((service) => stage.querySelector(`[data-medal="${service.id}"]`));
-  const spots = SERVICES.map((service) => stage.querySelector(`[data-spot="${service.id}"]`));
-  const spotTitles = spots.map((spot) => spot?.querySelector("[data-spot-title]"));
   const cardsWrap = stage.querySelector("[data-medals-cards]");
   const cards = SERVICES.map((service) => stage.querySelector(`[data-card="${service.id}"]`));
   const slots = SERVICES.map((service) => stage.querySelector(`[data-card-slot="${service.id}"]`));
@@ -516,15 +514,10 @@ function initMedals(lenis) {
     });
   };
 
-  const indexWrap = stage.querySelector("[data-medals-index]");
-  const indexValue = stage.querySelector("[data-medals-index-value]");
-  const indexBar = stage.querySelector("[data-medals-index-bar]");
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const sweepState = [false, false, false];
   let geometry = null;
   let trigger = null;
 
-  spotTitles.forEach(prepareYellowSweep);
 
   const poseLerp = (from, to, t) => ({
     x: lerp(from.x, to.x, t),
@@ -570,31 +563,17 @@ function initMedals(lenis) {
     geometry = { W, H, mobile, peek, up, front, wait, slotPoses };
   };
 
+  // Asoman → suben una tras otra → viajan directo a su plan.
   const stateAt = (p) => {
     const g = geometry;
-    if (p < 0.14) {
-      const t = ramp(p, 0.04, 0.14);
+    if (p < 0.34) {
+      const t = ramp(p, 0.06, 0.34);
       return SERVICES.map((_, i) => poseLerp(g.peek[i], g.up[i], easeInOutCubic(clamp((t - i * 0.22) / 0.56))));
     }
-    if (p < 0.20) return g.up;
-    if (p < 0.28) {
-      const t = easeInOutCubic(ramp(p, 0.20, 0.28));
-      return SERVICES.map((_, i) => poseLerp(g.up[i], i === 0 ? g.front[i] : g.wait[i], t));
-    }
-    if (p < 0.38) return [g.front[0], g.wait[1], g.wait[2]];
-    if (p < 0.46) {
-      const t = easeInOutCubic(ramp(p, 0.38, 0.46));
-      return [poseLerp(g.front[0], g.wait[0], t), poseLerp(g.wait[1], g.front[1], t), g.wait[2]];
-    }
-    if (p < 0.56) return [g.wait[0], g.front[1], g.wait[2]];
-    if (p < 0.64) {
-      const t = easeInOutCubic(ramp(p, 0.56, 0.64));
-      return [g.wait[0], poseLerp(g.front[1], g.wait[1], t), poseLerp(g.wait[2], g.front[2], t)];
-    }
-    if (p < 0.74) return [g.wait[0], g.wait[1], g.front[2]];
-    if (p < 0.86) {
-      const t = easeInOutCubic(ramp(p, 0.74, 0.86));
-      return SERVICES.map((_, i) => poseLerp(i === 2 ? g.front[i] : g.wait[i], g.slotPoses[i], t));
+    if (p < 0.46) return g.up;
+    if (p < 0.84) {
+      const t = easeInOutCubic(ramp(p, 0.46, 0.84));
+      return SERVICES.map((_, i) => poseLerp(g.up[i], g.slotPoses[i], t));
     }
     return g.slotPoses;
   };
@@ -611,46 +590,23 @@ function initMedals(lenis) {
     });
   };
 
-  const spotOpacity = (p, a, b) => ramp(p, a - 0.035, a) * (1 - ramp(p, b, b + 0.035));
-
   const update = (p) => {
     if (!geometry) measure();
     stateAt(p).forEach((pose, i) => applyPose(medals[i], pose, i));
 
-    gsap.set(title, { opacity: 1 - ramp(p, 0.19, 0.24), y: -18 * ramp(p, 0.19, 0.24) });
-    standard?.style.setProperty("--standard-fill", String(ramp(p, 0.02, 0.14)));
+    gsap.set(title, { opacity: 1 - ramp(p, 0.46, 0.56), y: -18 * ramp(p, 0.46, 0.56) });
+    standard?.style.setProperty("--standard-fill", String(ramp(p, 0.04, 0.34)));
 
-    const pauses = [[0.28, 0.38], [0.46, 0.56], [0.64, 0.74]];
-    spots.forEach((spot, i) => {
-      const opacity = spotOpacity(p, pauses[i][0], pauses[i][1]);
-      gsap.set(spot, { opacity, y: 14 * (1 - opacity) });
-      if (opacity > 0.5 && !sweepState[i]) {
-        sweepState[i] = true;
-        playYellowSweep(spotTitles[i]);
-      }
-      if (opacity < 0.1 && sweepState[i]) {
-        sweepState[i] = false;
-        resetYellowSweep(spotTitles[i]);
-      }
-    });
-
-    const indexOpacity = ramp(p, 0.22, 0.24) * (1 - ramp(p, 0.78, 0.80));
-    gsap.set(indexWrap, { opacity: indexOpacity });
-    if (indexValue) {
-      indexValue.textContent = p < 0.38 ? "01" : p < 0.56 ? "02" : "03";
-    }
-    gsap.set(indexBar, { scaleX: ramp(p, 0.26, 0.74) });
-
-    const cardsBase = ramp(p, 0.77, 0.80);
+    const cardsBase = ramp(p, 0.60, 0.66);
     gsap.set(cardsWrap, { opacity: cardsBase });
     cards.forEach((card, i) => {
-      const opacity = ramp(p, 0.79 + 0.02 * i, 0.86 + 0.02 * i);
+      const opacity = ramp(p, 0.64 + 0.03 * i, 0.80 + 0.03 * i);
       gsap.set(card, { opacity, y: 24 * (1 - opacity) });
     });
-    cardsWrap.style.pointerEvents = p >= 0.86 ? "auto" : "none";
+    cardsWrap.style.pointerEvents = p >= 0.84 ? "auto" : "none";
 
     medals.forEach((medal) => {
-      const decorative = p > 0.78;
+      const decorative = p > 0.6;
       medal.style.pointerEvents = decorative ? "none" : "auto";
       medal.tabIndex = decorative ? -1 : 0;
     });
@@ -665,7 +621,7 @@ function initMedals(lenis) {
     else window.scrollTo({ top: destination, behavior: "smooth" });
   };
 
-  medals.forEach((medal, i) => medal?.addEventListener("click", () => jumpTo([0.32, 0.50, 0.68][i])));
+  medals.forEach((medal) => medal?.addEventListener("click", () => jumpTo(0.92)));
 
   cards.forEach((card) => {
     if (!card) return;
@@ -780,6 +736,23 @@ function initAvailability() {
   });
 }
 
+// Otros servicios: los planos se dibujan cuando entran en pantalla.
+function initBlueprints() {
+  const items = [...document.querySelectorAll("[data-blueprint]")];
+  if (!items.length) return;
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+    items.forEach((item) => item.classList.add("is-drawn"));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => entry.target.classList.toggle("is-drawn", entry.isIntersecting));
+  }, { threshold: 0.35 });
+
+  items.forEach((item) => observer.observe(item));
+}
+
 export function initFilmServices(lenis) {
   initFilmHero();
   initYellowSweeps();
@@ -787,4 +760,5 @@ export function initFilmServices(lenis) {
   initMedals(lenis);
   initAvailability();
   requestAnimationFrame(() => ScrollTrigger.refresh());
+  initBlueprints();
 }

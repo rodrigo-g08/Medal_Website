@@ -1,11 +1,10 @@
 {
   "availability": {
     "label": "Availability",
-    "headline": "Six new brands a month.",
+    "headline": "Six brands at a time.",
     "headlineLines": [
-      "Six new",
-      "brands a",
-      "month."
+      "Six brands",
+      "at a time."
     ],
     "total": 6,
     "occupied": 4,

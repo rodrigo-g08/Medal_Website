@@ -1,0 +1,48 @@
+PORTADA + WORK UNIFICADOS · OBSERVACIONES DEL 5 DE OCTUBRE
+
+Instalación (desde la raíz del repositorio, en la rama de trabajo):
+
+  Expand-Archive -LiteralPath "$env:USERPROFILE\Downloads\Medal_Website-MASTER-2026-10-05-PORTADA-WORK-UNIFICADO-v3.zip" -DestinationPath . -Force
+  npm run dev
+
+Cambios de esta entrega
+
+1. Portada → Work en una sola transición
+   - La portada y Work son ahora una sola página (/). Se puede subir y bajar entre ambas.
+   - El video se aleja hasta quedar dentro de «medal»; esa palabra es el inicio de Work.
+   - Se eliminaron la frase intermedia, la barra «Keep scrolling» y la carga de otra página.
+   - /work/ sigue existiendo: entra a la portada ya ubicada en el inicio de Work (/#work).
+   Archivos: index.html, js/main.js, css/styles.css, work/index.html
+
+2. Work
+   - El acercamiento al apóstrofe y la pantalla clara llegan mucho antes (src/js/modules/work-intro.js).
+   - Menos espacio entre el titular claro y el primer caso (src/css/pages/work.css).
+   - Botón de tres apóstrofes para saltar a las fotos (src/js/modules/work-cases.js, src/css/pages/work-cases.css).
+   - «More than a portfolio»: franjas con el estilo de Film & Services, en movimiento automático lento
+     (src/js/modules/work-folio.js, src/css/pages/work-folio.css, src/js/modules/work-h4-h6.js).
+   - Frase de capacidad: «Six brands at a time.» y etiqueta «Current capacity» (src/data/site.json, index.html).
+
+3. Film & Services
+   - Medallas: asoman, suben y pasan directo a los planes. Se eliminó el paso de una por una.
+   - Los tres botones de los planes llevan a /contact/#scheduler (Calendly).
+   - Sección nueva «Also directed by Medal.»: Paid media, Packaging y Web development como planos a línea.
+   Archivos: film-services/index.html, src/js/modules/film-services.js, src/css/pages/film-services.css
+
+4. WordPress
+   - wordpress/medal-site/medal-site.php pasa a la versión 1.2.0.
+   - Para regenerar el plugin: node wordpress/build-plugin.mjs
+
+5. Ajuste de ritmo (v2)
+   - Portada → Work: el recorrido baja de 2,6 a 1,4 pantallas de scroll (css/styles.css).
+   - La pantalla clara entra mucho antes, sin esperar a que el apóstrofe cubra todo (src/js/modules/work-intro.js).
+   - La primera foto aparece mientras «Every brand, a different standard.» todavía está saliendo,
+     sin pantalla vacía intermedia (src/js/modules/work-cases.js).
+
+6. Fundido y salto suave (v3)
+   - Entre «Every brand, a different standard.» y la primera foto hay un fundido en el mismo lugar,
+     sin borde que las separe (src/js/modules/work-cases.js, src/css/pages/work.css).
+   - «Skip to photos» baja despacio, arrancando y frenando suave (src/js/modules/work-cases.js, js/main.js).
+
+No se modificaron: Contact, la confirmación, los reels, el video de Film ni los casos de Work.
+Textos provisionales pendientes de revisión: «Also directed by Medal.», las tres descripciones de
+servicios, «Drawn to brief» y «Skip to photos».

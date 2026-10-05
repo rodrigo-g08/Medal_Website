@@ -2,6 +2,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import stripItems from "../../data/strip.json";
 import site from "../../data/site.json";
+import { initFolio } from "./work-folio.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -245,8 +246,7 @@ function initInteractiveStrip(track) {
 
 function initH4() {
   const section = document.querySelector("[data-work-beyond]");
-  const track = buildStrip();
-  if (!section || !track) return;
+  if (!section) return;
 
   keepHeaderWhite(section);
 
@@ -267,7 +267,7 @@ function initH4() {
     }
   );
 
-  initInteractiveStrip(track);
+  initFolio(section);
 }
 
 function formatResult(value, prefix = "", suffix = "", decimals = 0) {

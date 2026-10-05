@@ -1,6 +1,13 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import "/src/css/pages/work-cases.css";
+import "/src/css/pages/work-h4-h6.css";
+import "/src/css/pages/work-folio.css";
+
 import { initMedalShell } from "/src/js/main.js";
+import { initWorkIntro } from "/src/js/modules/work-intro.js";
+import { initWorkCases } from "/src/js/modules/work-cases.js";
+import { initWorkH4H6 } from "/src/js/modules/work-h4-h6.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -36,125 +43,213 @@ function initCover() {
   const gate = document.querySelector("[data-cover-gate]");
   const hero = document.querySelector("[data-cover-hero]");
   const scrim = document.querySelector("[data-cover-scrim]");
-  const solid = document.querySelector("[data-cover-solid]");
-  const halos = document.querySelector("[data-cover-halos]");
-  const headerBrand = document.querySelector("[data-cover-header-brand]");
-  const line = document.querySelector("[data-cover-line]");
-  const workEyebrow = document.querySelector("[data-cover-work-eyebrow]");
-  const enter = document.querySelector("[data-cover-enter]");
-  const bar = document.querySelector("[data-cover-bar]");
+  const ghost = document.querySelector("[data-cover-work]");
+  const workHero = document.querySelector("[data-work-intro]");
+  const workInner = workHero?.querySelector(".work-hero__inner");
+  const ambient = document.querySelector(".ambient");
+  const workLinks = [...document.querySelectorAll('.site-header__link[href="/work/"], .mobile-menu__nav a[href="/work/"]')];
 
-  if (!cover || !stage || !hole || !gate) return;
+  if (!cover || !stage || !hole || !gate || !ghost || !workHero || !workInner) return null;
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduced) return;
+  if (reduced) return null;
 
+  // Punto más ancho del trazo de la «m», en unidades del logotipo (viewBox 0 0 640 200).
   const F = { x: 112.67, y: 106, r: 17.9 };
-  const C = { x: 319, y: 96 };
   let W = 0;
   let H = 0;
   let S0 = 1;
-  let S1 = 1;
-  let navigated = false;
+  let logo = { a: 1, e: 0, f: 0 };
+  let inWork = false;
+  let progress = 0;
+
+  /*
+   * Copia del inicio de Work dentro de la portada. Usa las mismas clases y el
+   * mismo viewBox que el original, así que queda en el mismo lugar exacto.
+   */
+  const buildGhost = () => {
+    const copy = workInner.cloneNode(true);
+    [copy, ...copy.querySelectorAll("*")].forEach((node) => {
+      [...node.attributes].forEach((attr) => {
+        if (attr.name.startsWith("data-") || attr.name === "id" || attr.name === "style" || attr.name === "role" || attr.name === "aria-label") {
+          node.removeAttribute(attr.name);
+        }
+      });
+    });
+    ghost.replaceChildren(copy);
+
+    // El hueco de la compuerta es el mismo logotipo.
+    const svg = copy.querySelector("svg");
+    if (!svg) return;
+    hole.replaceChildren(
+      ...[...svg.children].map((child) => {
+        const shape = child.cloneNode(true);
+        [shape, ...shape.querySelectorAll("*")].forEach((node) => {
+          if (node.hasAttribute("fill")) node.setAttribute("fill", "#000");
+        });
+        return shape;
+      })
+    );
+  };
 
   const measure = () => {
     const rect = stage.getBoundingClientRect();
     W = Math.max(1, rect.width);
     H = Math.max(1, rect.height);
-
-    // Match Work's actual opening logo fraction without changing Work itself.
-    let workFraction = 0.84;
-    if (W <= 540) workFraction = 0.90;
-    else if (W <= 860) workFraction = 0.82;
-
-    S1 = Math.min(W * workFraction, H * 1.5) / 640;
-    const d = Math.hypot(C.x - F.x, C.y - F.y);
-    S0 = (Math.hypot(W, H) / 2 + d * S1) * 1.12 / F.r;
     gate.setAttribute("viewBox", `0 0 ${W} ${H}`);
+
+    const svg = ghost.querySelector("svg");
+    const matrix = svg?.getScreenCTM();
+    if (matrix && matrix.a > 0) {
+      logo = { a: matrix.a, e: matrix.e - rect.left, f: matrix.f - rect.top };
+    }
+
+    // El hueco inicial debe cubrir toda la pantalla desde el punto de enfoque.
+    const fx = logo.e + F.x * logo.a;
+    const fy = logo.f + F.y * logo.a;
+    const reach = Math.max(
+      Math.hypot(fx, fy),
+      Math.hypot(W - fx, fy),
+      Math.hypot(fx, H - fy),
+      Math.hypot(W - fx, H - fy)
+    );
+    S0 = (reach * 1.12) / F.r;
   };
 
   const placeHole = (p) => {
-    const t = easeInOutCubic(ramp(p, 0.16, 0.60));
-    const s = S0 * Math.pow(S1 / S0, t);
-    const tx = W / 2 - F.x * s - (C.x - F.x) * S1;
-    const ty = H / 2 - F.y * s - (C.y - F.y) * S1;
+    const t = easeInOutCubic(ramp(p, 0.14, 0.80));
+    const s = S0 * Math.pow(logo.a / S0, t);
+    // El punto de enfoque permanece fijo en su posición final.
+    const tx = logo.e + F.x * logo.a - F.x * s;
+    const ty = logo.f + F.y * logo.a - F.y * s;
     hole.setAttribute("transform", `translate(${tx} ${ty}) scale(${s})`);
   };
 
   const updateScene = (p) => {
+    progress = p;
     placeHole(p);
 
-    const heroOut = ramp(p, 0.05, 0.15);
+    const heroOut = ramp(p, 0.04, 0.14);
     gsap.set(hero, { opacity: 1 - heroOut, y: -30 * heroOut });
-    gsap.set(scrim, { opacity: 1 - ramp(p, 0.20, 0.50) });
-    gsap.set(gate, { opacity: ramp(p, 0.12, 0.18) });
-    gsap.set(halos, { opacity: ramp(p, 0.40, 0.62) });
-    gsap.set(headerBrand, { opacity: 1 - ramp(p, 0.50, 0.60) });
+    gsap.set(scrim, { opacity: 1 - ramp(p, 0.18, 0.50) });
+    gsap.set(gate, { opacity: ramp(p, 0.10, 0.16) });
+    // Las letras se vuelven sólidas en el mismo movimiento: aparece el inicio de Work.
+    gsap.set(ghost, { opacity: ramp(p, 0.78, 0.94) });
 
-    const lineOpacity = ramp(p, 0.58, 0.64) * (1 - ramp(p, 0.70, 0.75));
-    gsap.set(line, { opacity: lineOpacity, y: 12 * (1 - lineOpacity) });
-
-    const solidOpacity = ramp(p, 0.72, 0.82);
-    gsap.set(solid, { opacity: solidOpacity });
-
-    const workIn = ramp(p, 0.80, 0.86);
-    gsap.set(workEyebrow, { opacity: workIn, y: 10 * (1 - workIn) });
-    gsap.set(enter, { opacity: workIn, y: 12 * (1 - workIn) });
-    enter?.classList.toggle("is-visible", workIn > 0.92);
-
-    gsap.set(bar, { scaleX: ramp(p, 0.86, 0.995) });
+    if (!inWork && ambient) ambient.style.opacity = String(ramp(p, 0.45, 0.75));
   };
 
+  // Relevo: al terminar la portada, el Work real ocupa el lugar de la copia.
+  const showWork = () => {
+    if (inWork) return;
+    inWork = true;
+    stage.style.visibility = "hidden";
+    workHero.style.visibility = "";
+    document.body.classList.remove("is-cover");
+    if (ambient) ambient.style.opacity = "1";
+    workLinks.forEach((link) => link.classList.add("is-active"));
+  };
+
+  const showCover = () => {
+    inWork = false;
+    stage.style.visibility = "";
+    workHero.style.visibility = "hidden";
+    document.body.classList.add("is-cover");
+    workLinks.forEach((link) => link.classList.remove("is-active"));
+    updateScene(progress);
+  };
+
+  buildGhost();
   measure();
+  showCover();
   updateScene(0);
 
   const trigger = ScrollTrigger.create({
     trigger: cover,
     start: "top top",
     end: "bottom bottom",
-    scrub: 0.4,
     invalidateOnRefresh: true,
     onRefresh: (self) => {
+      buildGhost();
       measure();
       updateScene(self.progress);
+      if (self.progress >= 1) showWork();
+      else if (inWork) showCover();
     },
     onUpdate: (self) => {
       updateScene(self.progress);
-      if (self.progress >= 0.995 && self.direction > 0 && !navigated) {
-        navigated = true;
-        window.location.assign("/work/");
-      }
-      if (self.progress < 0.97) navigated = false;
+      if (self.progress >= 1) showWork();
+      else if (inWork) showCover();
     },
   });
 
-  enter?.addEventListener("click", () => {
-    const travel = Math.max(0, cover.offsetHeight - window.innerHeight);
-    const destination = cover.offsetTop + travel * 0.84;
-    if (lenis?.scrollTo) lenis.scrollTo(destination, { duration: 1.05 });
-    else window.scrollTo({ top: destination, behavior: "smooth" });
+  // «Work» en el encabezado: baja hasta el inicio de Work sin cambiar de página.
+  const goToWork = (immediate = false) => {
+    const top = trigger.end;
+    if (lenis?.scrollTo) lenis.scrollTo(top, immediate ? { immediate: true, force: true } : { duration: 1.6 });
+    else window.scrollTo({ top, behavior: immediate ? "auto" : "smooth" });
+  };
+
+  workLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      goToWork(false);
+    });
   });
 
   window.addEventListener("resize", () => {
     measure();
     updateScene(trigger.progress);
   }, { passive: true });
+
+  return { goToWork };
 }
 
-function resetHomePosition() {
-  const reset = () => {
-    if (lenis?.scrollTo) lenis.scrollTo(0, { immediate: true, force: true });
-    else window.scrollTo(0, 0);
-    requestAnimationFrame(() => ScrollTrigger.refresh());
+/*
+ * Posición al cargar:
+ *   /#work            → inicio de Work
+ *   atrás / adelante  → donde estaba el visitante
+ *   cualquier otra    → arriba, en el video
+ */
+function initHomePosition(coverApi) {
+  const KEY = "medal-home-scroll";
+  const navigation = performance.getEntriesByType?.("navigation")?.[0];
+  const cameBack = navigation?.type === "back_forward";
+
+  const jump = (top) => {
+    if (lenis?.scrollTo) lenis.scrollTo(top, { immediate: true, force: true });
+    else window.scrollTo(0, top);
   };
 
-  if (document.readyState === "complete") reset();
-  else window.addEventListener("load", reset, { once: true });
+  const place = () => {
+    ScrollTrigger.refresh();
+    const saved = Number(sessionStorage.getItem(KEY));
+    if (window.location.hash === "#work" && coverApi) coverApi.goToWork(true);
+    else if (cameBack && saved > 0) jump(saved);
+    else jump(0);
+    requestAnimationFrame(() => ScrollTrigger.update());
+  };
+
+  if (document.readyState === "complete") place();
+  else window.addEventListener("load", place, { once: true });
+
+  window.addEventListener("pagehide", () => {
+    sessionStorage.setItem(KEY, String(Math.round(window.scrollY)));
+  });
   window.addEventListener("pageshow", (event) => {
-    if (event.persisted) reset();
+    if (event.persisted) ScrollTrigger.refresh();
+  });
+  window.addEventListener("hashchange", () => {
+    if (window.location.hash === "#work" && coverApi) coverApi.goToWork(false);
   });
 }
 
 initCoverSound();
-initCover();
-resetHomePosition();
+
+// Work vive en la misma página que la portada.
+initWorkIntro();
+initWorkCases(lenis);
+initWorkH4H6();
+
+const coverApi = initCover();
+initHomePosition(coverApi);

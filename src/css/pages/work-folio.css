@@ -1,0 +1,158 @@
+/* ==========================================================================
+   WORK · MORE THAN A PORTFOLIO
+   Franjas con el estilo de los reels de Film & Services. La fila avanza sola
+   y la franja que cruza el centro (o la que se señala) se abre.
+   ========================================================================== */
+
+.work-beyond--folio .work-beyond__pin {
+  gap: clamp(22px, 4vh, 46px);
+  padding: calc(var(--header-height) + clamp(18px, 4vh, 54px)) 0 clamp(40px, 6vh, 76px);
+}
+
+.work-beyond--folio .work-beyond__title {
+  font-size: clamp(3.6rem, 7vw, 8.6rem);
+}
+
+.folio {
+  --folio-closed: clamp(84px, 7.6vw, 132px);
+  --folio-open: clamp(320px, 34vw, 600px);
+  --folio-height: min(54svh, 540px);
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding-block: 4px 24px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+.folio.is-static {
+  overflow-x: auto;
+}
+
+.folio__track {
+  display: flex;
+  column-gap: 10px;
+  width: max-content;
+  padding-left: var(--page-pad);
+  will-change: transform;
+}
+
+.folio-slice {
+  position: relative;
+  flex: none;
+  width: var(--folio-closed);
+  height: var(--folio-height);
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0c0d12;
+  color: var(--bone);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  transition: width 720ms var(--ease-medal), transform 720ms var(--ease-medal);
+}
+
+.folio-slice--low {
+  transform: translateY(18px);
+}
+
+.folio-slice:focus-visible {
+  outline: 2px solid var(--blue-soft);
+  outline-offset: 3px;
+}
+
+.folio-slice img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.55) brightness(.62);
+  transform: scale(1.12);
+  transition: filter 600ms ease, transform 900ms var(--ease-medal);
+  pointer-events: none;
+}
+
+.folio-slice__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5,6,10,.25), transparent 30%, transparent 58%, rgba(5,6,10,.82));
+}
+
+.folio-slice__bar {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 13px;
+  height: 2px;
+  background: var(--yellow);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 700ms var(--ease-fill);
+}
+
+.folio-slice__meta {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 16px;
+  display: grid;
+  gap: 3px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 300ms ease, transform 500ms var(--ease-medal);
+}
+
+.folio-slice__meta span:first-child {
+  font-size: clamp(20px, 1.7vw, 30px);
+  letter-spacing: -.03em;
+}
+
+.folio-slice__meta span:last-child {
+  color: var(--text-soft);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.folio-slice.is-open {
+  width: var(--folio-open);
+  transform: translateY(0);
+}
+
+.folio-slice.is-open img {
+  filter: none;
+  transform: scale(1);
+}
+
+.folio-slice.is-open .folio-slice__bar {
+  transform: scaleX(1);
+}
+
+.folio-slice.is-open .folio-slice__meta {
+  opacity: 1;
+  transform: none;
+  transition-delay: 220ms;
+}
+
+@media (max-width: 760px) {
+  .folio {
+    --folio-closed: 58px;
+    --folio-open: 72vw;
+    --folio-height: min(50svh, 420px);
+  }
+
+  .folio__track { column-gap: 8px; }
+  .folio-slice--low { transform: translateY(12px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .folio-slice,
+  .folio-slice img,
+  .folio-slice__bar,
+  .folio-slice__meta { transition: none; }
+}

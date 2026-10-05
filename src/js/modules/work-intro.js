@@ -263,8 +263,8 @@ export function initWorkIntro() {
         bone,
         {
           opacity: 1,
-          duration: 0.10,
-          ease: "power1.out",
+          duration: 0.26,
+          ease: "power2.out",
         },
         0
       )
@@ -273,7 +273,7 @@ export function initWorkIntro() {
         {
           opacity: 1,
         },
-        0.07
+        0.12
       );
 
     if (boneEyebrow) {
@@ -450,13 +450,14 @@ export function initWorkIntro() {
         height,
       });
 
-    const earlyTakeover = p >= 0.955;
+    // La pantalla clara entra mucho antes: no espera a que el apóstrofe cubra todo.
+    const earlyTakeover = p >= 0.46;
 
     if (fullyWhite || earlyTakeover) {
       showBoneScreen();
     } else if (
       boneVisible &&
-      p < 0.94
+      p < 0.40
     ) {
       hideBoneScreen();
     }
@@ -512,8 +513,8 @@ export function initWorkIntro() {
       start: "top top",
       end: () =>
         `+=${Math.max(
-          window.innerHeight * 1.85,
-          1180
+          window.innerHeight * 0.62,
+          420
         )}`,
       pin: true,
       pinSpacing: true,

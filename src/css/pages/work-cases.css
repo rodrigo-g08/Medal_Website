@@ -268,3 +268,30 @@
 .work-hero__eyebrow,
 .work-bone__eyebrow { font-size: clamp(14px, .92vw, 16px); }
 .work-hero__stage { font-size: 13px; }
+
+/* Salto a las fotografías: el apóstrofe de Medal, tres veces, apuntando hacia abajo. */
+.work-cases__skip {
+  position: absolute;
+  z-index: 12;
+  left: 50%;
+  bottom: clamp(22px, 4.2vh, 44px);
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 0;
+  background: transparent;
+  color: var(--bone);
+  cursor: pointer;
+  transform: translateX(-50%);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  transition: color 280ms ease, transform 420ms var(--ease-medal);
+}
+.work-cases__skip svg { width: 34px; height: auto; display: block; animation: skip-nudge 2.2s ease-in-out infinite; }
+.work-cases__skip:hover,
+.work-cases__skip:focus-visible { color: var(--yellow); transform: translate(-50%, 4px); }
+@keyframes skip-nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+@media (prefers-reduced-motion: reduce) { .work-cases__skip svg { animation: none; } }
