@@ -1,0 +1,47 @@
+MEDAL · CORRECCIONES DEL 6 DE OCTUBRE DE 2026
+=============================================
+
+INSTALACION EN EL REPOSITORIO (rama rediseno-sitio)
+  1. En PowerShell, dentro de la carpeta del repositorio:
+     Expand-Archive -LiteralPath "$env:USERPROFILE\Downloads\Medal_Website-MASTER-2026-10-06-CINCO-MARCAS-MEDALLAS-RESPONSIVE.zip" -DestinationPath . -Force
+  2. npm install   (solo si hace falta)
+  3. npm run dev
+
+INSTALACION EN WORDPRESS
+  Plugins > Anadir nuevo > Subir plugin > medal-site.zip > "Reemplazar el actual con el subido".
+  La version nueva es 1.3.1. Los ajustes guardados (rutas activas, direccion del video) se conservan.
+
+QUE CAMBIA
+  Work
+    - Cinco marcas, en este orden, con las fotografias entregadas por el cliente:
+      Cabo Merlin (Luxury property - Peru), Zub Zero (Healthy ice cream - Peru),
+      Artech (Car collection - Lima), Fiesta (Peruvian restaurant - Peru),
+      Picanteria (Peruvian restaurant - Peru).
+    - Sale Kjolle de los casos. El rotulo vuelve a "Five brands - Four sectors".
+    - Imagenes nuevas en assets/img/work/: cabo-merlin-sunset.webp, zub-zero-flavors.webp,
+      artech-auburn.webp, fiesta-table.webp, picanteria-ajies.webp
+    - No se tocaron la franja de logotipos ni "More than a portfolio".
+  Film & Services
+    - Titulos con el mismo ancho de letra que Work y mas aire entre letras.
+    - El bloque de apertura ("Film", boton de sonido, "Every frame, directed.") sube.
+    - Medallas nuevas (bronce, plata, oro): flotan, se inclinan y un brillo recorre el metal.
+      El movimiento es mayor cuando ya subieron y mas calmado dentro de las tarjetas.
+    - Las medallas nunca tocan el titulo ni las frases: bajan o se achican si no caben,
+      y el texto de cada plan aparece cuando su medalla ya llego.
+  Celular y iPad
+    - Film & Services ya no se ensancha (el menu quedaba fuera de pantalla).
+    - "Skip to photos" va a la derecha y no pisa el nombre de la marca.
+    - Boton de sonido de Film arriba a la derecha del video.
+    - El visor de reels oculta el header mientras esta abierto.
+    - Tarjetas de planes ajustadas para iPad vertical y celular en horizontal.
+    - La pagina ya no salta cuando aparece o se esconde la barra del navegador.
+
+ARCHIVOS QUE YA NO SE USAN (se dejaron en su lugar, no se borro nada)
+  assets/img/film/medals/*-medal.png
+  assets/img/work/artech-classics.webp
+  assets/img/work/zub-zero-hero-cover.webp
+  assets/img/work/fiesta-grill-wide.jpg
+  assets/img/medal-01-tasting-menu.jpg (como caso de Work)
+
+DETALLE TECNICO
+  docs/MEDAL-CORRECCIONES-2026-10-06.md

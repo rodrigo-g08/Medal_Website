@@ -530,14 +530,30 @@ function initMedals(lenis) {
     const rect = stage.getBoundingClientRect();
     const W = Math.max(1, rect.width);
     const H = Math.max(1, rect.height);
-    const mobile = W < 820;
+    const mobile = W <= 820;
 
-    const peek = SERVICES.map((_, i) => {
-      const s = mobile ? W * [0.34, 0.40, 0.48][i] : H * [0.34, 0.41, 0.50][i];
-      const x = mobile ? W * [0.20, 0.50, 0.82][i] : W * [0.40, 0.545, 0.71][i];
-      return { x, y: H + 0.04 * s, s, o: 1 };
+    // Las medallas son el apóstrofe de Medal en metal. `s` es su ancho.
+    const sizes = mobile ? [0.46, 0.54, 0.64].map((k) => W * k) : [0.25, 0.30, 0.37].map((k) => Math.min(W * k, H * k * (H < 520 ? 1.4 : 1.9)));
+    const upX = mobile ? [0.5, 0.5, 0.5] : [0.235, 0.485, 0.765];
+    const upY = mobile ? [0.50, 0.645, 0.81] : [0.79, 0.775, 0.75];
+    // Ninguna medalla puede tocar el título, ni en el punto más alto de su
+    // vaivén: si no cabe, baja; y si aun así no cabe, se achica.
+    const titleBox = title.querySelector("h2")?.getBoundingClientRect();
+    const clearTop = (titleBox ? titleBox.bottom - rect.top : 0.3 * H) + 0.04 * H;
+    const HALF = 0.291; // media altura de la pieza respecto de su ancho
+    const SWAY = 0.16;  // recorrido de la flotación más el giro
+    const floor = 0.975 * H;
+    const up = SERVICES.map((_, i) => {
+      let size = sizes[i];
+      let y = H * upY[i];
+      if (!mobile || i === 0) {
+        const room = floor - clearTop;
+        if (size * (2 * HALF + SWAY) > room) size = room / (2 * HALF + SWAY);
+        y = clamp(y, clearTop + size * (HALF + SWAY), Math.max(clearTop + size * (HALF + SWAY), floor - size * HALF));
+      }
+      return { x: W * upX[i], y, s: size, o: 1 };
     });
-    const up = peek.map((pose) => ({ ...pose, y: H - 0.20 * pose.s }));
+    const peek = up.map((pose) => ({ ...pose, y: H + 0.17 * pose.s }));
     const front = SERVICES.map(() => {
       const s = mobile ? Math.min(0.66 * W, 0.36 * H) : Math.min(0.66 * H, 0.40 * W);
       return { x: mobile ? 0.50 * W : 0.31 * W, y: mobile ? 0.32 * H : 0.53 * H, s, o: 1 };
@@ -571,8 +587,8 @@ function initMedals(lenis) {
       return SERVICES.map((_, i) => poseLerp(g.peek[i], g.up[i], easeInOutCubic(clamp((t - i * 0.22) / 0.56))));
     }
     if (p < 0.46) return g.up;
-    if (p < 0.84) {
-      const t = easeInOutCubic(ramp(p, 0.46, 0.84));
+    if (p < 0.78) {
+      const t = easeInOutCubic(ramp(p, 0.46, 0.78));
       return SERVICES.map((_, i) => poseLerp(g.up[i], g.slotPoses[i], t));
     }
     return g.slotPoses;
@@ -595,12 +611,16 @@ function initMedals(lenis) {
     stateAt(p).forEach((pose, i) => applyPose(medals[i], pose, i));
 
     gsap.set(title, { opacity: 1 - ramp(p, 0.46, 0.56), y: -18 * ramp(p, 0.46, 0.56) });
+    // Más vida cuando ya subieron; más calma al llegar a las tarjetas.
+    stage.style.setProperty("--medal-lively", (1 - 0.72 * ramp(p, 0.46, 0.78)).toFixed(3));
     standard?.style.setProperty("--standard-fill", String(ramp(p, 0.04, 0.34)));
 
-    const cardsBase = ramp(p, 0.60, 0.66);
+    const cardsBase = ramp(p, 0.66, 0.72);
     gsap.set(cardsWrap, { opacity: cardsBase });
     cards.forEach((card, i) => {
-      const opacity = ramp(p, 0.64 + 0.03 * i, 0.80 + 0.03 * i);
+      // El texto de cada plan aparece cuando su medalla ya llegó, para que
+      // la medalla nunca pase por encima de las frases.
+      const opacity = ramp(p, 0.75 + 0.02 * i, 0.88 + 0.02 * i);
       gsap.set(card, { opacity, y: 24 * (1 - opacity) });
     });
     cardsWrap.style.pointerEvents = p >= 0.84 ? "auto" : "none";

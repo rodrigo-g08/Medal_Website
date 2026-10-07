@@ -4,6 +4,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// En celular y tablet la barra del navegador aparece y desaparece al hacer
+// scroll; sin esto, cada cambio recalcula las escenas y la página da saltos.
+ScrollTrigger.config({ ignoreMobileResize: true });
+
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
 export function initSmoothScroll() {

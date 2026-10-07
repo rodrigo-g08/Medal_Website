@@ -1,37 +1,37 @@
 [
   {
-    "slug": "kjolle",
-    "name": "Kjolle",
-    "meta": "Restaurant · Lima",
-    "image": "/assets/img/medal-01-tasting-menu.jpg",
-    "position": "center"
-  },
-  {
-    "slug": "artech",
-    "name": "Artech",
-    "meta": "Classic car collection · Lima",
-    "image": "/assets/img/work/artech-classics.webp",
+    "slug": "cabo-merlin",
+    "name": "Cabo Merlín",
+    "meta": "Luxury property · Peru",
+    "image": "/assets/img/work/cabo-merlin-sunset.webp",
     "position": "center"
   },
   {
     "slug": "zub-zero",
     "name": "Züb Zero",
-    "meta": "Healthy ice cream · Lima",
-    "image": "/assets/img/work/zub-zero-hero-cover.webp",
+    "meta": "Healthy ice cream · Peru",
+    "image": "/assets/img/work/zub-zero-flavors.webp",
     "position": "center"
+  },
+  {
+    "slug": "artech",
+    "name": "Artech",
+    "meta": "Car collection · Lima",
+    "image": "/assets/img/work/artech-auburn.webp",
+    "position": "26% center"
   },
   {
     "slug": "fiesta",
     "name": "Fiesta",
     "meta": "Peruvian restaurant · Peru",
-    "image": "/assets/img/work/fiesta-grill-wide.jpg",
+    "image": "/assets/img/work/fiesta-table.webp",
     "position": "center"
   },
   {
-    "slug": "food-freaks",
-    "name": "Food Freaks",
-    "meta": "Hospitality · Selected work",
-    "image": "/assets/img/medal-07-shared-table.jpg",
+    "slug": "picanteria",
+    "name": "Picantería",
+    "meta": "Peruvian restaurant · Peru",
+    "image": "/assets/img/work/picanteria-ajies.webp",
     "position": "center"
   }
 ]

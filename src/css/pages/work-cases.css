@@ -295,3 +295,27 @@
 .work-cases__skip:focus-visible { color: var(--yellow); transform: translate(-50%, 4px); }
 @keyframes skip-nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
 @media (prefers-reduced-motion: reduce) { .work-cases__skip svg { animation: none; } }
+
+/* El salto a las fotos va a la derecha, sobre el contador, para no pisar el
+   nombre de la marca (los nombres largos, como «Cabo Merlín», llegaban al centro). */
+.work-cases__skip {
+  left: auto;
+  right: calc(var(--page-pad) - 14px);
+  bottom: 116px;
+  justify-items: end;
+  transform: none;
+}
+.work-cases__skip:hover,
+.work-cases__skip:focus-visible { transform: translateY(4px); }
+@media (max-width: 720px) {
+  .work-cases__skip {
+    right: 8px;
+    bottom: 10px;
+    gap: 6px;
+    padding-block: 6px;
+  }
+  .work-cases__skip svg { width: 24px; }
+}
+@media (max-height: 520px) and (orientation: landscape) and (min-width: 721px) {
+  .work-cases__skip { bottom: 88px; }
+}

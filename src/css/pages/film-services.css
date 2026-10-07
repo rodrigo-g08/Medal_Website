@@ -21,6 +21,9 @@ main {
 .apostrophe-thread,
 .services-availability {
   isolation: isolate;
+  /* Los halos sobresalen por los lados: se recortan aquí para que la página
+     no se ensanche en celular y tablet (antes empujaba el header fuera). */
+  overflow-x: clip;
 }
 
 .reels::before,
@@ -605,14 +608,64 @@ main {
   transform-origin: center center;
   will-change: transform, opacity;
 }
+.medals__float {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: medalFloat 5.2s ease-in-out infinite;
+  will-change: transform;
+}
+.medals__medal[data-medal="silver"] .medals__float { animation-duration: 6s; animation-delay: -2.1s; }
+.medals__medal[data-medal="gold"] .medals__float { animation-duration: 6.8s; animation-delay: -4s; }
 .medals__medal img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: brightness(1.16) contrast(1.08) saturate(1.08) drop-shadow(0 22px 34px rgba(0,0,0,.55));
+  filter: drop-shadow(0 12px 14px rgba(0,0,0,.5));
+  transition: transform .5s var(--ease-medal);
 }
-.medals__medal:hover img { transform: translateY(-6px); }
-.medals__medal img { transition: transform .25s var(--ease-medal); }
+.medals__medal:hover img,
+.medals__medal:hover .medals__sheen { transform: translateY(-5%) scale(1.03); }
+
+/* Brillo que recorre el metal. Usa la propia medalla como recorte. */
+.medals__sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(112deg, transparent 38%, rgba(255,255,255,.0) 42%, rgba(255,255,255,.7) 50%, rgba(255,255,255,0) 58%, transparent 62%) no-repeat;
+  background-size: 260% 100%;
+  background-position: 130% 0;
+  mix-blend-mode: screen;
+  opacity: .55;
+  -webkit-mask: var(--medal-mask) center / contain no-repeat;
+  mask: var(--medal-mask) center / contain no-repeat;
+  animation: medalSheen 3.8s cubic-bezier(.45,.05,.35,1) infinite;
+  transition: transform .5s var(--ease-medal);
+}
+.medals__medal[data-medal="bronze"] { --medal-mask: url("../../../assets/img/film/medals/bronze-chevron.webp"); }
+.medals__medal[data-medal="silver"] { --medal-mask: url("../../../assets/img/film/medals/silver-chevron.webp"); }
+.medals__medal[data-medal="gold"] { --medal-mask: url("../../../assets/img/film/medals/gold-chevron.webp"); }
+.medals__medal[data-medal="silver"] .medals__sheen { animation-delay: -1.2s; }
+.medals__medal[data-medal="gold"] .medals__sheen { animation-delay: -2.4s; }
+
+/* --medal-lively la fija el scroll: 1 cuando las medallas ya subieron,
+   menos cuando descansan en su tarjeta, para no distraer de la lectura. */
+@keyframes medalFloat {
+  0%   { transform: perspective(340px) translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotate(0deg); }
+  25%  { transform: perspective(340px) translate3d(calc(2.4% * var(--medal-lively, 1)), calc(-6.5% * var(--medal-lively, 1)), 0) rotateX(calc(6deg * var(--medal-lively, 1))) rotateY(calc(-9deg * var(--medal-lively, 1))) rotate(calc(-2.6deg * var(--medal-lively, 1))); }
+  50%  { transform: perspective(340px) translate3d(0, calc(-12% * var(--medal-lively, 1)), 0) rotateX(0deg) rotateY(0deg) rotate(calc(.5deg * var(--medal-lively, 1))); }
+  75%  { transform: perspective(340px) translate3d(calc(-2.4% * var(--medal-lively, 1)), calc(-6% * var(--medal-lively, 1)), 0) rotateX(calc(-5deg * var(--medal-lively, 1))) rotateY(calc(9deg * var(--medal-lively, 1))) rotate(calc(2.6deg * var(--medal-lively, 1))); }
+  100% { transform: perspective(340px) translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotate(0deg); }
+}
+@keyframes medalSheen {
+  0%, 18% { background-position: 130% 0; }
+  62%, 100% { background-position: -40% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .medals__float, .medals__sheen { animation: none; }
+  .medals__sheen { display: none; }
+}
 .medals__spot {
   position: absolute;
   z-index: 4;
@@ -722,9 +775,9 @@ main {
 }
 .medal-card__slot {
   display: block;
-  width: clamp(52px, 4.9vw, 68px);
-  aspect-ratio: 1;
-  margin-bottom: 26px;
+  width: clamp(88px, 7.4vw, 118px);
+  aspect-ratio: 1101 / 641;
+  margin-bottom: 34px;
 }
 .medal-card__body {
   display: flex;
@@ -1021,7 +1074,7 @@ main {
     font-size: 7px;
   }
   .medal-card__slot {
-    width: 44px;
+    width: 54px;
     margin: 0;
     grid-column: 1;
     grid-row: 1;
@@ -1242,3 +1295,100 @@ body[data-page="film-services"] .site-header::before {
   letter-spacing: -.025em;
 }
 @media (max-width: 860px) { .blueprints__heading { grid-template-columns: 1fr; row-gap: 18px; } }
+
+/* --------------------------------------------------------------------------
+   AJUSTES DE CELULAR Y TABLET — no cambian el escritorio
+   -------------------------------------------------------------------------- */
+/* El botón de sonido sube a la esquina del video para no tapar el título. */
+@media (max-width: 820px) {
+  .film-sound {
+    top: calc(var(--header-height) + 76px);
+    right: 14px;
+    bottom: auto;
+  }
+}
+
+/* Con un reel abierto a pantalla completa, el header se retira. */
+@media (max-width: 820px), (max-height: 520px) and (orientation: landscape) {
+  body:has(.reel-viewer.is-open) .site-header {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .reel-viewer__close { top: 18px; }
+}
+
+/* Celular en horizontal: el visor cabe completo. */
+@media (min-width: 821px) and (max-height: 520px) and (orientation: landscape) {
+  .reel-viewer__layout { padding-block: 14px; gap: 22px; }
+  .reel-viewer__media-shell { height: calc(100dvh - 28px); }
+  .reel-viewer__meta h2 { font-size: 2.6rem; }
+  .reel-viewer__kpis { margin-top: 12px; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .reel-viewer__kpi { padding-top: 8px; }
+  .reel-viewer__kpi strong { font-size: 1.5rem; }
+}
+
+/* --------------------------------------------------------------------------
+   TIPOGRAFÍA Y ALTURA — observaciones del 6 de octubre
+   La letra de Film se veía apretada: se abre al mismo ancho que usa Work y
+   se suelta el espaciado. El bloque de apertura sube para que no quede al
+   borde inferior de la pantalla.
+   -------------------------------------------------------------------------- */
+.film-hero__opening h1,
+.film-hero__cinema-copy h2,
+.reels__heading h2,
+.reel-viewer__meta h2,
+.medals__title h2,
+.medal-card h3,
+.blueprints__heading h2,
+.blueprint__name,
+.services-availability h2 {
+  font-stretch: 112%;
+  letter-spacing: -.038em;
+}
+.film-hero__opening h1 { letter-spacing: -.045em; line-height: .86; }
+.reels__intro,
+.blueprints__intro,
+.blueprint__copy,
+.medal-card__copy,
+.apostrophe-thread__note p { letter-spacing: -.008em; }
+
+.film-hero__opening { bottom: calc(var(--header-height) + clamp(96px, 15vh, 170px)); }
+@media (min-width: 821px) {
+  .film-sound { bottom: calc(var(--header-height) + clamp(96px, 15vh, 170px)); }
+}
+.film-hero__cinema-copy { bottom: clamp(96px, 14vh, 150px); width: min(38vw, 620px); }
+@media (max-width: 820px) {
+  .film-hero__opening { bottom: calc(var(--header-height) + 150px); }
+  .film-hero__cinema-copy { bottom: 84px; }
+}
+
+/* Celulares angostos: el título de las medallas cabe en dos líneas. */
+@media (max-width: 380px) {
+  .medals__title h2 { font-size: 13.2vw; }
+}
+
+/* iPad en vertical: las tarjetas de planes usan mejor el ancho. */
+@media (min-width: 541px) and (max-width: 820px) {
+  .medal-card { grid-template-columns: 104px minmax(0, 1fr); column-gap: 22px; padding: 18px 24px; }
+  .medal-card__slot { width: 96px; }
+  .medal-card__eyebrow { font-size: 10px; }
+  .medal-card h3 { font-size: 2.6rem; }
+  .medal-card__copy { font-size: 16px; line-height: 1.36; max-width: 34rem; }
+  .medal-card .button { width: fit-content; min-height: 42px; padding-inline: 20px; }
+  .medal-card .button__label { font-size: 13px; }
+  .medal-card__badge { font-size: 10px; top: 14px; right: 18px; }
+  .medals__cards > .eyebrow { font-size: 11px; }
+}
+
+/* Celular en horizontal: los planes caben completos en la pantalla. */
+@media (min-width: 821px) and (max-height: 520px) and (orientation: landscape) {
+  .medals__cards { inset: 72px 18px 10px; gap: 6px; }
+  .medal-card { padding: 12px 16px; }
+  .medal-card__slot { width: 58px; margin-bottom: 28px; }
+  .medal-card__eyebrow { margin-bottom: 4px; }
+  .medal-card h3 { font-size: 1.7rem; }
+  .medal-card h3 br { display: none; }
+  .medal-card__copy { font-size: 13px; line-height: 1.3; margin: 6px 0 8px; }
+  .medal-card ul { display: none; }
+  .medal-card .button { min-height: 34px; }
+}

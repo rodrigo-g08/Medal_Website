@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Medal Site
  * Description:       Publica el sitio de Medal (portada, Work, Film & Services y Contact) dentro de WordPress, sin pasar por el tema ni por Elementor. Cada página se activa por separado en Ajustes → Medal Site.
- * Version:           1.2.0
+ * Version:           1.3.1
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            Medal
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MEDAL_SITE_VERSION', '1.2.0' );
+define( 'MEDAL_SITE_VERSION', '1.3.1' );
 define( 'MEDAL_SITE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'MEDAL_SITE_OPTION', 'medal_site_routes' );
 define( 'MEDAL_SITE_VIDEO_OPTION', 'medal_site_cover_video' );

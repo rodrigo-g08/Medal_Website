@@ -70,3 +70,11 @@
   .site-header__nav { display:none; }
   .site-header__mobile-actions { display:flex; }
 }
+
+/* Celular en horizontal: el menú cabe sin que se monten las líneas. */
+@media (max-height: 520px) and (orientation: landscape) {
+  .mobile-menu { padding-top: 84px; padding-bottom: 20px; justify-content: flex-start; overflow-y: auto; }
+  .mobile-menu__nav { gap: 6px; }
+  .mobile-menu__nav a { font-size: clamp(34px, 11vh, 52px); }
+  .mobile-menu__meta { margin-top: 18px; }
+}
